@@ -1,5 +1,5 @@
 package logic.util;
 
-enum ScholarDegreeValue {
+public enum ScholarDegreeValue {
 	basic, halfSuperior, superior
 }

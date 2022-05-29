@@ -1,5 +1,5 @@
 package logic.util;
 
-enum PositionValue {
+public enum PositionValue {
 	manager, shiftManager, dependent
 }

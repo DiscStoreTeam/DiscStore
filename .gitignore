@@ -1,3 +1,4 @@
 /bin
 .project
 .classpath
+src/logic/main/Main.java

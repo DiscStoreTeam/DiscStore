@@ -4,23 +4,34 @@ public class Position {
 	private PositionValue value;
 	
 	//Builders
-	public Position(int value)
+	public Position(PositionValue value)
 	{
+		this.value = value;
+	}
+	
+	//Methods
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		String position = null;
+		
 		switch (value) {
-		case 0:
-			this.value = PositionValue.manager;
+		case manager:
+			position = "Administrador";
 			break;
-		case 1:
-			this.value = PositionValue.shiftManager;
+		case shiftManager:
+			position = "Jefe de Turno";
 			break;
-		case 2:
-			this.value = PositionValue.dependent;
+		case dependent:
+			position = "Dependeinte";
+			break;
 		default:
 			break;
 		}
+		
+		return position;
 	}
 
 	//Getters & Setters
-	public PositionValue getValue() {return value;}
-	public void setValue(PositionValue value) {this.value = value;}
+	public void setValue(PositionValue value){this.value = value;}
 }

@@ -2,7 +2,9 @@ package logic.business;
 
 import logic.util.Credential;
 import logic.util.Position;
+import logic.util.PositionValue;
 import logic.util.ScholarDegree;
+import logic.util.ScholarDegreeValue;
 
 public class Worker {
 	private String name;
@@ -15,7 +17,7 @@ public class Worker {
 	private Credential credentials;
 	
 	//Builders
-	public Worker(String name, String lastName, String ci, int workerID, int position, int scholarDegree) {
+	public Worker(String name, String lastName, String ci, int workerID, PositionValue position, ScholarDegreeValue scholarDegree) {
 		this.name = new String(name);
 		this.lastName = new String(lastName);
 		this.ci = new String(ci);
@@ -24,13 +26,13 @@ public class Worker {
 		this.scholarDegree = new ScholarDegree(scholarDegree);
 		this.credentials = new Credential(name, ci);
 		switch (position) {
-		case 0:
+		case manager:
 			this.basicSalary = 5000;
 			break;
-		case 1:
+		case shiftManager:
 			this.basicSalary = 3500;
 			break;
-		case 2:
+		case dependent:
 			this.basicSalary = 3000;
 			break;
 		}
@@ -104,9 +106,11 @@ public class Worker {
 	//ID
 	public Integer getWorkerID() {return workerID;}
 	//position
-	public Position getPosition() {return position;}
+	public String getPosition() {return position.toString();}
+	public void setPosition(PositionValue value){position.setValue(value);}
 	//scholarDegree
-	public ScholarDegree getScholarDegree() {return scholarDegree;}
+	public String getScholarDegree() {return scholarDegree.toString();}
+	public void setScholarDegree(ScholarDegreeValue value){scholarDegree.setValue(value);}
 	//credentials
 	public Credential getCredentials() {return credentials;}
 }

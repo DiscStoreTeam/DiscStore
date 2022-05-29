@@ -4,23 +4,34 @@ public class ScholarDegree {
 	private ScholarDegreeValue value;
 	
 	//Builders
-	public ScholarDegree(int value)
+	public ScholarDegree(ScholarDegreeValue value)
 	{
+		this.value = value;
+	}
+	
+	//Methods
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		String degree = null;
+		
 		switch (value) {
-		case 0:
-			this.value = ScholarDegreeValue.basic;
+		case basic:
+			degree = "Básico";
 			break;
-		case 1:
-			this.value = ScholarDegreeValue.halfSuperior;
+		case halfSuperior:
+			degree = "Medio Superior";
 			break;
-		case 2:
-			this.value = ScholarDegreeValue.superior;
+		case superior:
+			degree = "Superior";
+			break;
 		default:
 			break;
 		}
+		
+		return degree;
 	}
 
 	//Getters & Setters
-	public ScholarDegreeValue getValue() {return value;}
 	public void setValue(ScholarDegreeValue value) {this.value = value;}
 }
