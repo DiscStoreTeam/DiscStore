@@ -10,18 +10,18 @@ public class Worker {
 	private String name;
 	private String lastName;
 	private String ci;
-	private String workerID;
+	private Integer workerID;
 	private double basicSalary;
-	private Position position;
 	private ScholarDegree scholarDegree;
 	private Credential credentials;
+	private Position position;
 	
 	//Builders
-	public Worker(String name, String lastName, String ci, String workerID, PositionValue position, ScholarDegreeValue scholarDegree) {
+	public Worker(String name, String lastName, String ci, Integer workerID, PositionValue position, ScholarDegreeValue scholarDegree) {
 		this.name = new String(name);
 		this.lastName = new String(lastName);
 		this.ci = new String(ci);
-		this.workerID = new String(workerID);
+		this.workerID = new Integer(workerID);
 		this.position = new Position(position);
 		this.scholarDegree = new ScholarDegree(scholarDegree);
 		this.credentials = new Credential(name, ci);
@@ -29,11 +29,8 @@ public class Worker {
 		case manager:
 			this.basicSalary = 5000;
 			break;
-		case shiftManager:
-			this.basicSalary = 3500;
-			break;
 		case dependent:
-			this.basicSalary = 3000;
+			this.basicSalary = 3500;
 			break;
 		}
 	}
@@ -104,8 +101,8 @@ public class Worker {
 	//CI
 	public String getCi() {return ci;}
 	//ID
-	public String getWorkerID() {return workerID;}
-	public void setWorkerID(String workerID){this.workerID = workerID;}
+	public Integer getWorkerID() {return workerID;}
+	public void setWorkerID(Integer workerID){this.workerID = workerID;}
 	//position
 	public PositionValue getPosition() {return position.getValue();}
 	public void setPosition(PositionValue value){position.setValue(value);}

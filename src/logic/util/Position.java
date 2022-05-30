@@ -19,9 +19,6 @@ public class Position {
 		case manager:
 			position = "Administrador";
 			break;
-		case shiftManager:
-			position = "Jefe de Turno";
-			break;
 		case dependent:
 			position = "Dependiente";
 			break;
@@ -38,9 +35,6 @@ public class Position {
 		case manager:
 			position = "Administrador";
 			break;
-		case shiftManager:
-			position = "Jefe de Turno";
-			break;
 		case dependent:
 			position = "Dependiente";
 			break;
@@ -56,11 +50,8 @@ public class Position {
 		case manager:
 			position = 0;
 			break;
-		case shiftManager:
-			position = 1;
-			break;
 		case dependent:
-			position = 2;
+			position = 1;
 			break;
 		default:
 			break;
