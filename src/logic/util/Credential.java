@@ -13,6 +13,13 @@ public class Credential {
 		this.firstLogin = true;
 	}
 	
+	public Credential(Credential auxiliar)
+	{
+		this.username = new String(auxiliar.getUsername());
+		this.password = new String(auxiliar.getPassword());
+		this.firstLogin = auxiliar.getFirstLogin();
+	}
+	
 	//Methods
 	public void updateCredentials(String username, String password)
 	{

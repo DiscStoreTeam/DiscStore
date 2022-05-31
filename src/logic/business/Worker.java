@@ -34,7 +34,24 @@ public class Worker {
 			break;
 		}
 	}
-	
+	public Worker(Worker auxiliar){
+		this.name = new String(auxiliar.getName());
+		this.lastName = new String(auxiliar.getLastName());
+		this.ci = new String(auxiliar.getCi());
+		this.workerID = new Integer(auxiliar.getWorkerID());
+		this.position = new Position(auxiliar.getPosition());
+		this.scholarDegree = new ScholarDegree(auxiliar.getScholarDegree());
+		this.credentials = new Credential(auxiliar.getCredentials());
+		switch (auxiliar.getPosition()) {
+		case manager:
+			this.basicSalary = 5000;
+			break;
+		case dependent:
+			this.basicSalary = 3500;
+			break;
+		}
+	}
+
 	//Methods
 	public boolean isMe(String username, String password)
 	{
@@ -49,7 +66,7 @@ public class Worker {
 		return valid;
 	}
 	
-	public void changeCredentials(String username, String password)
+	public void updateCredentials(String username, String password)
 	{
 		credentials.updateCredentials(username, password);
 	}
@@ -102,12 +119,14 @@ public class Worker {
 	public String getCi() {return ci;}
 	//ID
 	public Integer getWorkerID() {return workerID;}
-	public void setWorkerID(Integer workerID){this.workerID = workerID;}
+	public void setWorkerID(Integer workerID){this.workerID = new Integer(workerID);}
 	//position
+	public String positionString(){return position.toString();}
 	public PositionValue getPosition() {return position.getValue();}
 	public void setPosition(PositionValue value){position.setValue(value);}
 	//scholarDegree
-	public String getScholarDegree() {return scholarDegree.toString();}
+	public String degreeString(){return scholarDegree.toString();}
+	public ScholarDegreeValue getScholarDegree() {return scholarDegree.getValue();}
 	public void setScholarDegree(ScholarDegreeValue value){scholarDegree.setValue(value);}
 	//credentials
 	public Credential getCredentials() {return credentials;}

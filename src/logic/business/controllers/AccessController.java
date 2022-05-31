@@ -36,6 +36,6 @@ public class AccessController {
 	
 	public void updateCredentials(String username, String password)
 	{
-		loggedWorker.changeCredentials(username, password);
+		loggedWorker.updateCredentials(username, password);
 	}
 }

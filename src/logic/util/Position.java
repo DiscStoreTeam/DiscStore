@@ -11,7 +11,8 @@ public class Position {
 	
 	//Methods
 	@Override
-	public String toString() {
+	public String toString() 
+	{
 		// TODO Auto-generated method stub
 		String position = null;
 		
@@ -29,7 +30,8 @@ public class Position {
 		return position;
 	}
 	
-	public static String toString(PositionValue value){
+	public static String toString(PositionValue value)
+	{
 		String position = null;
 		switch (value) {
 		case manager:
@@ -44,7 +46,8 @@ public class Position {
 		return position;
 	}
 	
-	public static Integer toInt(PositionValue value){
+	public Integer toInt()
+	{
 		Integer position = null;
 		switch (value) {
 		case manager:
