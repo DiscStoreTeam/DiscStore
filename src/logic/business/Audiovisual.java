@@ -18,22 +18,19 @@ public abstract class Audiovisual {
 		this.fileSize = fileSize;
 	}
 	
+	
+	
 	//Getters & Setters
 	public String getTitle() {return title;}
-	public void setTitle(String title) {this.title = title;}
-	
+	//public void setTitle(String title) {this.title = title;}
 	public String getGenre() {return genre;}
-	public void setGenre(String genre) {this.genre = genre;}
-	
+	//public void setGenre(String genre) {this.genre = genre;}
 	public int getDuration() {return duration;}
-	public void setDuration(int duration) {this.duration = duration;}
-	
+	//public void setDuration(int duration) {this.duration = duration;}
 	public String getInterpreter() {return interpreter;}
-	public void setInterpreter(String interpreter) {this.interpreter = interpreter;}
-	
+	//public void setInterpreter(String interpreter) {this.interpreter = interpreter;}
 	public String getCollaborators() {return collaborators;}
-	public void setCollaborators(String collaborators) {this.collaborators = collaborators;}
-	
+	//public void setCollaborators(String collaborators) {this.collaborators = collaborators;}
 	public int getFileSize() {return fileSize;}
-	public void setFileSize(int fileSize) {this.fileSize = fileSize;}	
+	//public void setFileSize(int fileSize) {this.fileSize = fileSize;}	
 }

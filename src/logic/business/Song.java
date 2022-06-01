@@ -6,12 +6,10 @@ public class Song extends Audiovisual {
 
 	public Song(String title, String genre, int duration, String interpreter, String collaborators, int fileSize, String author, String album) {
 		super(title, genre, duration, interpreter, collaborators, fileSize);
-		this.author = author;
-		this.album = album;
+		this.author = new String(author);
+		this.album = new String(album);
 	}
-	
-	public void foo()
-	{
-		
-	}
+
+	public String getAuthor() {return author;}
+	public String getAlbum() {return album;}
 }
