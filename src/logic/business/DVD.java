@@ -1,22 +1,24 @@
 package logic.business;
 
-public class DVD implements Disc{
+import java.util.ArrayList;
 
+public class DVD implements Disc{
+	private ArrayList<Video> contents;
+	
+	@Override
+	public Video getItem(int item) {
+		return contents.get(item);
+	}
 	@Override
 	public void addItem() {
-		// TODO Auto-generated method stub
 		
 	}
-
 	@Override
 	public void removeItem() {
-		// TODO Auto-generated method stub
 		
 	}
-
 	@Override
 	public double calculateCost() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 }
