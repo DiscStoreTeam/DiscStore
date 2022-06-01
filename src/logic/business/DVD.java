@@ -1,6 +1,6 @@
 package logic.business;
 
-public class DVD extends Disc{
+public class DVD implements Disc{
 
 	@Override
 	public void addItem() {
