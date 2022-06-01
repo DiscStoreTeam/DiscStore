@@ -1,6 +1,8 @@
 package logic.business.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import logic.business.Worker;
 import logic.util.PositionValue;
@@ -11,17 +13,10 @@ public class HRController {
 	private Worker manager;
 	
 	//Builders
-	public HRController(Worker manager)
+	public HRController(String name, String lastName, String ci, ScholarDegreeValue scholarDegree)
 	{
 		this.workersList = new ArrayList<Worker>();
-		this.manager = new Worker(manager);
-		workersList.add(manager);
-	}
-	
-	public HRController(String name, String lastName, String ci, PositionValue position, ScholarDegreeValue scholarDegree)
-	{
-		this.workersList = new ArrayList<Worker>();
-		this.manager = new Worker(name, lastName, ci, 0, position, scholarDegree);
+		this.manager = new Worker(name, lastName, ci, 0, PositionValue.manager, scholarDegree);
 		workersList.add(manager);
 	}
 	
@@ -33,16 +28,14 @@ public class HRController {
 	
 	//Methods
 	public void changeManager(int newManagerPosition){
-		/* Analizar el tema del cambio de ID al cambiar el admin*/
-		manager.setPosition(PositionValue.dependent);
-		manager.setWorkerID(workersList.get(newManagerPosition).getWorkerID());
-		
-		System.out.println(manager.getName() + manager.getWorkerID());
-		
-		workersList.get(newManagerPosition).setPosition(PositionValue.manager);
-		manager = workersList.get(newManagerPosition);
-		manager.setWorkerID(0);
-		System.out.println(manager.getName() + workersList.get(newManagerPosition).getWorkerID());
+		Worker actualManager = this.manager;
+		Worker newManager = this.workersList.get(newManagerPosition);
+		actualManager.setPosition(PositionValue.dependent);
+		newManager.setPosition(PositionValue.manager);
+		actualManager.setWorkerID(workersList.get(newManagerPosition).getWorkerID());
+		newManager.setWorkerID(0);
+		this.manager = newManager;
+		sortWorkersList();
 	}
 	
 	public void hireWorker(String name, String lastName, String ci, PositionValue position, ScholarDegreeValue scholarDegree)
@@ -59,6 +52,17 @@ public class HRController {
 				workersList.remove(i);
 			}
 		}
+	}
+	
+	private void sortWorkersList()
+	{
+		Collections.sort(workersList, new Comparator<Worker>() {
+			@Override
+			public int compare(Worker wrk1, Worker wrk2) {
+				// TODO Auto-generated method stub
+				return wrk1.getWorkerID().compareTo(wrk2.getWorkerID());
+			}
+		});
 	}
 	
 	private Integer generateID()
@@ -83,7 +87,6 @@ public class HRController {
 				continous = false;
 			}
 		}
-		System.out.println("Contratar Trabajador(IDs correctos) : " + continous);
 		return continous;
 	}
 	
@@ -91,17 +94,11 @@ public class HRController {
 		int ID = 0;
 		boolean finded = false;
 		for(int i = 0; i < workersList.size() && !finded; i++){
-			System.out.println("Analizando : " + workersList.get(i).getName() + " en la posicion : " + i + " de ID : " + workersList.get(i).getWorkerID());
 			if(i != workersList.get(i).getWorkerID()){
-				//System.out.println(workersList.get(i).getName());
 				ID = workersList.get(i - 1).getWorkerID() + 1;
-				System.out.println("ID del nuevo trabajador : " + ID);
 				finded = true;
 			}
 		}
 		return ID;
 	}
-	
-	public ArrayList<Worker> getworkers(){return workersList;}
-	public String getManagerName(){return manager.getName();}
 }
