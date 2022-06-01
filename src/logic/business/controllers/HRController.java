@@ -64,7 +64,7 @@ public class HRController {
 			}
 		});
 	}
-	
+
 	private Integer generateID()
 	{
 		int ID = 0;

@@ -16,10 +16,12 @@ public class CD implements Disc{
 	public Song getItem(int item) {
 		return contents.get(item);
 	}
+	
 	@Override
-	public void addItem() {
+	public void addItem(){
 		
 	}
+	
 	@Override
 	public void removeItem() {
 		
