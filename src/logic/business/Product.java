@@ -1,6 +1,6 @@
 package logic.business;
 
-public abstract class Audiovisual {
+public abstract class Product {
 	private String title;
 	private String genre;
 	private int duration;
@@ -9,13 +9,21 @@ public abstract class Audiovisual {
 	private int fileSize;
 	
 	//Builders
-	public Audiovisual(String title, String genre, int duration,String interpreter, String collaborators, int fileSize) {
+	public Product(String title, String genre, int duration,String interpreter, String collaborators, int fileSize) {
 		this.title = title;
 		this.genre = genre;
 		this.duration = duration;
 		this.interpreter = interpreter;
 		this.collaborators = collaborators;
 		this.fileSize = fileSize;
+	}
+	public Product(Product product){
+		this.title = new String(product.getTitle());
+		this.genre = new String(product.getGenre());
+		this.duration = product.getDuration();
+		this.interpreter = new String(product.getInterpreter());
+		this.collaborators = new String(product.getCollaborators());
+		this.fileSize = product.getFileSize();
 	}
 	
 	

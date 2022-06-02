@@ -19,7 +19,6 @@ public class HRController {
 		this.manager = new Worker(name, lastName, ci, 0, PositionValue.manager, scholarDegree);
 		workersList.add(manager);
 	}
-	
 	public HRController(ArrayList<Worker> workersList)
 	{
 		this.workersList = new ArrayList<Worker>(workersList);

@@ -1,6 +1,6 @@
 package logic.business;
 
-public class Song extends Audiovisual {
+public class Song extends Product {
 	private String author;
 	private String album;
 
@@ -9,6 +9,12 @@ public class Song extends Audiovisual {
 		this.author = new String(author);
 		this.album = new String(album);
 	}
+	public Song(Song song){
+		super((Product)song);
+		this.author = new String(song.getAuthor());
+		this.album = new String(song.getAlbum());
+	}
+	
 
 	public String getAuthor() {return author;}
 	public String getAlbum() {return album;}
