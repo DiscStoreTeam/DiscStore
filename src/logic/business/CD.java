@@ -2,7 +2,7 @@ package logic.business;
 
 import java.util.ArrayList;
 
-public class CD implements Disc{
+public class CD extends Disc implements ProductContainer{
 	private ArrayList<Song> contents;
 	
 	//Builders
@@ -11,12 +11,7 @@ public class CD implements Disc{
 		contents = new ArrayList<Song>();
 	}
 	
-	//Methods
-	@Override
-	public Song getItem(int item) {
-		return contents.get(item);
-	}
-	
+	//Methods	
 	@Override
 	public void addItem(){
 		
@@ -29,5 +24,11 @@ public class CD implements Disc{
 	@Override
 	public double calculateCost() {
 		return 0;
+	}
+
+	@Override
+	public Product getItem(int index) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -1,8 +1,5 @@
 package logic.business;
 
-public interface Disc {	
-	public Product getItem(int item);
-	public void addItem();
-	public void removeItem();
-	public double calculateCost();
+public abstract class Disc{
+	public abstract Product getItem(int index);
 }

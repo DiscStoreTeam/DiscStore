@@ -2,13 +2,10 @@ package logic.business;
 
 import java.util.ArrayList;
 
-public class DVD implements Disc{
+public class DVD extends Disc implements ProductContainer{
 	private ArrayList<Video> contents;
 	
-	@Override
-	public Video getItem(int item) {
-		return contents.get(item);
-	}
+	//Methods
 	@Override
 	public void addItem() {
 		
@@ -20,5 +17,10 @@ public class DVD implements Disc{
 	@Override
 	public double calculateCost() {
 		return 0;
+	}
+	@Override
+	public Product getItem(int index) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
