@@ -3,6 +3,6 @@ package logic.business.controllers;
 public class SalesController {
 
 	int ad;
-	String prueba = "Test";
+	String prueba = "Testa";
 	//Test
 }
