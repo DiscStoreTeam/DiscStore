@@ -11,6 +11,13 @@ public class Video extends Product {
 		super(title, genre, duration, interpreter, collaborators, fileSize);
 		this.resolution = new Resolution(resolution);
 	}
+	public Video(Video video)
+	{
+		super((Product)video);
+		this.resolution = new Resolution(video.resolution);
+	}
+	
+	//Methods
 	
 	//Getters & Setters
 	public String getResolution(){return resolution.toString();}

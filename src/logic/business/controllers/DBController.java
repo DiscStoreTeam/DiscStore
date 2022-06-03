@@ -3,8 +3,6 @@ package logic.business.controllers;
 import java.util.ArrayList;
 
 import logic.business.Product;
-import logic.business.Song;
-import logic.business.Video;
 import logic.util.Resolution;
 
 public class DBController {
@@ -30,41 +28,5 @@ public class DBController {
 			resolutions.add(resolution.toString());
 		}
 		return resolutions;
-	}
-	
-	public boolean addProduct(Product product)
-	{
-		boolean exist = false;
-		
-		for(int i = 0; i < database.size() && !exist; i++){
-			if(database.get(i).equals(product)){
-				exist = true;
-			}
-		}
-		if(!exist){
-			if(product instanceof Song){
-				addSong((Song)product);
-			}
-			else{
-				addVideo((Video)product);
-			}
-		}
-		
-		return exist;
-	}
-	
-	public void addSong(Song newSong)
-	{
-		database.add(new Song(newSong));
-	}
-	
-	public void addVideo(Video newVideo)
-	{
-		
-	}
-	
-	public void removeProduct()
-	{
-		
 	}
 }

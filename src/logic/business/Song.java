@@ -4,6 +4,7 @@ public class Song extends Product {
 	private String author;
 	private String album;
 
+	//Builders
 	public Song(String title, String genre, int duration, String interpreter, String collaborators, int fileSize, String author, String album) {
 		super(title, genre, duration, interpreter, collaborators, fileSize);
 		this.author = new String(author);
@@ -15,7 +16,9 @@ public class Song extends Product {
 		this.album = new String(song.getAlbum());
 	}
 	
+	//Methods
 
+	//Getters & Setters
 	public String getAuthor() {return author;}
 	public String getAlbum() {return album;}
 }
