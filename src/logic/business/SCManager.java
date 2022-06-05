@@ -23,19 +23,19 @@ public class SCManager implements IContainerManager {
 	//Methods
 	@Override
 	public boolean addItem(IProduct item) {
-		return false;
+		return shoppingCar.addItem(item);
 	}
 	@Override
 	public void removeItem(IProduct item) {
-
+		shoppingCar.removeItem(item);
 	}
 	@Override
 	public void removeItem(int index) {
-
+		shoppingCar.removeItem(index);
 	}
 	@Override
 	public double calculateCost() {
-		return 0;
+		return shoppingCar.calculateCost();
 	}
 	@Override
 	public ArrayList<IProduct> search(String critery) {
