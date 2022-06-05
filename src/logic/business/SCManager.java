@@ -37,10 +37,10 @@ public class SCManager implements IContainerManager {
 	public double calculateCost() {
 		return shoppingCar.calculateCost();
 	}
-	@Override
+	/*@Override
 	public ArrayList<IProduct> search(String critery) {
 		return null;
-	}
+	}*/
 	@Override
 	public void sell() {
 		

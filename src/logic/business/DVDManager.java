@@ -19,24 +19,24 @@ public class DVDManager implements IContainerManager {
 	@Override
 	public boolean addItem(IProduct item) {
 		// TODO Auto-generated method stub
-		return false;
+		return dvd.addItem(item);
 	}
 	@Override
 	public void removeItem(IProduct item) {
-
+		dvd.removeItem(item);
 	}
 	@Override
 	public void removeItem(int index) {
-
+		dvd.removeItem(index);
 	}
 	@Override
 	public double calculateCost() {
-		return 0;
+		return dvd.calculateCost();
 	}
-	@Override
+	/*@Override
 	public ArrayList<IProduct> search(String critery) {
 		return null;
-	}
+	}*/
 	@Override
 	public void sell() {
 		//Lo mismo de cd

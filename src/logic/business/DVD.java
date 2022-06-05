@@ -38,7 +38,7 @@ public class DVD extends IDisc {
 	public double calculateCost() {
 		return priceBase + contents.size()*4.50;
 	}
-	@Override
+	/*@Override
 	public ArrayList<IProduct> search(String critery) {
 		ArrayList<IProduct> searchList = new ArrayList<IProduct>();
 		for(int i = 0; i<contents.size();i++){
@@ -47,7 +47,7 @@ public class DVD extends IDisc {
 			}
 		}	
 		return searchList;
-	}
+	}*/
 	@Override
 	public Product getItem(int index) {
 		return contents.get(index);

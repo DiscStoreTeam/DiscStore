@@ -7,5 +7,5 @@ public interface ProductContainer {
 	public void removeItem(IProduct item);
 	public void removeItem(int index);
 	public double calculateCost();
-	public ArrayList<IProduct> search(String critery);
+	/*public ArrayList<IProduct> search(String critery);*/
 }

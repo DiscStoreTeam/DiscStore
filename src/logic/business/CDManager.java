@@ -9,7 +9,7 @@ import logic.business.controllers.SalesController;
 public class CDManager implements IContainerManager {
 	private SalesController controller;
 	private CD cd;
-	
+
 	public CDManager(SalesController controller)
 	{
 		this.controller = controller;
@@ -18,25 +18,25 @@ public class CDManager implements IContainerManager {
 
 	@Override
 	public boolean addItem(IProduct item) {
-		// TODO Auto-generated method stub
-		return false;
+		// TODO Auto-generated method stub	
+		return cd.addItem(item);
 	}
 	@Override
 	public void removeItem(IProduct item) {
-
+		cd.removeItem(item);
 	}
 	@Override
 	public void removeItem(int index) {
-
+		cd.removeItem(index);		
 	}
 	@Override
 	public double calculateCost() {
-		return 0;
+		return cd.calculateCost();
 	}
-	@Override
+	/*@Override
 	public ArrayList<IProduct> search(String critery) {
 		return null;
-	}
+	}*/
 	@Override
 	public void sell() {
 		//Cuando se haga el sell significa q el cd pasa al carrito, por tanto le pasas la referencia al array list del 

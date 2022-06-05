@@ -33,14 +33,18 @@ public class ShoppingCar implements ProductContainer {
 	}
 	@Override
 	public void removeItem(int index) {
-
+		discs.remove(index);
 	}
 	@Override
 	public double calculateCost() {
-		return 0;
+		double cost = 0;
+		for(int i = 0; i<discs.size(); i++){
+			cost += discs.get(i).calculateCost();
+		}
+		return cost;
 	}
-	@Override
+	/*@Override
 	public ArrayList<IProduct> search(String critery) {
 		return null;
-	}
+	}*/
 }
