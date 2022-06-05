@@ -4,3 +4,4 @@ public class SalesController {
 	private int numer;
 	//testing merge
 }
+ 
