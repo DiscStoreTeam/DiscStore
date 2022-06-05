@@ -6,27 +6,27 @@ import logic.business.abstractions.IDisc;
 import logic.business.abstractions.IProduct;
 import logic.business.abstractions.ProductContainer;
 
-public class DVD implements IDisc, ProductContainer{
-	private ArrayList<Video> contents;
+public class ShoppingCar implements ProductContainer {
+	private ArrayList<IDisc> discs;
 	
 	//Builders
-	public DVD()
+	public ShoppingCar()
 	{
-		contents = new ArrayList<Video>();
+		discs = new ArrayList<IDisc>();
 	}
 	
-	//Methods	
+	//Methods
 	@Override
 	public boolean addItem(IProduct item) {
 		return false;
 	}
 	@Override
 	public void removeItem(IProduct item) {
-		
+
 	}
 	@Override
 	public void removeItem(int index) {
-		
+
 	}
 	@Override
 	public double calculateCost() {
@@ -36,9 +36,4 @@ public class DVD implements IDisc, ProductContainer{
 	public ArrayList<IProduct> search(String critery) {
 		return null;
 	}
-	@Override
-	public Product getItem(int index) {
-		return null;
-	}
-	
 }

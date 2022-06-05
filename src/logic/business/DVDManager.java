@@ -2,31 +2,32 @@ package logic.business;
 
 import java.util.ArrayList;
 
-import logic.business.abstractions.IDisc;
+import logic.business.abstractions.IContainerManager;
 import logic.business.abstractions.IProduct;
-import logic.business.abstractions.ProductContainer;
+import logic.business.controllers.SalesController;
 
-public class DVD implements IDisc, ProductContainer{
-	private ArrayList<Video> contents;
+public class DVDManager implements IContainerManager {
+	private SalesController controller;
+	private DVD dvd;
 	
-	//Builders
-	public DVD()
+	public DVDManager(SalesController controller)
 	{
-		contents = new ArrayList<Video>();
+		this.controller = controller;
+		dvd = new DVD();
 	}
-	
-	//Methods	
+
 	@Override
 	public boolean addItem(IProduct item) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 	@Override
 	public void removeItem(IProduct item) {
-		
+
 	}
 	@Override
 	public void removeItem(int index) {
-		
+
 	}
 	@Override
 	public double calculateCost() {
@@ -37,8 +38,7 @@ public class DVD implements IDisc, ProductContainer{
 		return null;
 	}
 	@Override
-	public Product getItem(int index) {
-		return null;
+	public void sell() {
+		//Lo mismo de cd
 	}
-	
 }
