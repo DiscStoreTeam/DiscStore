@@ -1,7 +1,7 @@
 package logic.business.controllers;
 
 public class SalesController {
-	//master
-	//+carlosd
+	private int a;
+	public float b;
 }
  
