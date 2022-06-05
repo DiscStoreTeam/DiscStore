@@ -1,7 +1,7 @@
 package logic.business.controllers;
 
 public class SalesController {
-	private int numer;
+	private int numero;
 	//testing merge
 }
  
