@@ -15,10 +15,18 @@ public class Song extends Product {
 		this.author = new String(song.getAuthor());
 		this.album = new String(song.getAlbum());
 	}
+	public Song(){
+		super();
+		author = new String();
+		album = new String();
+	}
 	
 	//Methods
-
+	
+	
 	//Getters & Setters
 	public String getAuthor() {return author;}
+	public void setAuthor(String author){this.author = author;}
 	public String getAlbum() {return album;}
+	public void setAlbum(String album){this.album = album;}
 }
