@@ -11,6 +11,7 @@ public class ShoppingCar implements ProductContainer {
 	private double totalCost = 0;
 	private String a;
 	//Builders
+	
 	public ShoppingCar()
 	{
 		discs = new ArrayList<IDisc>();
