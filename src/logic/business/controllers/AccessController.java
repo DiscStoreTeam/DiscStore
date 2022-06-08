@@ -2,7 +2,7 @@ package logic.business.controllers;
 
 import java.util.ArrayList;
 
-import logic.business.Worker;
+import logic.business.core.Worker;
 
 public class AccessController {
 	private ArrayList<Worker> workersList;

@@ -1,4 +1,6 @@
-package logic.util;
+package interfaces.util;
+
+import logic.util.Validator;
 
 public class SongPreForm {
 	private String title;

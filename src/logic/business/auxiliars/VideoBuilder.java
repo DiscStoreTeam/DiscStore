@@ -1,6 +1,6 @@
 package logic.business.auxiliars;
 
-import logic.business.Video;
+import logic.business.core.Video;
 import logic.util.Resolution;
 
 public class VideoBuilder {

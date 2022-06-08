@@ -1,12 +1,12 @@
-package logic.business;
+package logic.business.core;
 
 import java.util.ArrayList;
 
-import logic.business.abstractions.IDisc;
+import logic.business.abstractions.Disc;
 import logic.business.abstractions.IProduct;
 import logic.business.abstractions.ProductContainer;
 
-public class CD extends IDisc{
+public class CD extends Disc{
 	private ArrayList<Song> contents;
 	private double priceBase =  12.50;
 

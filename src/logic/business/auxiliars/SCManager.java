@@ -1,6 +1,4 @@
-package logic.business;
-
-import java.util.ArrayList;
+package logic.business.auxiliars;
 
 import logic.business.abstractions.IContainerManager;
 import logic.business.abstractions.IProduct;
@@ -40,10 +38,6 @@ public class SCManager implements IContainerManager {
 	public double calculateCost() {
 		return shoppingCar.calculateCost();
 	}
-	/*@Override
-	public ArrayList<IProduct> search(String critery) {
-		return null;
-	}*/
 	@Override
 	public void sell() {
 		

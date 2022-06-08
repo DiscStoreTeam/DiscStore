@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import logic.business.Worker;
+import logic.business.core.Worker;
 import logic.util.PositionValue;
 import logic.util.ScholarDegreeValue;
 

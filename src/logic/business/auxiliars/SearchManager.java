@@ -2,8 +2,8 @@ package logic.business.auxiliars;
 
 import java.util.ArrayList;
 
-import logic.business.Product;
-import logic.business.Song;
+import logic.business.core.Product;
+import logic.business.core.Song;
 
 public class SearchManager<E> {
 	

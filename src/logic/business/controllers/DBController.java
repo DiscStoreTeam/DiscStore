@@ -1,17 +1,18 @@
 package logic.business.controllers;
 
+import interfaces.util.SongPreForm;
+import interfaces.util.VideoPreForm;
+
 import java.util.ArrayList;
 
-import logic.business.Product;
-import logic.business.Song;
-import logic.business.Video;
 import logic.business.auxiliars.SearchManager;
 import logic.business.auxiliars.SongBuilder;
 import logic.business.auxiliars.VideoBuilder;
+import logic.business.core.Product;
+import logic.business.core.Song;
+import logic.business.core.Video;
 import logic.util.ProductType;
 import logic.util.Resolution;
-import logic.util.SongPreForm;
-import logic.util.VideoPreForm;
 
 public class DBController {
 	private ArrayList<Product> database;

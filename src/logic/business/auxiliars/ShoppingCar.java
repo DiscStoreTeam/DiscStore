@@ -1,33 +1,32 @@
-package logic.business;
+package logic.business.auxiliars;
 
 import java.util.ArrayList;
 
-import logic.business.abstractions.IDisc;
+import logic.business.abstractions.Disc;
 import logic.business.abstractions.IProduct;
 import logic.business.abstractions.ProductContainer;
 
 public class ShoppingCar implements ProductContainer {
-	private ArrayList<IDisc> discs;
+	private ArrayList<Disc> discs;
 	private double totalCost = 0;
-	private String a;
-	//Builders
 	
+	//Builders
 	public ShoppingCar()
 	{
-		discs = new ArrayList<IDisc>();
+		discs = new ArrayList<Disc>();
 		totalCost = calculateCost();
 	}
 	
 	//Methods
 	@Override
 	public boolean addItem(IProduct item) {
-		discs.add((IDisc) item);
+		discs.add((Disc) item);
 		return true;
 	}
 	@Override
 	public void removeItem(IProduct item) {
 		for(int i = 0; i<discs.size();i++){
-			if(discs.get(i).equals((IDisc)item)){
+			if(discs.get(i).equals((Disc)item)){
 				discs.remove(i);
 			}
 		}
@@ -47,8 +46,4 @@ public class ShoppingCar implements ProductContainer {
 	public double getTotalCost(){
 		return totalCost;
 	}
-	/*@Override
-	public ArrayList<IProduct> search(String critery) {
-		return null;
-	}*/
 }

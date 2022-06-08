@@ -2,32 +2,31 @@ package logic.business.controllers;
 
 import java.util.ArrayList;
 
-import logic.business.CDManager;
-import logic.business.DVDManager;
-import logic.business.Product;
-import logic.business.SCManager;
-import logic.business.ShoppingCar;
-import logic.business.Song;
-import logic.business.abstractions.IDisc;
+import logic.business.abstractions.Disc;
+import logic.business.auxiliars.CDManager;
+import logic.business.auxiliars.DVDManager;
+import logic.business.auxiliars.SCManager;
+import logic.business.auxiliars.ShoppingCar;
+import logic.business.core.Product;
+import logic.business.core.Song;
 
 public class SalesController {
 	//Te dejo de tarea cambiar la estructura para q existan 2 listas, una de canciones y otra de videos, asi cada Manager no tiene
 	//q trabajar con informacion q no le toca
-	private ArrayList<Product> database;
 	private ArrayList<Product> songsList;
 	private ArrayList<Product> videosList;	
 	private ShoppingCar shoppingCar;
 	
 	public SalesController(ArrayList<Product> database)
-	{
-		this.database = database;		
+	{	
 		this.shoppingCar = new ShoppingCar();
 		this.songsList = new ArrayList<Product>();
 		this.videosList = new ArrayList<Product>();
 		arrange();
 	}
 	
-	public void addToShoppingList(IDisc item){
+	public void addToShoppingList(Disc item){
+		shoppingCar.addItem(item);
 		
 	}
 	public CDManager getCDManager(){

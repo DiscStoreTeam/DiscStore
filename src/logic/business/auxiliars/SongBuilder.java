@@ -1,6 +1,6 @@
 package logic.business.auxiliars;
 
-import logic.business.Song;
+import logic.business.core.Song;
 
 public class SongBuilder {
 	private Song song;

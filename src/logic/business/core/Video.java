@@ -1,4 +1,4 @@
-package logic.business;
+package logic.business.core;
 
 import logic.util.Resolution;
 

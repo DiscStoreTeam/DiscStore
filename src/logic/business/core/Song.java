@@ -1,4 +1,4 @@
-package logic.business;
+package logic.business.core;
 
 public class Song extends Product {
 	private String author;

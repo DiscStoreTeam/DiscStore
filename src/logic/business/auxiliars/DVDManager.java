@@ -1,40 +1,42 @@
-package logic.business;
+package logic.business.auxiliars;
 
 import java.util.ArrayList;
 
 import logic.business.abstractions.IContainerManager;
 import logic.business.abstractions.IProduct;
 import logic.business.controllers.SalesController;
+import logic.business.core.DVD;
 
-public class CDManager implements IContainerManager {
+public class DVDManager implements IContainerManager {
 	private SalesController controller;
-	private CD cd;
-
-	public CDManager(SalesController controller)
+	private DVD dvd;
+	
+	public DVDManager(SalesController controller)
 	{
 		this.controller = controller;
-		cd = new CD();
+		dvd = new DVD();
+	}
+	
+	public DVD getDVD(){
+		return dvd;
 	}
 
-	public CD getCD(){
-		return cd;
-	}
 	@Override
 	public boolean addItem(IProduct item) {
-		// TODO Auto-generated method stub	
-		return cd.addItem(item);
+		// TODO Auto-generated method stub
+		return dvd.addItem(item);
 	}
 	@Override
 	public void removeItem(IProduct item) {
-		cd.removeItem(item);
+		dvd.removeItem(item);
 	}
 	@Override
 	public void removeItem(int index) {
-		cd.removeItem(index);		
+		dvd.removeItem(index);
 	}
 	@Override
 	public double calculateCost() {
-		return cd.calculateCost();
+		return dvd.calculateCost();
 	}
 	/*@Override
 	public ArrayList<IProduct> search(String critery) {
@@ -42,7 +44,6 @@ public class CDManager implements IContainerManager {
 	}*/
 	@Override
 	public void sell() {
-		//Cuando se haga el sell significa q el cd pasa al carrito, por tanto le pasas la referencia al array list del 
-		//carrito y el cd de aki le haces un new por si el usuario va a buscar otra cosa
+		//Lo mismo de cd
 	}
 }

@@ -1,4 +1,7 @@
-package logic.util;
+package interfaces.util;
+
+import logic.util.Resolution;
+import logic.util.Validator;
 
 public class VideoPreForm {
 	private String title;

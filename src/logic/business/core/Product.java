@@ -1,4 +1,4 @@
-package logic.business;
+package logic.business.core;
 
 public abstract class Product {
 	private String title;
