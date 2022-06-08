@@ -3,7 +3,12 @@ package logic.business.controllers;
 import java.util.ArrayList;
 
 import logic.business.Product;
+import logic.business.Song;
+import logic.business.Video;
+import logic.business.auxiliars.SearchManager;
 import logic.business.auxiliars.SongBuilder;
+import logic.business.auxiliars.VideoBuilder;
+import logic.util.ProductType;
 import logic.util.Resolution;
 import logic.util.SongPreForm;
 import logic.util.VideoPreForm;
@@ -34,7 +39,7 @@ public class DBController {
 	}
 	
 	public boolean addProduct(SongPreForm form){
-		boolean exist = compareByTitle(form.getTitle());
+		boolean exist = compareByTitle(form.getTitle(), ProductType.song);
 		if(!exist){
 			SongBuilder song = new SongBuilder();
 			song.withTitle(form.getTitle());
@@ -50,15 +55,71 @@ public class DBController {
 		return exist;
 	}
 	public boolean addProduct(VideoPreForm form){
-		boolean exist = false;
+		boolean exist = compareByTitle(form.getTitle(), ProductType.video);
+		if(!exist){
+			VideoBuilder video = new VideoBuilder();
+			video.withTitle(form.getTitle());
+			video.withGenre(form.getGenre());
+			video.withInterpreter(form.getInterpreter());
+			video.withCollaborators(form.getCollaborators());
+			video.withDuration(form.getDuration());
+			video.withFileSize(form.getFileSize());
+			video.withResolution(form.getResolution());
+		}
 		return exist;
 	}
 	
-	private boolean compareByTitle(String title){
+	public void removeItem(String title, ProductType type){
+		for(int i = 0; i < database.size(); i++){
+			Product item = database.get(i);
+			if(item.getTitle().equalsIgnoreCase(title)){
+				switch (type) {
+				case song:
+					if(item instanceof Song){
+						database.remove(item);
+					}
+					break;
+				case video:
+					if(item instanceof Video){
+						database.remove(item);
+					}
+					break;
+				}
+			}
+		}
+	}
+	
+	public ArrayList<Song> searchSongs(String critery){
+		ArrayList<Song> list = new ArrayList<Song>();
+		
+		SearchManager<Song> searcher = new SearchManager<Song>();
+		list = searcher.search(critery, database);
+		
+		return list;
+	}
+	public ArrayList<Video> searchVideos(String critery){
+		ArrayList<Video> list = new ArrayList<Video>();
+		
+		SearchManager<Video> searcher = new SearchManager<Video>();
+		list = searcher.search(critery, database);
+		
+		return list;
+	}
+	
+	private boolean compareByTitle(String title, ProductType type){
 		boolean exist = false;
 		for(int i = 0; i < database.size() && !exist; i++){
 			if(database.get(i).getTitle().equalsIgnoreCase(title)){
-				exist = true;
+				if(type == ProductType.song){
+					if(database.get(i) instanceof Song){
+						exist = true;
+					}
+				}
+				else{
+					if(database.get(i) instanceof Video){
+						exist = true;
+					}
+				}
 			}
 		}
 		return exist;
