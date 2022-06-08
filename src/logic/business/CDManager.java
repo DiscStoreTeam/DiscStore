@@ -16,6 +16,9 @@ public class CDManager implements IContainerManager {
 		cd = new CD();
 	}
 
+	public CD getCD(){
+		return cd;
+	}
 	@Override
 	public boolean addItem(IProduct item) {
 		// TODO Auto-generated method stub	

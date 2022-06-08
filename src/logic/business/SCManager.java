@@ -21,6 +21,9 @@ public class SCManager implements IContainerManager {
 	}
 
 	//Methods
+	public double getTotalCost(){
+		return shoppingCar.getTotalCost();
+	}
 	@Override
 	public boolean addItem(IProduct item) {
 		return shoppingCar.addItem(item);

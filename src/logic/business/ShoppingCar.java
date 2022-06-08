@@ -8,8 +8,8 @@ import logic.business.abstractions.ProductContainer;
 
 public class ShoppingCar implements ProductContainer {
 	private ArrayList<IDisc> discs;
-	private double totalCost;
-	
+	private double totalCost = 0;
+	private String a;
 	//Builders
 	public ShoppingCar()
 	{
@@ -37,11 +37,14 @@ public class ShoppingCar implements ProductContainer {
 	}
 	@Override
 	public double calculateCost() {
-		double cost = 0;
 		for(int i = 0; i<discs.size(); i++){
-			cost += discs.get(i).calculateCost();
+			totalCost += discs.get(i).calculateCost();
 		}
-		return cost;
+		return totalCost;
+	}
+	
+	public double getTotalCost(){
+		return totalCost;
 	}
 	/*@Override
 	public ArrayList<IProduct> search(String critery) {

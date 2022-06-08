@@ -15,6 +15,10 @@ public class DVDManager implements IContainerManager {
 		this.controller = controller;
 		dvd = new DVD();
 	}
+	
+	public DVD getDVD(){
+		return dvd;
+	}
 
 	@Override
 	public boolean addItem(IProduct item) {
