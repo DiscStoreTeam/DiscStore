@@ -15,6 +15,9 @@ public class Resolution {
 		this.height = new Integer(resolution.getHeight());
 		this.width = new Integer(resolution.getWidth());
 	}
+	public Resolution(){
+		
+	}
 	
 	//Methods
 	@Override

@@ -16,9 +16,16 @@ public class Video extends Product {
 		super((Product)video);
 		this.resolution = new Resolution(video.resolution);
 	}
+	public Video(){
+		super();
+		this.resolution = new Resolution();
+	}
 	
 	//Methods
 	
 	//Getters & Setters
 	public String getResolution(){return resolution.toString();}
+	public void setResolution(Resolution resolution){
+		this.resolution = new Resolution(resolution);
+	}
 }
