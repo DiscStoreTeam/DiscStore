@@ -22,7 +22,7 @@ public class SalesController {
 		this.shoppingCar = new ShoppingCar();
 		this.songsList = new ArrayList<Product>();
 		this.videosList = new ArrayList<Product>();
-		arrange();
+		arrange(database);
 	}
 	
 	public void addToShoppingList(Disc item){
@@ -44,7 +44,7 @@ public class SalesController {
 	
 	
 	//llena las listas de canciones y videos
-	public void arrange(){
+	public void arrange(ArrayList<Product> database){
 		for(int i=0; i<database.size();i++){
 			if(database.get(i) instanceof Song){
 				songsList.add(database.get(i));

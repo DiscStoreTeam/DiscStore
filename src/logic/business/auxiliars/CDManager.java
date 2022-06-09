@@ -1,7 +1,5 @@
 package logic.business.auxiliars;
 
-import java.util.ArrayList;
-
 import logic.business.abstractions.IContainerManager;
 import logic.business.abstractions.IProduct;
 import logic.business.controllers.SalesController;
