@@ -1,14 +1,14 @@
 package interfaces.gui.workflow;
 
-import interfaces.gui.access.ChangeCredentials;
+import interfaces.gui.main.MainWindow;
 
 import java.awt.EventQueue;
 
 import logic.business.core.Store;
 
-public class ChangeCredentialHandler implements WindowHandler {
-	
-	public ChangeCredentialHandler(){
+public class MainHandler implements WindowHandler {
+
+	public MainHandler() {
 		
 	}
 	
@@ -17,7 +17,7 @@ public class ChangeCredentialHandler implements WindowHandler {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ChangeCredentials frame = new ChangeCredentials(store.getAccessController());
+					MainWindow frame = new MainWindow();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

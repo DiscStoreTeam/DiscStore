@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import main.Application;
+import main.Application.WindowType;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.border.TitledBorder;
@@ -123,7 +125,7 @@ public class ChangeCredentials extends JDialog {
 	private void okButton(){
 		if(validateFields()){
 			controller.updateCredentials(textFieldUsername.getText(), textFieldPassword.getText());
-			dispose();
+			Application.changeWindow(this, WindowType.main);
 		}
 	}
 	
