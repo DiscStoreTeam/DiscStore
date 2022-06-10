@@ -13,9 +13,9 @@ public class HRController {
 	private Worker manager;
 	
 	//Builders
-	public HRController(String name, String lastName, String ci, ScholarDegreeValue scholarDegree)
+	public HRController(String name, String lastName, String ci, ScholarDegreeValue scholarDegree, ArrayList<Worker> workerList)
 	{
-		this.workersList = new ArrayList<Worker>();
+		this.workersList = workerList;
 		this.manager = new Worker(name, lastName, ci, 0, PositionValue.manager, scholarDegree);
 		workersList.add(manager);
 	}
