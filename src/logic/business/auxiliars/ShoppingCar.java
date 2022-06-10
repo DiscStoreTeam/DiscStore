@@ -9,13 +9,11 @@ import logic.business.abstractions.ProductContainer;
 public class ShoppingCar implements ProductContainer {
 	private ArrayList<Disc> discs;
 	private double totalCost = 0;
-	private ArrayList<Integer> sellReports;
 
 	//Builders
-	public ShoppingCar(ArrayList<Integer> sellReports)
+	public ShoppingCar()
 	{
 		discs = new ArrayList<Disc>();
-		this.sellReports = sellReports;
 		totalCost = calculateCost();
 	}
 
@@ -23,7 +21,6 @@ public class ShoppingCar implements ProductContainer {
 	@Override
 	public boolean addItem(IProduct item) {
 			discs.add((Disc) item);
-			discs.get(discs.size()).setID(sellReports.size());
 		return true;
 	}
 	@Override
@@ -48,5 +45,14 @@ public class ShoppingCar implements ProductContainer {
 
 	public double getTotalCost(){
 		return totalCost;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		boolean empty = false;
+		if(discs.isEmpty()){
+			empty = true;
+		}
+		return empty;
 	}
 }

@@ -4,18 +4,18 @@ import java.util.ArrayList;
 
 import logic.business.abstractions.Disc;
 import logic.business.abstractions.IProduct;
-import logic.business.abstractions.ProductContainer;
+
 
 public class DVD extends Disc {
 	private ArrayList<Video> contents;
 	private double priceBase = 15.50;
-	
+
 	//Builders
 	public DVD()
 	{
 		contents = new ArrayList<Video>();
 	}
-	
+
 	//Methods	
 	@Override
 	public boolean addItem(IProduct item) {
@@ -51,5 +51,14 @@ public class DVD extends Disc {
 	@Override
 	public Product getItem(int index) {
 		return contents.get(index);
+	}
+
+	@Override
+	public boolean isEmpty() {
+		boolean empty = false;
+		if(contents.isEmpty()){
+			empty = true;
+		}
+		return empty;
 	}
 }

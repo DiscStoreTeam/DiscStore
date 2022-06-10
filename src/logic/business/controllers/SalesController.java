@@ -17,18 +17,22 @@ public class SalesController {
 	private ArrayList<Product> videosList;
 	private ArrayList<Integer> sellReports;
 	private ShoppingCar shoppingCar;
-	
+
 	public SalesController(ArrayList<Product> database)
 	{	
-		this.shoppingCar = new ShoppingCar(sellReports);
+		this.shoppingCar = new ShoppingCar();
 		this.songsList = new ArrayList<Product>();
 		this.videosList = new ArrayList<Product>();
+		this.sellReports = new ArrayList<Integer>();
 		arrange(database);
 	}
-	
+
 	public void addToShoppingList(Disc item){	
-		shoppingCar.addItem(item);
-		
+		if(!item.isEmpty()){
+			item.setID(sellReports.size()+1);
+			shoppingCar.addItem(item);
+			sellReports.add(sellReports.size()+1);
+		}
 	}
 	public CDManager getCDManager(){
 		return new CDManager(this);
@@ -40,10 +44,10 @@ public class SalesController {
 		return new SCManager(this, shoppingCar);
 	}
 	public void sell(){
-		
+
 	}
-	
-	
+
+
 	//llena las listas de canciones y videos
 	public void arrange(ArrayList<Product> database){
 		for(int i=0; i<database.size();i++){
@@ -54,6 +58,6 @@ public class SalesController {
 			}
 		}
 	}
-	
+
 }
- 
+

@@ -1,21 +1,24 @@
 package interfaces.gui.access;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import net.miginfocom.swing.MigLayout;
+
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTabbedPane;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JLayeredPane;
+
 import javax.swing.JTextField;
 import javax.swing.JTable;
 
+@SuppressWarnings("serial")
 public class Sales extends JFrame {
 
 	private JPanel contentPane;

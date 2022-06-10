@@ -53,4 +53,13 @@ public class CD extends Disc{
 	public Product getItem(int index) {
 		return contents.get(index);
 	}
+
+	@Override
+	public boolean isEmpty() {
+		boolean empty = false;
+		if(contents.isEmpty()){
+			empty = true;
+		}
+		return empty;
+	}
 }
