@@ -53,13 +53,16 @@ public class Worker {
 	}
 
 	//Methods
-	public boolean isMe(String username, String password)
+	public int isMe(String username, String password)
 	{
-		boolean valid = false;
+		int valid = 0;
 		
 		if(credentials.getUsername().equalsIgnoreCase(username)){
 			if(credentials.getPassword().equals(password)){
-				valid = true;
+				valid = 2;
+			}
+			else{
+				valid = 1;
 			}
 		}
 		

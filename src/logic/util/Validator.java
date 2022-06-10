@@ -48,4 +48,9 @@ public class Validator {
 		return valid;
 	}
 	
+	public static boolean emptyString(String string){
+		boolean valid = true;
+		valid = string.isEmpty();
+		return valid;
+	}
 }
