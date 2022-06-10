@@ -14,18 +14,19 @@ public class SalesController {
 	//Te dejo de tarea cambiar la estructura para q existan 2 listas, una de canciones y otra de videos, asi cada Manager no tiene
 	//q trabajar con informacion q no le toca
 	private ArrayList<Product> songsList;
-	private ArrayList<Product> videosList;	
+	private ArrayList<Product> videosList;
+	private ArrayList<Integer> sellReports;
 	private ShoppingCar shoppingCar;
 	
 	public SalesController(ArrayList<Product> database)
 	{	
-		this.shoppingCar = new ShoppingCar();
+		this.shoppingCar = new ShoppingCar(sellReports);
 		this.songsList = new ArrayList<Product>();
 		this.videosList = new ArrayList<Product>();
 		arrange(database);
 	}
 	
-	public void addToShoppingList(Disc item){
+	public void addToShoppingList(Disc item){	
 		shoppingCar.addItem(item);
 		
 	}
