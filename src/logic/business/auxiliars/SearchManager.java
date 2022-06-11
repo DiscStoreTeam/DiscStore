@@ -13,7 +13,7 @@ public class SearchManager<E> {
 	}
 	
 	//Methods
-	public ArrayList<E> search(String critery, ArrayList<Product> database){
+	public ArrayList<E> search(String critery, ArrayList<E> database){
 		//Manejar la excepcion de q E no sea Song o Video
 		ArrayList<E> list = new ArrayList<E>();
 		list.addAll(byTitle(critery, database));
@@ -29,7 +29,7 @@ public class SearchManager<E> {
 	
 	
 	@SuppressWarnings("unchecked")
-	private ArrayList<E> byTitle(String critery, ArrayList<Product> database){
+	private ArrayList<E> byTitle(String critery, ArrayList<E> database){
 		ArrayList<E> list = new ArrayList<E>();
 		for(int i = 0; i < database.size(); i++){
 			Product item = (Product)database.get(i);
@@ -40,7 +40,7 @@ public class SearchManager<E> {
 		return list;
 	}
 	@SuppressWarnings("unchecked")
-	private ArrayList<E> byGenre(String critery, ArrayList<Product> database){
+	private ArrayList<E> byGenre(String critery, ArrayList<E> database){
 		ArrayList<E> list = new ArrayList<E>();
 		for(int i = 0; i < database.size(); i++){
 			Product item = (Product)database.get(i);
@@ -51,7 +51,7 @@ public class SearchManager<E> {
 		return list;
 	}
 	@SuppressWarnings("unchecked")
-	private ArrayList<E> byInterpreter(String critery, ArrayList<Product> database){
+	private ArrayList<E> byInterpreter(String critery, ArrayList<E> database){
 		ArrayList<E> list = new ArrayList<E>();
 		for(int i = 0; i < database.size(); i++){
 			Product item = (Product)database.get(i);
@@ -62,7 +62,7 @@ public class SearchManager<E> {
 		return list;
 	}
 	@SuppressWarnings("unchecked")
-	private ArrayList<E> byCollaborators(String critery, ArrayList<Product> database){
+	private ArrayList<E> byCollaborators(String critery, ArrayList<E> database){
 		ArrayList<E> list = new ArrayList<E>();
 		for(int i = 0; i < database.size(); i++){
 			Product item = (Product)database.get(i);
@@ -73,7 +73,7 @@ public class SearchManager<E> {
 		return list;
 	}
 	@SuppressWarnings("unchecked")
-	private ArrayList<E> byAlbum(String critery, ArrayList<Product> database){
+	private ArrayList<E> byAlbum(String critery, ArrayList<E> database){
 		ArrayList<E> list = new ArrayList<E>();
 		for(int i = 0; i < database.size(); i++){
 			Song item = (Song)database.get(i);
@@ -84,7 +84,7 @@ public class SearchManager<E> {
 		return list;
 	}
 	@SuppressWarnings("unchecked")
-	private ArrayList<E> byAuthor(String critery, ArrayList<Product> database){
+	private ArrayList<E> byAuthor(String critery, ArrayList<E> database){
 		ArrayList<E> list = new ArrayList<E>();
 		for(int i = 0; i < database.size(); i++){
 			Song item = (Song)database.get(i);
