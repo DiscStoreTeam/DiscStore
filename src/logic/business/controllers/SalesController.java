@@ -18,7 +18,6 @@ public class SalesController {
 	private ArrayList<Product> videosList;
 	private ArrayList<Integer> sellReports;
 	private ShoppingCar shoppingCar;
-	private SearchManager<Product> search;
 
 	public SalesController(ArrayList<Product> database)
 	{	
@@ -27,7 +26,7 @@ public class SalesController {
 		this.videosList = new ArrayList<Product>();
 		this.sellReports = new ArrayList<Integer>();
 		arrange(database);
-		search = new SearchManager<>();
+
 	}
 
 	public void addToShoppingList(Disc item){	
@@ -45,6 +44,15 @@ public class SalesController {
 	}
 	public SCManager getSCManager(){
 		return new SCManager(this, shoppingCar);
+	}
+	public SearchManager<Product> getSearchManager(){
+		return new SearchManager<Product>();
+	}
+	public ArrayList<Product> getVideoList(){
+		return videosList;
+	}
+	public ArrayList<Product> getSongsList(){
+		return songsList;
 	}
 	public void sell(){
 

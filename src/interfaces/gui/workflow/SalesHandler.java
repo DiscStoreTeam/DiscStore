@@ -1,12 +1,13 @@
 package interfaces.gui.workflow;
 
+import interfaces.gui.Sales.Sales;
 import interfaces.gui.access.Login;
-import interfaces.gui.access.Sales;
 
 import java.awt.EventQueue;
 
 import logic.business.core.Store;
 
+@SuppressWarnings("unused")
 public class SalesHandler implements WindowHandler{
 	
 	public SalesHandler(){
