@@ -34,4 +34,5 @@ public class Store {
 	}
 	
 	public AccessController getAccessController(){return accessCtrl;}
+	public SalesController getSalesController(){return salesCtrl;}
 }

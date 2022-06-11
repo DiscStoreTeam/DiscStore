@@ -6,6 +6,7 @@ import logic.business.abstractions.Disc;
 import logic.business.auxiliars.CDManager;
 import logic.business.auxiliars.DVDManager;
 import logic.business.auxiliars.SCManager;
+import logic.business.auxiliars.SearchManager;
 import logic.business.auxiliars.ShoppingCar;
 import logic.business.core.Product;
 import logic.business.core.Song;
@@ -17,6 +18,7 @@ public class SalesController {
 	private ArrayList<Product> videosList;
 	private ArrayList<Integer> sellReports;
 	private ShoppingCar shoppingCar;
+	private SearchManager<Product> search;
 
 	public SalesController(ArrayList<Product> database)
 	{	
@@ -25,6 +27,7 @@ public class SalesController {
 		this.videosList = new ArrayList<Product>();
 		this.sellReports = new ArrayList<Integer>();
 		arrange(database);
+		search = new SearchManager<>();
 	}
 
 	public void addToShoppingList(Disc item){	

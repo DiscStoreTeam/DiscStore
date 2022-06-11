@@ -3,6 +3,7 @@ package main;
 import interfaces.gui.workflow.ChangeCredentialHandler;
 import interfaces.gui.workflow.LoginHandler;
 import interfaces.gui.workflow.MainHandler;
+import interfaces.gui.workflow.SalesHandler;
 import interfaces.gui.workflow.WindowHandler;
 
 import java.awt.Window;
@@ -11,7 +12,7 @@ import java.util.HashMap;
 import logic.business.core.Store;
 
 public final class Application {
-	public enum WindowType{login, credentials, main;}
+	public enum WindowType{login, credentials, main, sales;}
 	private static HashMap<WindowType, WindowHandler> handlerMap;
 	
 	private final static Store store = new Store();
@@ -26,6 +27,7 @@ public final class Application {
 		handlerMap.put(WindowType.login, new LoginHandler());
 		handlerMap.put(WindowType.credentials, new ChangeCredentialHandler());
 		handlerMap.put(WindowType.main, new MainHandler());
+		handlerMap.put(WindowType.sales, new SalesHandler());
 	}
 	
 	public static void changeWindow(Window actualWindow,WindowType nextWindow){

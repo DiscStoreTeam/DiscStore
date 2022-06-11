@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import main.Application;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.JLabel;
@@ -18,7 +19,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 
+import logic.business.auxiliars.SearchManager;
 import logic.business.controllers.SalesController;
+import logic.business.core.Product;
 
 @SuppressWarnings("serial")
 public class Sales extends JFrame {
@@ -29,6 +32,7 @@ public class Sales extends JFrame {
 	private JTable table;
 
 	private SalesController controller;
+
 
 	/**
 	 * Launch the application.
@@ -61,17 +65,25 @@ public class Sales extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[15.00][53.00][496.00][158.00][162.00,grow]", "[][][86.00][422.00][grow]"));
-
+		contentPane.setLayout(new MigLayout("", "[15.00][53.00][496.00][158.00][162.00,grow]", "[][][36.00][86.00][377.00][grow]"));
+		setLocationRelativeTo(null);
 		JLabel lblNewLabel = new JLabel("Gesti\u00F3n de Venta");
 		contentPane.add(lblNewLabel, "cell 1 0");
+		
+		JButton btnBack = new JButton("Volver");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				goMain();
+			}
+		});
+		contentPane.add(btnBack, "cell 4 0,alignx right");
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		contentPane.add(tabbedPane, "cell 1 1 2 4,grow");
+		contentPane.add(tabbedPane, "cell 1 1 2 5,grow");
 
 		JPanel panelCD = new JPanel();
 		tabbedPane.addTab("Venta CD", null, panelCD, null);
-		panelCD.setLayout(new MigLayout("", "[7.00][109.00,grow][251.00][grow]", "[30.00][][9.00][418.00,grow][]"));
+		panelCD.setLayout(new MigLayout("", "[7.00][109.00,grow][251.00][grow]", "[30.00][][9.00][418.00,grow][19.00]"));
 
 		JLabel lblIntroduzcaSuCriterioCD = new JLabel("Introduzca su criterio de busqueda");
 		panelCD.add(lblIntroduzcaSuCriterioCD, "cell 1 0");
@@ -85,6 +97,9 @@ public class Sales extends JFrame {
 
 		tableSearch = new JTable();
 		panelCD.add(tableSearch, "cell 1 3 3 1,grow");
+		
+		JButton btnCleanListCD = new JButton("Limpiar Lista");
+		panelCD.add(btnCleanListCD, "cell 1 4");
 
 		JButton buttonAddCD = new JButton("A\u00F1adir");
 		panelCD.add(buttonAddCD, "cell 2 4 2 1,alignx right");
@@ -108,6 +123,9 @@ public class Sales extends JFrame {
 
 		tableSearch = new JTable();
 		panelDVD.add(tableSearch, "cell 1 3 3 1,grow");
+		
+		JButton btnCleanListDVD = new JButton("Limpiar Lista");
+		panelDVD.add(btnCleanListDVD, "cell 1 4");
 
 		JButton buttonAddDVD = new JButton("A\u00F1adir");
 		panelDVD.add(buttonAddDVD, "cell 2 4 2 1,alignx right");
@@ -117,12 +135,12 @@ public class Sales extends JFrame {
 
 		JPanel panelShoppingcar = new JPanel();
 		tabbedPane.addTab("Carrito", null, panelShoppingcar, null);
-
-		JLabel lblFicherosAadidos = new JLabel("Productos agregados");
-		contentPane.add(lblFicherosAadidos, "cell 3 1 2 1,alignx center");
+		
+				JLabel lblFicherosAadidos = new JLabel("Productos agregados");
+				contentPane.add(lblFicherosAadidos, "cell 3 2 2 1,alignx center");
 
 		table = new JTable();
-		contentPane.add(table, "cell 3 2 2 2,grow");
+		contentPane.add(table, "cell 3 3 2 2,grow");
 
 		JButton buttonMoveSC = new JButton("Enviar Al Carrito");
 		buttonMoveSC.addActionListener(new ActionListener() {
@@ -131,9 +149,14 @@ public class Sales extends JFrame {
 		});
 
 		JButton buttonDel = new JButton("Eliminar");
-		contentPane.add(buttonDel, "cell 3 4,aligny top");
-		contentPane.add(buttonMoveSC, "cell 4 4,alignx center,aligny top");
-
-		
+		contentPane.add(buttonDel, "cell 3 5,aligny top");
+		contentPane.add(buttonMoveSC, "cell 4 5,alignx right,aligny top");	
 	}
+	//methods
+	public void goMain(){
+		Application.changeWindow(this, Application.WindowType.main);
+	}
+	
+	
+	
 }
