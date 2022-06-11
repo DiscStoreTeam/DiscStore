@@ -50,7 +50,9 @@ public class AccessController {
 		boolean exist = false;
 		for(int i = 0; i < workersList.size() && !exist; i++){
 			if(workersList.get(i).getCredentials().getUsername().equalsIgnoreCase(username)){
-				exist = true;
+				if(!loggedWorker.getCredentials().getUsername().equalsIgnoreCase(username)){
+					exist = true;
+				}
 			}
 		}
 		return exist;
