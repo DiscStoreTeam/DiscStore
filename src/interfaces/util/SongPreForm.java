@@ -5,10 +5,13 @@ import logic.util.Validator;
 public class SongPreForm {
 	private String title;
 	private String genre;
-	private Integer duration;
+	
 	private String interpreter;
 	private String collaborators;
+	
+	private Integer duration;
 	private Integer fileSize;
+	
 	private String author;
 	private String album;
 	
