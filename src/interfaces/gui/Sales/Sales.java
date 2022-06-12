@@ -13,6 +13,7 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 import java.awt.event.ActionListener;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 
 import javax.swing.JTextField;
 import javax.swing.JTable;
+
 
 
 
@@ -70,10 +72,24 @@ public class Sales extends JFrame {
 	private JTable tableDVD;
 	private DefaultTableModel model;
 
+	//test tabla
+	
+	String columnas[]={ "Titulo","Album","Artista",""};
+	boolean columnasEditables[]={false, false, false, true};
+	Class data[]={java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class };
+	DefaultTableModel modelTest = new DefaultTableModel(){
+		public boolean isCellEditable(int row, int col){
+			return columnasEditables[col];
+		}
+		public Class getColumnClass(int index){
+			return data[index];
+		}
+	};
 
 
 
-	/**
+	
+	private JButton buttonInfo;/**
 	 * Create the frame.
 	 */
 	public Sales(SalesController controller) {		
@@ -88,10 +104,11 @@ public class Sales extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[15.00][53.00][496.00][158.00][162.00,grow]", "[][][36.00][86.00][377.00][grow]"));
+		contentPane.setLayout(new MigLayout("", "[15.00][53.00][496.00][192.00][108.00,grow][51.00,grow]", "[][][36.00][86.00][377.00][grow]"));
 		setLocationRelativeTo(null);
 		JLabel lblNewLabel = new JLabel("Gesti\u00F3n de Venta");
 		contentPane.add(lblNewLabel, "cell 1 0");
+
 
 		//tablas
 		model = (new DefaultTableModel(
@@ -119,7 +136,7 @@ public class Sales extends JFrame {
 
 		lblWarning = new JLabel("Warning");
 		contentPane.add(lblWarning, "cell 2 0,alignx right");
-		contentPane.add(btnBack, "cell 4 0,alignx right");
+		contentPane.add(btnBack, "cell 4 0 2 1,alignx right");
 		lblWarning.setVisible(false);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -148,8 +165,8 @@ public class Sales extends JFrame {
 		panelCD.add(scrollPaneCD, "cell 1 3 3 1,grow");
 
 		tableCD = new JTable();
-
-		tableCD.setModel(model);
+		modelTest.setColumnIdentifiers(columnas);
+		tableCD.setModel(modelTest);
 		tableCD.getColumnModel().getColumn(0).setPreferredWidth(160);
 		tableCD.getColumnModel().getColumn(1).setPreferredWidth(160);
 		tableCD.getColumnModel().getColumn(2).setPreferredWidth(160);
@@ -165,6 +182,11 @@ public class Sales extends JFrame {
 
 
 		btnCleanListCD = new JButton("Limpiar Lista");
+		btnCleanListCD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				cleanTableSearch();
+			}
+		});
 		panelCD.add(btnCleanListCD, "cell 1 4");
 
 		buttonAddCD = new JButton("A\u00F1adir");
@@ -207,9 +229,17 @@ public class Sales extends JFrame {
 
 		JLabel lblProducts = new JLabel("Productos agregados");
 		contentPane.add(lblProducts, "cell 3 2 2 1,alignx center");
+		
+		buttonInfo = new JButton("?");
+		buttonInfo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				 msgInfo();
+			}
+		});
+		contentPane.add(buttonInfo, "cell 5 2");
 
 		table = new JTable();
-		contentPane.add(table, "cell 3 3 2 2,grow");
+		contentPane.add(table, "cell 3 3 3 2,grow");
 
 		buttonMoveSC = new JButton("Enviar Al Carrito");
 		buttonMoveSC.addActionListener(new ActionListener() {
@@ -219,7 +249,7 @@ public class Sales extends JFrame {
 
 		buttonDel = new JButton("Eliminar");
 		contentPane.add(buttonDel, "cell 3 5,aligny top");
-		contentPane.add(buttonMoveSC, "cell 4 5,alignx right,aligny top");	
+		contentPane.add(buttonMoveSC, "cell 4 5 2 1,alignx right,aligny top");	
 	}
 	//methods
 	public void goMain(){
@@ -249,14 +279,14 @@ public class Sales extends JFrame {
 	}
 	
 	public void addToSearchList(){
+		cleanTableSearch();
 		if(!textFieldSearchCD.getText().equals("")){
 			ArrayList<Song> auxiliar = searchSongs();
-			
 			for (Song song : auxiliar) {
-				Object rowns[] = {song.getTitle(), song.getAlbum(), song.getAuthor(), ""};
-				model.addRow(rowns);
-				
+				Object rowns[] = {song.getTitle(), song.getAlbum(), song.getAuthor(), false};
+				modelTest.addRow(rowns);	
 			}
+			lblWarning.setVisible(false);
 
 		}	
 		else{
@@ -264,10 +294,21 @@ public class Sales extends JFrame {
 			lblWarning.setVisible(true);
 		}
 	}
+	public void cleanTableSearch(){
+		int centinel = modelTest.getRowCount();
+		for(int i=0; i<centinel; i++){
+			modelTest.removeRow(0);
+		}
+	}
+	
+	public void moveToVerifyList(){
+		
+	}
 
-
-
-
+	public void msgInfo(){
+		JOptionPane.showMessageDialog(null, "Esta lista contiene los elementos que conformarán vuestro CD o DVD, al enviar al carrito enviará los productos en formato de disco,\n"
+				+ "quedando registrado el mismo con un id asignado por el sistema.");
+	}
 
 
 }
