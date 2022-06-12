@@ -1,27 +1,20 @@
 package interfaces.gui.workflow;
 
-import interfaces.gui.access.Login;
-import interfaces.gui.sales.Sales;
-
+import interfaces.gui.database.NewProduct;
 import java.awt.EventQueue;
 import java.awt.Window;
 
 import logic.business.core.Store;
 
-@SuppressWarnings("unused")
-public class SalesHandler implements WindowHandler{
-	Sales frame;
-	
-	public SalesHandler(){
-		
-	}
+public class AddProductHandler implements WindowHandler {
+	NewProduct frame;
 
 	@Override
-	public Window open(final Store store, Window father) {
+	public Window open(final Store store, Window fatherWindow) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame = new Sales(store.getSalesController());
+					frame = new NewProduct(store);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -30,4 +23,5 @@ public class SalesHandler implements WindowHandler{
 		});
 		return frame;
 	}
+
 }

@@ -3,6 +3,7 @@ package logic.business.controllers;
 import java.util.ArrayList;
 
 import logic.business.core.Worker;
+import logic.util.PositionValue;
 
 public class AccessController {
 	private ArrayList<Worker> workersList;
@@ -38,7 +39,7 @@ public class AccessController {
 	
 	public boolean fistLogin()
 	{
-		return loggedWorker.firstLogin();
+		return (loggedWorker.getName().equals("admin")) ? (false) : (loggedWorker.firstLogin());
 	}
 	
 	public void updateCredentials(String username, String password)
@@ -57,4 +58,9 @@ public class AccessController {
 		}
 		return exist;
 	}
+	
+	public boolean isManager(){return loggedWorker.getPosition() == PositionValue.manager;}
+	
+	public void logout(){loggedWorker = null;}
+	public Worker getLoggedWorker(){return loggedWorker;}
 }

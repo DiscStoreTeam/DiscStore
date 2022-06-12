@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import main.Application;
+import main.Application.WindowType;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.JLabel;
@@ -35,6 +36,7 @@ public class Login extends JFrame {
 	 */
 	public Login(AccessController controller) {
 		this.controller = controller;
+		controller.logout();
 		drawWindow();
 	}
 	
@@ -124,10 +126,10 @@ public class Login extends JFrame {
 	
 	private void nextWindow(){
 		if(controller.fistLogin()){
-			Application.changeWindow(this, Application.WindowType.credentials);
+			Application.changeWindow(this, WindowType.credentials);
 		}
 		else{
-			
+			Application.changeWindow(this, WindowType.main);
 		}
 	}
 
