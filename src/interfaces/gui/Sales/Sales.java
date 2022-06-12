@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import main.Application;
@@ -28,13 +29,13 @@ import javax.swing.JTable;
 
 
 
+
 import logic.business.auxiliars.SearchManager;
 import logic.business.controllers.SalesController;
 import logic.business.core.Product;
 import logic.business.core.Song;
 import logic.business.core.Video;
 
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
 
@@ -229,23 +230,23 @@ public class Sales extends JFrame {
 
 	//de aqui pa abajoo
 
-	public ArrayList<Song> searchSongs(){
+	/*public ArrayList<Song> searchSongs(){
 		return controller.getCDManager().getSearch().search(textFieldSearchDVD.getText(), controller.getSongsList());
 	}
 	public ArrayList<Video> searchVideos(){
 		return controller.getDVDManager().getSearch().search(textFieldSearchDVD.getText(), controller.getVideoList());
-	}
+	}*/
 	
-	/*public ArrayList<Song> searchSongs(){
+	public ArrayList<Song> searchSongs(){
 		ArrayList<Song> auxiliar = new ArrayList<Song>();
 		ArrayList<Song> songslist = controller.getSongsList();
 		for (Song song : songslist) {
-			if(textFieldSearchCD.getText().equalsIgnoreCase(song.getTitle()) || textFieldSearchCD.getText().equalsIgnoreCase(song.getAlbum())){
+			if(textFieldSearchCD.getText().equalsIgnoreCase(song.getTitle()) || textFieldSearchCD.getText().equalsIgnoreCase(song.getAlbum()) || textFieldSearchCD.getText().equalsIgnoreCase(song.getAuthor())){
 				auxiliar.add(song);
 			}
 		}
 		return auxiliar;
-	}*/
+	}
 	
 	public void addToSearchList(){
 		if(!textFieldSearchCD.getText().equals("")){
@@ -254,6 +255,7 @@ public class Sales extends JFrame {
 			for (Song song : auxiliar) {
 				Object rowns[] = {song.getTitle(), song.getAlbum(), song.getAuthor(), ""};
 				model.addRow(rowns);
+				
 			}
 
 		}	
@@ -262,7 +264,6 @@ public class Sales extends JFrame {
 			lblWarning.setVisible(true);
 		}
 	}
-
 
 
 

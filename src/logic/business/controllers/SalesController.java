@@ -28,7 +28,42 @@ public class SalesController {
 		this.videosList = new ArrayList<Video>();
 		this.sellReports = new ArrayList<Integer>();
 		arrange(database);
+		
+		//String title, String genre, int duration, String interpreter, String collaborators, int fileSize, String author, String album
+		songsList.add( new Song("Lagrimas Desordenadas","Romantico",3,"Melendi","",0,"Melendi","Lagrimas Desordenadas"));
+		songsList.add(new Song("Tu jardin con enanitos", "", 0, "", "", 0, "Melendi", "Lagrimas Desordenadas"));
+		songsList.add(new Song("Cheque al portamor", "", 0, "", "", 0, "Melendi", "Lagrimas Desordenadas"));
+		songsList.add(new Song("Tu lista de enemigos", "", 0, "", "", 0, "Melendi", "Lagrimas Desordenadas"));
+		songsList.add(new Song("Aprendiz de caballero", "", 0, "", "", 0, "Melendi", "Lagrimas Desordenadas"));
+		songsList.add(new Song("Autofotos", "", 0, "", "", 0, "Melendi", "Lagrimas Desordenadas"));
+		songsList.add(new Song("Mi Primer beso", "", 0, "", "", 0, "Melendi", "Lagrimas Desordenadas"));
+		songsList.add(new Song("La tortura de Lyss", "", 0, "", "", 0, "Melendi", "Lagrimas Desordenadas"));
+		songsList.add(new Song("De pequeño fue el coco", "", 0, "", "", 0, "Melendi", "Lagrimas Desordenadas"));
+		songsList.add(new Song("Gatos Celestes", "", 0, "", "", 0, "Melendi", "Lagrimas Desordenadas"));
+		songsList.add(new Song("De repente desperte", "", 0, "", "", 0, "Melendi", "Lagrimas Desordenadas"));
 
+		songsList.add(new Song("Barbie de extraradio", "", 0, "", "", 0, "Melendi", "Volvamos a empezar"));
+		songsList.add(new Song("Llueve", "", 0, "", "", 0, "Melendi", "Volvamos a empezar"));
+		songsList.add(new Song("Somos", "", 0, "", "", 0, "Melendi", "Volvamos a empezar"));
+		songsList.add(new Song("Volvamos a empezar", "", 0, "", "", 0, "Melendi", "Volvamos a empezar"));
+
+		songsList.add(new Song("Coronel", "", 0, "", "", 0, "La Oreja de Van Gogh", "Rarezas"));
+		songsList.add(new Song("El tiempo", "", 0, "", "", 0, "La Oreja de Van Gogh", "Rarezas"));
+		songsList.add(new Song("Vestido azul", "", 0, "", "", 0, "La Oreja de Van Gogh", "Rarezas"));
+		songsList.add(new Song("Paris", "", 0, "", "", 0, "La Oreja de Van Gogh", "Rarezas"));
+
+		songsList.add(new Song("Noche", "", 0, "", "", 0, "La Oreja de Van Gogh", "Guapa"));
+		songsList.add(new Song("Muñeca de trapo", "", 0, "", "", 0, "La Oreja de Van Gogh", "Guapa"));
+		songsList.add(new Song("Dulce Locura", "", 0, "", "", 0, "La Oreja de Van Gogh", "Guapa"));
+		songsList.add(new Song("Apareces Tu", "", 0, "", "", 0, "La Oreja de Van Gogh", "Guapa"));
+
+		songsList.add(new Song("Calma Pueblo", "", 0, "", "", 0, "Calle 13", "Entren los que quieran"));
+		songsList.add(new Song("La Vuelta al mundo", "", 0, "", "", 0, "Calle 13", "Entren los que quieran"));
+		songsList.add(new Song("Latinoamerica", "", 0, "", "", 0, "Calle 13", "Entren los que quieran"));
+
+		songsList.add(new Song("El Aguante", "", 0, "", "", 0, "Calle 13", "Multi Viral"));
+		songsList.add(new Song("Ojos de color sol", "", 0, "", "", 0, "Calle 13", "Multi Viral"));
+		songsList.add(new Song("Los idiotas", "", 0, "", "", 0, "Calle 13", "Multi Viral"));
 	}
 
 	public void addToShoppingList(Disc item){	

@@ -34,4 +34,5 @@ public class Credential {
 	public String getUsername() {return username;}
 	public String getPassword() {return password;}
 	public boolean getFirstLogin(){return firstLogin;}
+	
 }
