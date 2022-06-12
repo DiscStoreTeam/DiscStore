@@ -29,7 +29,7 @@ public class SalesController {
 		this.sellReports = new ArrayList<Integer>();
 		
 		//String title, String genre, int duration, String interpreter, String collaborators, int fileSize, String author, String album
-		songsList.add( new Song("Lagrimas Desordenadas","Romantico",3,"Melendi","",0,"Melendi","Lagrimas Desordenadas", 0));
+		songsList.add( new Song("Lagrimas Desordenadas","Romantico",3,"","",0,"Melendi","Lagrimas Desordenadas", 0));
 		songsList.add(new Song("Tu jardin con enanitos", "", 0, "", "", 0, "Melendi", "Lagrimas Desordenadas", 1));
 		songsList.add(new Song("Cheque al portamor", "", 0, "", "", 0, "Melendi", "Lagrimas Desordenadas", 2));
 		songsList.add(new Song("Tu lista de enemigos", "", 0, "", "", 0, "Melendi", "Lagrimas Desordenadas", 3));
