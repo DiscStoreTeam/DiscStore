@@ -73,7 +73,6 @@ public class Sales extends JFrame {
 	private JTable tableDVD;
 	private DefaultTableModel model;
 
-<<<<<<< HEAD
 	//test tabla
 	
 	String columnas[]={ "Titulo","Album","Artista",""};
@@ -88,10 +87,8 @@ public class Sales extends JFrame {
 		}
 	};
 
-=======
 	//private SalesController controller;
 	private CDManager manager;
->>>>>>> branch 'master' of https://github.com/DiscStoreTeam/DiscStore.git
 
 
 	
