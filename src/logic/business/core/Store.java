@@ -12,6 +12,7 @@ import logic.business.controllers.SalesController;
 import logic.util.Address;
 import logic.util.PositionValue;
 import logic.util.ScholarDegreeValue;
+import logic.util.StoreProperties;
 
 public class Store {
 	private AccessController accessCtrl;
@@ -22,16 +23,12 @@ public class Store {
 	private ArrayList<Worker> workersList;
 	private ArrayList<Product> database;
 	
-	private String name;
-	private Address address;
-	private String phoneNumber;
 	private Worker manager;
 	private Date startManagerDate;
+	private StoreProperties properties;
 	
 	public Store(){
-		name = new String();
-		phoneNumber = new String();
-		address = new Address();
+		properties = new StoreProperties();
 		workersList = new ArrayList<Worker>();
 		database = new ArrayList<Product>();
 		hrCtrl = new HRController("admin", "admin", "admin", ScholarDegreeValue.superior, workersList);
@@ -45,9 +42,9 @@ public class Store {
 	}
 	
 	private void initialize(){
-		name = "El Cucurucho";
-		address.setStreet("114").setLatStreetA("La escalinata").setLatStreetB("La warapera").setNumber("12");
-		phoneNumber = "71234567";
+		properties.setName("El cucurucho");
+		properties.getAddress().setStreet("114").setNumber("12").setLatStreetA("La escalinata").setLatStreetB("La warapera");
+		properties.setPhoneNumber("79019090");
 		hrCtrl.hireWorker("Pepe", "A", "12345678901", PositionValue.manager, ScholarDegreeValue.basic);
 		hrCtrl.hireWorker("Alberto", "A", "12345678901", PositionValue.manager, ScholarDegreeValue.basic);
 		
@@ -57,16 +54,5 @@ public class Store {
 	
 	public AccessController getAccessController(){return accessCtrl;}
 	public SalesController getSalesController(){return salesCtrl;}
-	
-	public String getName(){return name;}
-	public void setName(String name){this.name = name;}
-	public Address getAddress(){return address;}
-	public void setAddress(String street, String latStreetA, String latStreetB, String number){
-		this.address.setStreet(street);
-		this.address.setLatStreetA(latStreetA);
-		this.address.setLatStreetB(latStreetB);
-		this.address.setNumber(number);
-	}
-	public String getPhoneNumber(){return phoneNumber;}
-	public void setPhoneNumber(String phoneNumber){this.phoneNumber = phoneNumber;}
+	public StoreProperties getProperties(){return properties;}
 }

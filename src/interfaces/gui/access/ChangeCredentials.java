@@ -38,20 +38,6 @@ public class ChangeCredentials extends JDialog {
 	private AccessController controller;
 
 	/**
-	 * Launch the application.
-	 */
-	/*
-	public static void main(String[] args) {
-		try {
-			ChangeCredentials dialog = new ChangeCredentials();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	*/
-	/**
 	 * Create the dialog.
 	 */
 	public ChangeCredentials(AccessController controller) {
@@ -125,6 +111,7 @@ public class ChangeCredentials extends JDialog {
 	private void okButton(){
 		if(validateFields()){
 			controller.updateCredentials(textFieldUsername.getText(), textFieldPassword.getText());
+			JOptionPane.showMessageDialog(null, "Credenciales Cambiadas Correctamente");
 			Application.changeWindow(this, WindowType.main);
 		}
 	}

@@ -77,6 +77,6 @@ public class MainWindow extends JFrame {
 	}
 	
 	private void changePropertiesButton(){
-		Application.changeWindow(this, WindowType.properties);
+		Application.openChildWindow(this, WindowType.properties);
 	}
 }

@@ -17,7 +17,7 @@ public class SalesHandler implements WindowHandler{
 	}
 
 	@Override
-	public void open(final Store store, Window father) {
+	public Window open(final Store store, Window father) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -28,11 +28,6 @@ public class SalesHandler implements WindowHandler{
 				}
 			}
 		});
-		
-	}
-	
-	@Override
-	public Window getWindow() {
 		return frame;
 	}
 }

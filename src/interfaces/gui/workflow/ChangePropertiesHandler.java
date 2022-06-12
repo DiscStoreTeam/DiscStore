@@ -15,22 +15,17 @@ public ChangePropertiesHandler(){
 	}
 	
 	@Override
-	public void open(final Store store, final Window father) {
+	public Window open(final Store store, final Window father) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					frame = new ChangeProperties(store, father);
 					frame.setVisible(true);
-					father.setEnabled(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	}
-	
-	@Override
-	public Window getWindow() {
 		return frame;
 	}
 }
