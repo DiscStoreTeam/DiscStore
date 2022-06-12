@@ -51,4 +51,7 @@ public class CDManager implements IContainerManager {
 		//Cuando se haga el sell significa q el cd pasa al carrito, por tanto le pasas la referencia al array list del 
 		//carrito y el cd de aki le haces un new por si el usuario va a buscar otra cosa
 	}
+	public ArrayList<Song>getDatabase(){
+		return this.database;
+	}
 }

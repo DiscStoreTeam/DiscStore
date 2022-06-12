@@ -76,7 +76,7 @@ public class SalesController {
 		return new CDManager(this, songsList);
 	}
 	public DVDManager getDVDManager(){
-		return new DVDManager(this);
+		return new DVDManager(this, videosList);
 	}
 	public SCManager getSCManager(){
 		return new SCManager(this, shoppingCar);
