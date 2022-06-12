@@ -91,7 +91,7 @@ public class Sales extends JFrame {
 		setLocationRelativeTo(null);
 		JLabel lblNewLabel = new JLabel("Gesti\u00F3n de Venta");
 		contentPane.add(lblNewLabel, "cell 1 0");
-		
+
 		//tablas
 		model = (new DefaultTableModel(
 				new Object[][] {
@@ -138,7 +138,7 @@ public class Sales extends JFrame {
 		btnSearchCD = new JButton("Buscar");
 		btnSearchCD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-//				addToSearchList();
+				addToSearchList();
 			}
 		});
 		panelCD.add(btnSearchCD, "cell 3 1");
@@ -147,7 +147,7 @@ public class Sales extends JFrame {
 		panelCD.add(scrollPaneCD, "cell 1 3 3 1,grow");
 
 		tableCD = new JTable();
-		
+
 		tableCD.setModel(model);
 		tableCD.getColumnModel().getColumn(0).setPreferredWidth(160);
 		tableCD.getColumnModel().getColumn(1).setPreferredWidth(160);
@@ -225,32 +225,46 @@ public class Sales extends JFrame {
 		Application.changeWindow(this, Application.WindowType.main);
 	}
 
-	
-	
+
+
 	//de aqui pa abajoo
-	
-/*	public ArrayList<Song> searchSongs(){
-		return controller.getSearchManager().search(textFieldSearchDVD.getText(), controller.getSongsList());
+
+	public ArrayList<Song> searchSongs(){
+		return controller.getCDManager().getSearch().search(textFieldSearchDVD.getText(), controller.getSongsList());
 	}
 	public ArrayList<Video> searchVideos(){
-		return controller.getSearchManager().search(textFieldSearchDVD.getText(), controller.getVideoList());
+		return controller.getDVDManager().getSearch().search(textFieldSearchDVD.getText(), controller.getVideoList());
 	}
-
+	
+	/*public ArrayList<Song> searchSongs(){
+		ArrayList<Song> auxiliar = new ArrayList<Song>();
+		ArrayList<Song> songslist = controller.getSongsList();
+		for (Song song : songslist) {
+			if(textFieldSearchCD.getText().equalsIgnoreCase(song.getTitle()) || textFieldSearchCD.getText().equalsIgnoreCase(song.getAlbum())){
+				auxiliar.add(song);
+			}
+		}
+		return auxiliar;
+	}*/
+	
 	public void addToSearchList(){
 		if(!textFieldSearchCD.getText().equals("")){
 			ArrayList<Song> auxiliar = searchSongs();
-			for (Product song : auxiliar) {
-
+			
+			for (Song song : auxiliar) {
+				Object rowns[] = {song.getTitle(), song.getAlbum(), song.getAuthor(), ""};
+				model.addRow(rowns);
 			}
 
 		}	
-	else{
-		lblWarning.setText("Debe introducir su criterio de búsqueda en la caja de texto");
-		lblWarning.setVisible(true);
+		else{
+			lblWarning.setText("Debe introducir su criterio de búsqueda en la caja de texto");
+			lblWarning.setVisible(true);
+		}
 	}
-}
 
-*/
+
+
 
 
 

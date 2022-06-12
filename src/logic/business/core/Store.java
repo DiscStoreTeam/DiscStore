@@ -50,7 +50,10 @@ public class Store {
 		phoneNumber = "71234567";
 		hrCtrl.hireWorker("Pepe", "A", "12345678901", PositionValue.manager, ScholarDegreeValue.basic);
 		hrCtrl.hireWorker("Alberto", "A", "12345678901", PositionValue.manager, ScholarDegreeValue.basic);
+		
+
 	}
+	
 	
 	public AccessController getAccessController(){return accessCtrl;}
 	public SalesController getSalesController(){return salesCtrl;}

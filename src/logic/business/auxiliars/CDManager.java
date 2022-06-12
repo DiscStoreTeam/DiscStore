@@ -4,15 +4,22 @@ import logic.business.abstractions.IContainerManager;
 import logic.business.abstractions.IProduct;
 import logic.business.controllers.SalesController;
 import logic.business.core.CD;
+import logic.business.core.Song;
 
 public class CDManager implements IContainerManager {
 	private SalesController controller;
+	private SearchManager<Song> searcher ; 
 	private CD cd;
 
 	public CDManager(SalesController controller)
 	{
 		this.controller = controller;
 		cd = new CD();
+		searcher = new SearchManager<Song>();
+	}
+	
+	public SearchManager<Song> getSearch(){
+		return this.searcher;
 	}
 
 	public CD getCD(){
