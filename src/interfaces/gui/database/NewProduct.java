@@ -1,5 +1,7 @@
 package interfaces.gui.database;
 
+import interfaces.util.SongPreForm;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
@@ -11,6 +13,7 @@ import javax.swing.border.EmptyBorder;
 import logic.business.controllers.DBController;
 import logic.business.controllers.HRController;
 import logic.business.core.Store;
+import logic.util.Validator;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.border.TitledBorder;
@@ -25,6 +28,9 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import javax.swing.SpinnerNumberModel;
+import javax.swing.DefaultComboBoxModel;
+
 public class NewProduct extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
@@ -38,7 +44,7 @@ public class NewProduct extends JDialog {
 	private JSpinner spinnerMinutes;
 	private JSpinner spinnerSeconds;
 	private JSpinner spinnerSize;
-	private JComboBox comboBoxResolution;
+	private JComboBox<String> comboBoxResolution;
 	private JPanel panelType;
 	private JPanel panelCaract;
 	private JPanel panelArtist;
@@ -96,30 +102,23 @@ public class NewProduct extends JDialog {
 		JLabel lblTtulo = new JLabel("T\u00EDtulo : ");
 		panelCaract.add(lblTtulo, "cell 0 0,alignx trailing");
 
-
 		textFieldTitle = new JTextField();
 		panelCaract.add(textFieldTitle, "cell 1 0,growx");
 		textFieldTitle.setColumns(10);
 
-
 		JLabel lblGnero = new JLabel("G\u00E9nero : ");
 		panelCaract.add(lblGnero, "cell 0 1,alignx trailing");
-
 
 		textFieldGender = new JTextField();
 		panelCaract.add(textFieldGender, "cell 1 1,growx");
 		textFieldGender.setColumns(10);
 
-
 		JLabel lbllbum = new JLabel("\u00C1lbum : ");
 		panelCaract.add(lbllbum, "cell 0 2,alignx trailing");
-
 
 		textFieldAlbum = new JTextField();
 		panelCaract.add(textFieldAlbum, "cell 1 2,growx");
 		textFieldAlbum.setColumns(10);
-
-
 
 		panelArtist = new JPanel();
 		panelArtist.setBorder(new TitledBorder(null, "Artistas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -129,30 +128,23 @@ public class NewProduct extends JDialog {
 		JLabel lblIntrprete = new JLabel("Int\u00E9rprete : ");
 		panelArtist.add(lblIntrprete, "cell 0 0,alignx trailing");
 
-
 		textFieldInterpreter = new JTextField();
 		panelArtist.add(textFieldInterpreter, "cell 1 0,growx");
 		textFieldInterpreter.setColumns(10);
 
-
 		JLabel lblColaboradores = new JLabel("Colaboradores : ");
 		panelArtist.add(lblColaboradores, "cell 0 1,alignx trailing");
-
 
 		textFieldCollaborators = new JTextField();
 		panelArtist.add(textFieldCollaborators, "cell 1 1,growx");
 		textFieldCollaborators.setColumns(10);
 
-
 		JLabel lblAutor = new JLabel("Autor : ");
 		panelArtist.add(lblAutor, "cell 0 2,alignx trailing");
-
 
 		textFieldAuthor = new JTextField();
 		panelArtist.add(textFieldAuthor, "cell 1 2,growx");
 		textFieldAuthor.setColumns(10);
-
-
 
 		panelTec = new JPanel();
 		panelTec.setBorder(new TitledBorder(null, "Caracter\u00EDsticas T\u00E9cnicas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -164,12 +156,14 @@ public class NewProduct extends JDialog {
 
 
 		spinnerMinutes = new JSpinner();
+		spinnerMinutes.setModel(new SpinnerNumberModel(1, 1, 15, 1));
 		panelTec.add(spinnerMinutes, "flowx,cell 1 0,growx");
 		
 		JLabel label = new JLabel(" : ");
 		panelTec.add(label, "cell 1 0,alignx center");
 		
 		spinnerSeconds = new JSpinner();
+		spinnerSeconds.setModel(new SpinnerNumberModel(0, 0, 59, 1));
 		panelTec.add(spinnerSeconds, "cell 1 0,growx");
 
 		JLabel lblTamaoDelArchivo = new JLabel("Tama\u00F1o del archivo : ");
@@ -177,6 +171,7 @@ public class NewProduct extends JDialog {
 
 
 		spinnerSize = new JSpinner();
+		spinnerSize.setModel(new SpinnerNumberModel(new Float(0.1), new Float(0.1), null, new Float(0.5)));
 		panelTec.add(spinnerSize, "cell 1 1,growx");
 
 
@@ -184,10 +179,10 @@ public class NewProduct extends JDialog {
 		panelTec.add(lblResolucin, "cell 0 2,alignx trailing");
 
 
-		comboBoxResolution = new JComboBox();
+		comboBoxResolution = new JComboBox<String>();
+		comboBoxResolution.setModel(new DefaultComboBoxModel<String>(new String[] {"800x600", "1280x720", "1920x1080", "2048x1080", "4096x2160"}));
 		panelTec.add(comboBoxResolution, "cell 1 2,growx");
 		
-
 		lblError = new JLabel("Error!");
 		lblError.setForeground(Color.RED);
 		contentPanel.add(lblError, "cell 0 4,alignx center,aligny center");
@@ -198,30 +193,105 @@ public class NewProduct extends JDialog {
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
 		JButton okButton = new JButton("A\u00F1adir");
+		okButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				addButton();
+			}
+		});
 		okButton.setActionCommand("Ok");
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
 
 
 		JButton cancelButton = new JButton("Cancel");
+		cancelButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				cancelButton();
+			}
+		});
 		cancelButton.setActionCommand("Cancel");
 		buttonPane.add(cancelButton);
 		
 		setLocationRelativeTo(null);
 		lblError.setVisible(false);
+		radioSong.setEnabled(true);
+		updateTypes();
 	}
 	
 	private void updateTypes(){
 		if(radioSong.isSelected()){
-			textFieldAlbum.setEnabled(false);
-			textFieldAuthor.setEnabled(false);
-			comboBoxResolution.setEnabled(true);
-		}
-		else if(radioVideo.isSelected()){
 			textFieldAlbum.setEnabled(true);
 			textFieldAuthor.setEnabled(true);
 			comboBoxResolution.setEnabled(false);
 		}
+		else if(radioVideo.isSelected()){
+			textFieldAlbum.setEnabled(false);
+			textFieldAuthor.setEnabled(false);
+			comboBoxResolution.setEnabled(true);
+		}
+	}
+	
+	private void addButton(){
+		if(validateFields()){
+			if(radioSong.isEnabled()){
+				SongPreForm form = new SongPreForm();
+				form.setTitle(textFieldTitle.getText());
+				form.setGenre(textFieldGender.getText());
+				form.setAlbum(textFieldAlbum.getText());
+				form.setAuthor(textFieldAuthor.getText());
+				form.setInterpreter(textFieldInterpreter.getText());
+				form.setCollaborators(textFieldCollaborators.getText());
+				form.setDuration((Integer)spinnerMinutes.getValue() * 60 + (Integer)spinnerSeconds.getValue());
+				form.setFileSize((Integer)spinnerSize.getValue());
+				System.out.println(form.getDuration());
+				System.out.println(form.getFileSize());
+			}
+		}
+	}
+	
+	private void cancelButton(){
+		dispose();
+	}
+	
+	private boolean validateFields(){
+		boolean valid = true;
+		if(!Validator.emptyString(textFieldTitle.getText())){
+			if(!Validator.emptyString(textFieldGender.getText())){
+				if(!Validator.emptyString(textFieldInterpreter.getText())){
+					if(!Validator.emptyString(textFieldCollaborators.getText())){
+						lblError.setVisible(false);
+					}
+					else{
+						valid = false;
+						lblError.setVisible(true);
+						lblError.setText("Existen campos vacíos");
+					}
+				}
+				else{
+					valid = false;
+					lblError.setVisible(true);
+					lblError.setText("Existen campos vacíos");
+				}
+			}
+			else{
+				valid = false;
+				lblError.setVisible(true);
+				lblError.setText("Existen campos vacíos");
+			}
+		}
+		else{
+			valid = false;
+			lblError.setVisible(true);
+			lblError.setText("Existen campos vacíos");
+		}
+		if(valid){
+			if(!Validator.alphabeticalString(textFieldGender.getText())){
+				valid = false;
+				lblError.setVisible(true);
+				lblError.setText("El género introducido no es válido");
+			}
+		}
+		return valid;
 	}
 
 }

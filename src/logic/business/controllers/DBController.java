@@ -24,11 +24,23 @@ public class DBController {
 	{
 		this.songDatabase = songDatabase;
 		this.videoDatabase = videoDatabase;
+		registeredResolutions = new ArrayList<Resolution>();
+		registeredResolutions.add(new Resolution(800, 600));
+		registeredResolutions.add(new Resolution(1280, 720));
+		registeredResolutions.add(new Resolution(1920, 1080));
+		registeredResolutions.add(new Resolution(2048, 1080));
+		registeredResolutions.add(new Resolution(4096, 2160));
 	}
 	public DBController()
 	{
 		this.songDatabase = new ArrayList<Song>();
 		this.videoDatabase = new ArrayList<Video>();
+		registeredResolutions = new ArrayList<Resolution>();
+		registeredResolutions.add(new Resolution(800, 600));
+		registeredResolutions.add(new Resolution(1280, 720));
+		registeredResolutions.add(new Resolution(1920, 1080));
+		registeredResolutions.add(new Resolution(2048, 1080));
+		registeredResolutions.add(new Resolution(4096, 2160));
 	}
 	
 	//Methods
