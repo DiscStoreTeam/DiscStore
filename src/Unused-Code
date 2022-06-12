@@ -72,4 +72,15 @@ public static String toString(PositionValue value){
 		}
 		return position;
 	}
+	-----------------------------------------------------------------------------------------------
 	
+		public ArrayList<Song> searchSongs(){
+		ArrayList<Song> auxiliar = new ArrayList<Song>();
+		ArrayList<Song> songslist = controller.getSongsList();
+		for (Song song : songslist) {
+			if(textFieldSearchCD.getText().equalsIgnoreCase(song.getTitle()) || textFieldSearchCD.getText().equalsIgnoreCase(song.getAlbum()) || textFieldSearchCD.getText().equalsIgnoreCase(song.getAuthor())){
+				auxiliar.add(song);
+			}
+		}
+		return auxiliar;
+	}

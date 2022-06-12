@@ -23,16 +23,6 @@ import java.util.ArrayList;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 
-
-
-
-
-
-
-
-
-
-
 import logic.business.auxiliars.CDManager;
 import logic.business.auxiliars.SearchManager;
 import logic.business.controllers.SalesController;
@@ -63,7 +53,6 @@ public class Sales extends JFrame {
 	private JButton btnCleanListDVD;
 	private JButton buttonMoveSC;
 	private JButton buttonDel;
-	private JTable table;
 	private JLabel lblWarning;
 	private	JButton btnBack;
 
@@ -72,8 +61,16 @@ public class Sales extends JFrame {
 	private JTable tableCD;	
 	private JTable tableDVD;
 
+	private JButton buttonInfo;
+	private JScrollPane scrollPaneCont;
+	private JTable tableCont;
+	private ArrayList<Song>auxSong;
+	private ArrayList<Video>auxVideo;
+	private ArrayList<Song>auxSCSong;
+	private ArrayList<Video>auxSCVideo;
+
 	//test tabla
-	
+
 	String columnas[]={ "Titulo","Album","Artista","ID",""};
 	boolean columnasEditables[]={false, false, false, false, true};
 	Class data[]={java.lang.Object.class,java.lang.Object.class , java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class };
@@ -85,20 +82,32 @@ public class Sales extends JFrame {
 			return data[index];
 		}
 	};
+	DefaultTableModel modelCont = new DefaultTableModel(){
+		public boolean isCellEditable(int row, int col){
+			return columnasEditables[col];
+		}
+		public Class getColumnClass(int index){
+			return data[index];
+		}
+	};
+
 
 	private SalesController controller;
 	private CDManager manager;
 
 
-	
-	private JButton buttonInfo;/**
+
+	/**
 	 * Create the frame.
 	 */
 	public Sales(SalesController controller) {		
 		drawWindow();
 		this.manager = controller.getCDManager();
 		this.controller = controller;
-
+		auxSong = new ArrayList<Song>();
+		auxVideo = new ArrayList<Video>();
+		auxSCSong = new ArrayList<Song>();
+		auxSCVideo = new ArrayList<Video>();
 	}
 	private void drawWindow(){
 		setTitle("Ventana De Venta");
@@ -107,12 +116,10 @@ public class Sales extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[15.00][53.00][496.00][192.00][108.00,grow][51.00,grow]", "[][][36.00][86.00][377.00][grow]"));
+		contentPane.setLayout(new MigLayout("", "[15.00][53.00][496.00][192.00,grow][108.00,grow][51.00,grow]", "[][][36.00][86.00,grow][377.00][grow]"));
 		setLocationRelativeTo(null);
 		JLabel lblNewLabel = new JLabel("Gesti\u00F3n de Venta");
 		contentPane.add(lblNewLabel, "cell 1 0");
-
-
 
 		btnBack = new JButton("Volver");
 		btnBack.addActionListener(new ActionListener() {
@@ -143,7 +150,7 @@ public class Sales extends JFrame {
 		btnSearchCD = new JButton("Buscar");
 		btnSearchCD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addToSearchList();
+				addToSearchListSong(model);
 			}
 		});
 		panelCD.add(btnSearchCD, "cell 3 1");
@@ -173,12 +180,17 @@ public class Sales extends JFrame {
 		btnCleanListCD = new JButton("Limpiar Lista");
 		btnCleanListCD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				cleanTableSearch();
+				cleanTableSearch(model);
 			}
 		});
 		panelCD.add(btnCleanListCD, "cell 1 4");
 
 		buttonAddCD = new JButton("A\u00F1adir");
+		buttonAddCD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				moveToVerifyListSong(tableCD, modelCont, 12, auxSong);
+			}
+		});
 		panelCD.add(buttonAddCD, "cell 2 4 2 1,alignx right");
 
 
@@ -216,19 +228,16 @@ public class Sales extends JFrame {
 		panelShoppingcar = new JPanel();
 		tabbedPane.addTab("Carrito", null, panelShoppingcar, null);
 
-		JLabel lblProducts = new JLabel("Productos agregados");
+		JLabel lblProducts = new JLabel("Productos agregados a contenedor");
 		contentPane.add(lblProducts, "cell 3 2 2 1,alignx center");
-		
+
 		buttonInfo = new JButton("?");
 		buttonInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				 msgInfo();
+				msgInfo();
 			}
 		});
 		contentPane.add(buttonInfo, "cell 5 2");
-
-		table = new JTable();
-		contentPane.add(table, "cell 3 3 3 2,grow");
 
 		buttonMoveSC = new JButton("Enviar Al Carrito");
 		buttonMoveSC.addActionListener(new ActionListener() {
@@ -236,7 +245,31 @@ public class Sales extends JFrame {
 			}
 		});
 
+		scrollPaneCont = new JScrollPane();
+		contentPane.add(scrollPaneCont, "cell 3 3 3 2,grow");
+
+		tableCont = new JTable();
+		scrollPaneCont.setViewportView(tableCont);
+		modelCont.setColumnIdentifiers(columnas);
+		tableCont.setModel(modelCont);
+		tableCont.getColumnModel().getColumn(0).setPreferredWidth(160);
+		tableCont.getColumnModel().getColumn(1).setPreferredWidth(160);
+		tableCont.getColumnModel().getColumn(2).setPreferredWidth(160);
+		tableCont.getColumnModel().getColumn(3).setPreferredWidth(60);
+		tableCont.getColumnModel().getColumn(4).setPreferredWidth(35);
+		tableCont.getColumnModel().getColumn(0).setResizable(false);
+		tableCont.getColumnModel().getColumn(1).setResizable(false);
+		tableCont.getColumnModel().getColumn(2).setResizable(false);
+		tableCont.getColumnModel().getColumn(3).setResizable(false);
+		tableCont.getColumnModel().getColumn(3).setResizable(false);
+
+
 		buttonDel = new JButton("Eliminar");
+		buttonDel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				delVerifySong(tableCont, modelCont);
+			}
+		});
 		contentPane.add(buttonDel, "cell 3 5,aligny top");
 		contentPane.add(buttonMoveSC, "cell 4 5 2 1,alignx right,aligny top");	
 	}
@@ -245,60 +278,162 @@ public class Sales extends JFrame {
 		Application.changeWindow(this, Application.WindowType.main);
 	}
 
-
-
-	//de aqui pa abajoo
-
-	/*public ArrayList<Song> searchSongs(){
-		return manager.search(textFieldSearchCD.getText());
+	public void msgInfo(){
+		JOptionPane.showMessageDialog(null, "Esta lista contiene los elementos que conformarán vuestro CD o DVD, al enviar al carrito enviará los productos en formato de disco,\n"
+				+ "quedando registrado el mismo con un id asignado por el sistema.");
 	}
-	/*
-	public ArrayList<Video> searchVideos(){
-		return controller.getDVDManager().getSearch().search(textFieldSearchDVD.getText(), controller.getVideoList());
-	}*/
 	
-	
-	public ArrayList<Song> searchSongs(){
-		ArrayList<Song> auxiliar = new ArrayList<Song>();
-		ArrayList<Song> songslist = controller.getSongsList();
-		for (Song song : songslist) {
-			if(textFieldSearchCD.getText().equalsIgnoreCase(song.getTitle()) || textFieldSearchCD.getText().equalsIgnoreCase(song.getAlbum()) || textFieldSearchCD.getText().equalsIgnoreCase(song.getAuthor())){
-				auxiliar.add(song);
-			}
+	public void cleanTableSearch(DefaultTableModel modelOrigen){
+		int centinel = modelOrigen.getRowCount();
+		for(int i=0; i<centinel; i++){
+			modelOrigen.removeRow(0);
 		}
-		return auxiliar;
 	}
-	
-	public void addToSearchList(){
-		cleanTableSearch();
+
+	//Metodos para canciones
+	public ArrayList<Song> searchSongs(){
+		return manager.search(textFieldSearchCD.getText());
+	}	
+
+	public void addToSearchListSong(DefaultTableModel modelOrigen){
+		auxSong.clear();
+		cleanTableSearch(modelOrigen);
 		if(!textFieldSearchCD.getText().equals("")){
 			ArrayList<Song> auxiliar = searchSongs();
 			for (Song song : auxiliar) {
 				Object rowns[] = {song.getTitle(), song.getAlbum(), song.getAuthor(),song.getID(), false};
-				model.addRow(rowns);	
+				modelOrigen.addRow(rowns);		
 			}
 			lblWarning.setVisible(false);
+			auxSong=searchSongs();
 		}	
 		else{
 			lblWarning.setText("Debe introducir su criterio de búsqueda en la caja de texto");
 			lblWarning.setVisible(true);
 		}
 	}
-	public void cleanTableSearch(){
-		int centinel = model.getRowCount();
-		for(int i=0; i<centinel; i++){
-			model.removeRow(0);
+
+
+	public void moveToVerifyListSong(JTable tableOrigen, DefaultTableModel modelSC, int max, ArrayList<Song> auxSearch){
+		ArrayList<Song>auxiliar = searchSelectedSong(tableOrigen, auxSearch);
+		if(!(auxiliar.size() > (max-modelSC.getRowCount()))){
+			for (Song song : auxiliar) {
+				Object rowns[] = {song.getTitle(), song.getAlbum(), song.getAuthor(),song.getID(), false};
+				modelSC.addRow(rowns);	
+				auxSCSong.add(song);
+			}
+		}
+		else{
+			JOptionPane.showMessageDialog(null, "El limite maximo de productos a agregar es " + max);
+		}
+	}
+
+	public ArrayList<Song> searchSelectedSong(JTable table, ArrayList<Song> auxSong){
+		ArrayList<Song>search = new ArrayList<Song>();
+		boolean confirm = false;
+		for(int i = 0; i<table.getRowCount(); i++){
+			if((boolean) table.getValueAt(i, 4)){
+				int id = (int) table.getValueAt(i, 3);				
+				for(int j = 0; j<auxSong.size();j++){
+					if(auxSong.get(j).getID() == id){
+						search.add(auxSong.get(j));
+						confirm = true;
+					}
+				}
+			}
+		}
+		if(!confirm){	
+			JOptionPane.showMessageDialog(null, "Debe seleccionar al menos un elemento para agregar");	
+		}
+		return search;
+	}
+	
+	public void delVerifySong(JTable tableCont, DefaultTableModel modelCont){
+		boolean confirm = false;
+		for(int i = 0; i<tableCont.getRowCount(); i++){
+			if((boolean) tableCont.getValueAt(i, 4)){
+				modelCont.removeRow(i);
+				auxSCSong.remove(i);
+				confirm = true;
+			}
+		}
+		if(!confirm){	
+			JOptionPane.showMessageDialog(null, "Debe seleccionar al menos un elemento para eliminar");	
 		}
 	}
 	
-	public void moveToVerifyList(){
-		
+	//Metodos para Videos
+	public ArrayList<Video> searchVideos(){
+		return controller.getDVDManager().getSearch().search(textFieldSearchDVD.getText(), controller.getVideoList());
 	}
 
-	public void msgInfo(){
-		JOptionPane.showMessageDialog(null, "Esta lista contiene los elementos que conformarán vuestro CD o DVD, al enviar al carrito enviará los productos en formato de disco,\n"
-				+ "quedando registrado el mismo con un id asignado por el sistema.");
+	public void addToSearchListVideo(DefaultTableModel modelOrigen){
+		auxSong.clear();
+		cleanTableSearch(modelOrigen);
+		if(!textFieldSearchCD.getText().equals("")){
+			ArrayList<Video> auxiliar = searchVideos();
+			for (Video video : auxiliar) {
+				Object rowns[] = {video.getTitle(), video.getInterpreter(),video.getID(), false};
+				modelOrigen.addRow(rowns);		
+			}
+			lblWarning.setVisible(false);
+			auxSong=searchSongs();
+		}	
+		else{
+			lblWarning.setText("Debe introducir su criterio de búsqueda en la caja de texto");
+			lblWarning.setVisible(true);
+		}
 	}
+
+
+	public void moveToVerifyListVideo(JTable tableOrigen, DefaultTableModel modelSC, int max, ArrayList<Video> auxSearch){
+		ArrayList<Video>auxiliar = searchSelectedVideo(tableOrigen, auxSearch);
+		if(!(auxiliar.size() > (max-modelSC.getRowCount()))){
+			for (Video video : auxiliar) {
+				Object rowns[] = {video.getTitle(), video.getInterpreter(),video.getID(), false};
+				modelSC.addRow(rowns);	
+				auxSCVideo.add(video);
+			}
+		}
+		else{
+			JOptionPane.showMessageDialog(null, "El limite maximo de productos a agregar es " + max);
+		}
+	}
+
+	public ArrayList<Video> searchSelectedVideo(JTable table, ArrayList<Video> auxSearch){
+		ArrayList<Video>search = new ArrayList<Video>();
+		boolean confirm = false;
+		for(int i = 0; i<table.getRowCount(); i++){
+			if((boolean) table.getValueAt(i, 4)){
+				int id = (int) table.getValueAt(i, 3);				
+				for(int j = 0; j<auxSearch.size();j++){
+					if(auxSearch.get(j).getID() == id){
+						search.add(auxSearch.get(j));
+						confirm = true;
+					}
+				}
+			}
+		}
+		if(!confirm){	
+			JOptionPane.showMessageDialog(null, "Debe seleccionar al menos un elemento para agregar");	
+		}
+		return search;
+	}
+
+	public void delVerifyVideo(JTable tableCont, DefaultTableModel modelCont){
+		boolean confirm = false;
+		for(int i = 0; i<tableCont.getRowCount(); i++){
+			if((boolean) tableCont.getValueAt(i, 4)){
+				modelCont.removeRow(i);
+				auxSCVideo.remove(i);
+				confirm = true;
+			}
+		}
+		if(!confirm){	
+			JOptionPane.showMessageDialog(null, "Debe seleccionar al menos un elemento para eliminar");	
+		}
+	}
+
 
 
 }
