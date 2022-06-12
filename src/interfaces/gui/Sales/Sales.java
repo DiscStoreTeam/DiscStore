@@ -30,6 +30,8 @@ import javax.swing.JTable;
 
 
 
+
+import logic.business.auxiliars.CDManager;
 import logic.business.auxiliars.SearchManager;
 import logic.business.controllers.SalesController;
 import logic.business.core.Product;
@@ -63,14 +65,14 @@ public class Sales extends JFrame {
 	private JLabel lblWarning;
 	private	JButton btnBack;
 
-	private SalesController controller;
 	private JScrollPane scrollPaneDVD;
 	private JScrollPane scrollPaneCD;
 	private JTable tableCD;	
 	private JTable tableDVD;
 	private DefaultTableModel model;
 
-
+	//private SalesController controller;
+	private CDManager manager;
 
 
 	/**
@@ -78,7 +80,7 @@ public class Sales extends JFrame {
 	 */
 	public Sales(SalesController controller) {		
 		drawWindow();
-		this.controller = controller;
+		this.manager = controller.getCDManager();
 
 	}
 	private void drawWindow(){
@@ -230,13 +232,15 @@ public class Sales extends JFrame {
 
 	//de aqui pa abajoo
 
-	/*public ArrayList<Song> searchSongs(){
-		return controller.getCDManager().getSearch().search(textFieldSearchDVD.getText(), controller.getSongsList());
+	public ArrayList<Song> searchSongs(){
+		return manager.search(textFieldSearchCD.getText());
 	}
+	/*
 	public ArrayList<Video> searchVideos(){
 		return controller.getDVDManager().getSearch().search(textFieldSearchDVD.getText(), controller.getVideoList());
 	}*/
 	
+	/*
 	public ArrayList<Song> searchSongs(){
 		ArrayList<Song> auxiliar = new ArrayList<Song>();
 		ArrayList<Song> songslist = controller.getSongsList();
@@ -246,7 +250,7 @@ public class Sales extends JFrame {
 			}
 		}
 		return auxiliar;
-	}
+	}*/
 	
 	public void addToSearchList(){
 		if(!textFieldSearchCD.getText().equals("")){

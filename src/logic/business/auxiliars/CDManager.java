@@ -1,5 +1,7 @@
 package logic.business.auxiliars;
 
+import java.util.ArrayList;
+
 import logic.business.abstractions.IContainerManager;
 import logic.business.abstractions.IProduct;
 import logic.business.controllers.SalesController;
@@ -8,18 +10,16 @@ import logic.business.core.Song;
 
 public class CDManager implements IContainerManager {
 	private SalesController controller;
-	private SearchManager<Song> searcher ; 
+	private SearchManager<Song> searcher; 
 	private CD cd;
+	private ArrayList<Song> database;
 
-	public CDManager(SalesController controller)
+	public CDManager(SalesController controller, ArrayList<Song> database)
 	{
 		this.controller = controller;
 		cd = new CD();
 		searcher = new SearchManager<Song>();
-	}
-	
-	public SearchManager<Song> getSearch(){
-		return this.searcher;
+		this.database = database;
 	}
 
 	public CD getCD(){
@@ -42,10 +42,10 @@ public class CDManager implements IContainerManager {
 	public double calculateCost() {
 		return cd.calculateCost();
 	}
-	/*@Override
-	public ArrayList<IProduct> search(String critery) {
-		return null;
-	}*/
+	
+	public ArrayList<Song> search(String critery) {
+		return searcher.search(critery, database);
+	}
 	@Override
 	public void sell() {
 		//Cuando se haga el sell significa q el cd pasa al carrito, por tanto le pasas la referencia al array list del 

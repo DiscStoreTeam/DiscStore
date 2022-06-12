@@ -5,8 +5,8 @@ public class Song extends Product {
 	private String album;
 
 	//Builders
-	public Song(String title, String genre, int duration, String interpreter, String collaborators, int fileSize, String author, String album) {
-		super(title, genre, duration, interpreter, collaborators, fileSize);
+	public Song(String title, String genre, int duration, String interpreter, String collaborators, int fileSize, String author, String album, int id) {
+		super(title, genre, duration, interpreter, collaborators, fileSize, id);
 		this.author = new String(author);
 		this.album = new String(album);
 	}
@@ -15,8 +15,8 @@ public class Song extends Product {
 		this.author = new String(song.getAuthor());
 		this.album = new String(song.getAlbum());
 	}
-	public Song(){
-		super();
+	public Song(int id){
+		super(id);
 		author = new String();
 		album = new String();
 	}

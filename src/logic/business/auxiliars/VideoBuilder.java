@@ -7,8 +7,8 @@ public class VideoBuilder {
 private Video video;
 	
 	//Builders
-	public VideoBuilder(){
-		video = new Video();
+	public VideoBuilder(int id){
+		video = new Video(id);
 	}
 	
 	//Methods

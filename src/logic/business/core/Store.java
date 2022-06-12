@@ -21,7 +21,8 @@ public class Store {
 	private SalesController salesCtrl;
 	
 	private ArrayList<Worker> workersList;
-	private ArrayList<Product> database;
+	private ArrayList<Song> songDatabase;
+	private ArrayList<Video> videoDatabase;
 	
 	private Worker manager;
 	private Date startManagerDate;
@@ -30,14 +31,15 @@ public class Store {
 	public Store(){
 		properties = new StoreProperties();
 		workersList = new ArrayList<Worker>();
-		database = new ArrayList<Product>();
+		songDatabase = new ArrayList<Song>();
+		videoDatabase = new ArrayList<Video>();
 		hrCtrl = new HRController("admin", "admin", "admin", ScholarDegreeValue.superior, workersList);
 		manager = workersList.get(0);
 		startManagerDate = new Date();
 		startManagerDate = Calendar.getInstance().getTime();
 		accessCtrl = new AccessController(workersList);
-		databaseCtrl = new DBController(database);
-		salesCtrl = new SalesController(database);
+		databaseCtrl = new DBController(songDatabase, videoDatabase);
+		salesCtrl = new SalesController(songDatabase, videoDatabase);
 		initialize();
 	}
 	
