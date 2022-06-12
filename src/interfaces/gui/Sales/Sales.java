@@ -1,4 +1,4 @@
-package interfaces.gui.Sales;
+package interfaces.gui.sales;
 
 
 import javax.swing.JFrame;

@@ -141,6 +141,7 @@ public class ChangeCredentials extends JDialog {
 			else{
 				if(!textFieldPassword.getText().equals(textFieldPasswordConfirm.getText())){
 					lblError.setText("Las contraseñas no coinciden, revise los datos introducidos");
+					valid = false;
 					lblError.setVisible(true);
 				}
 				else{

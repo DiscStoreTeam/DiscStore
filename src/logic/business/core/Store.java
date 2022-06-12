@@ -47,14 +47,12 @@ public class Store {
 		properties.setName("El cucurucho");
 		properties.getAddress().setStreet("114").setNumber("12").setLatStreetA("La escalinata").setLatStreetB("La warapera");
 		properties.setPhoneNumber("79019090");
-		hrCtrl.hireWorker("Pepe", "A", "12345678901", PositionValue.manager, ScholarDegreeValue.basic);
+		hrCtrl.hireWorker("Pepe", "A", "12345678901", PositionValue.dependent, ScholarDegreeValue.basic);
 		hrCtrl.hireWorker("Alberto", "A", "12345678901", PositionValue.manager, ScholarDegreeValue.basic);
-		
-
 	}
 	
-	
 	public AccessController getAccessController(){return accessCtrl;}
+	public DBController getDatabaseController(){return databaseCtrl;}
 	public SalesController getSalesController(){return salesCtrl;}
 	public StoreProperties getProperties(){return properties;}
 }

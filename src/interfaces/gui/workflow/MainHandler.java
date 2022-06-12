@@ -19,7 +19,7 @@ public class MainHandler implements WindowHandler {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame = new MainWindow();
+					frame = new MainWindow(store);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
