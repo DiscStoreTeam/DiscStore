@@ -3,6 +3,7 @@ package interfaces.gui.main;
 import interfaces.gui.workflow.SalesHandler;
 
 import java.awt.BorderLayout;
+import java.awt.Window;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -53,11 +54,26 @@ public class MainWindow extends JFrame {
 		
 		JMenuItem mntmCambiarAdministrador = new JMenuItem("Cambiar Administrador");
 		mnTienda.add(mntmCambiarAdministrador);
+		
+		JMenu mnProbando = new JMenu("Probando");
+		menuBar.add(mnProbando);
+		
+		JMenuItem mntmTesteandoVentas = new JMenuItem("Testeando Ventas");
+		mntmTesteandoVentas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				test();
+			}
+		});
+		mnProbando.add(mntmTesteandoVentas);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new MigLayout("", "[]", "[]"));
 		setLocationRelativeTo(null);
+	}
+	
+	private void test(){
+		Application.changeWindow(this, WindowType.sales);
 	}
 	
 	private void changePropertiesButton(){

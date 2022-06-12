@@ -20,9 +20,11 @@ public class SearchManager<E> {
 		list.addAll(byGenre(critery, database));
 		list.addAll(byInterpreter(critery, database));
 		list.addAll(byCollaborators(critery, database));
-		if(database.get(0) instanceof Song){
-			list.addAll(byAlbum(critery, database));
-			list.addAll(byAuthor(critery, database));
+		if(!database.isEmpty()){
+			if(database.get(0) instanceof Song){
+				list.addAll(byAlbum(critery, database));
+				list.addAll(byAuthor(critery, database));
+			}
 		}
 		return list;
 	}
