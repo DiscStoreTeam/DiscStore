@@ -20,6 +20,7 @@ public class SalesController {
 	private ArrayList<Integer> sellReports;
 	private ShoppingCar shoppingCar;
 
+
 	public SalesController(ArrayList<Product> database)
 	{	
 		this.shoppingCar = new ShoppingCar();
@@ -46,9 +47,7 @@ public class SalesController {
 	public SCManager getSCManager(){
 		return new SCManager(this, shoppingCar);
 	}
-	public SearchManager<Product> getSearchManager(){
-		return new SearchManager<Product>();
-	}
+
 	public ArrayList<Video> getVideoList(){
 		return videosList;
 	}
