@@ -23,16 +23,6 @@ import java.util.ArrayList;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 
-
-
-
-
-
-
-
-
-
-
 import logic.business.auxiliars.CDManager;
 import logic.business.auxiliars.SearchManager;
 import logic.business.controllers.SalesController;
@@ -63,7 +53,6 @@ public class Sales extends JFrame {
 	private JButton btnCleanListDVD;
 	private JButton buttonMoveSC;
 	private JButton buttonDel;
-	private JTable table;
 	private JLabel lblWarning;
 	private	JButton btnBack;
 
