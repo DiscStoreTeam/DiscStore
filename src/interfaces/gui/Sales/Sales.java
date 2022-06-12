@@ -71,14 +71,13 @@ public class Sales extends JFrame {
 	private JScrollPane scrollPaneCD;
 	private JTable tableCD;	
 	private JTable tableDVD;
-	private DefaultTableModel model;
 
 	//test tabla
 	
-	String columnas[]={ "Titulo","Album","Artista",""};
-	boolean columnasEditables[]={false, false, false, true};
-	Class data[]={java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class };
-	DefaultTableModel modelTest = new DefaultTableModel(){
+	String columnas[]={ "Titulo","Album","Artista","ID",""};
+	boolean columnasEditables[]={false, false, false, false, true};
+	Class data[]={java.lang.Object.class,java.lang.Object.class , java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class };
+	DefaultTableModel model = new DefaultTableModel(){
 		public boolean isCellEditable(int row, int col){
 			return columnasEditables[col];
 		}
@@ -87,7 +86,7 @@ public class Sales extends JFrame {
 		}
 	};
 
-	//private SalesController controller;
+	private SalesController controller;
 	private CDManager manager;
 
 
@@ -98,6 +97,7 @@ public class Sales extends JFrame {
 	public Sales(SalesController controller) {		
 		drawWindow();
 		this.manager = controller.getCDManager();
+		this.controller = controller;
 
 	}
 	private void drawWindow(){
@@ -113,22 +113,6 @@ public class Sales extends JFrame {
 		contentPane.add(lblNewLabel, "cell 1 0");
 
 
-		//tablas
-		model = (new DefaultTableModel(
-				new Object[][] {
-				},
-				new String[] {
-						"Nombre", "\u00C1lbum", "Artista", " "
-				}
-				) {
-			boolean[] columnEditables = new boolean[] {
-					false, false, false, true
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
-		//
 
 		btnBack = new JButton("Volver");
 		btnBack.addActionListener(new ActionListener() {
@@ -168,15 +152,17 @@ public class Sales extends JFrame {
 		panelCD.add(scrollPaneCD, "cell 1 3 3 1,grow");
 
 		tableCD = new JTable();
-		modelTest.setColumnIdentifiers(columnas);
-		tableCD.setModel(modelTest);
+		model.setColumnIdentifiers(columnas);
+		tableCD.setModel(model);
 		tableCD.getColumnModel().getColumn(0).setPreferredWidth(160);
 		tableCD.getColumnModel().getColumn(1).setPreferredWidth(160);
 		tableCD.getColumnModel().getColumn(2).setPreferredWidth(160);
-		tableCD.getColumnModel().getColumn(3).setPreferredWidth(20);
+		tableCD.getColumnModel().getColumn(3).setPreferredWidth(60);
+		tableCD.getColumnModel().getColumn(4).setPreferredWidth(35);
 		tableCD.getColumnModel().getColumn(0).setResizable(false);
 		tableCD.getColumnModel().getColumn(1).setResizable(false);
 		tableCD.getColumnModel().getColumn(2).setResizable(false);
+		tableCD.getColumnModel().getColumn(3).setResizable(false);
 		tableCD.getColumnModel().getColumn(3).setResizable(false);
 
 
@@ -263,7 +249,7 @@ public class Sales extends JFrame {
 
 	//de aqui pa abajoo
 
-	public ArrayList<Song> searchSongs(){
+	/*public ArrayList<Song> searchSongs(){
 		return manager.search(textFieldSearchCD.getText());
 	}
 	/*
@@ -271,7 +257,7 @@ public class Sales extends JFrame {
 		return controller.getDVDManager().getSearch().search(textFieldSearchDVD.getText(), controller.getVideoList());
 	}*/
 	
-	/*
+	
 	public ArrayList<Song> searchSongs(){
 		ArrayList<Song> auxiliar = new ArrayList<Song>();
 		ArrayList<Song> songslist = controller.getSongsList();
@@ -281,18 +267,17 @@ public class Sales extends JFrame {
 			}
 		}
 		return auxiliar;
-	}*/
+	}
 	
 	public void addToSearchList(){
 		cleanTableSearch();
 		if(!textFieldSearchCD.getText().equals("")){
 			ArrayList<Song> auxiliar = searchSongs();
 			for (Song song : auxiliar) {
-				Object rowns[] = {song.getTitle(), song.getAlbum(), song.getAuthor(), false};
-				modelTest.addRow(rowns);	
+				Object rowns[] = {song.getTitle(), song.getAlbum(), song.getAuthor(),song.getID(), false};
+				model.addRow(rowns);	
 			}
 			lblWarning.setVisible(false);
-
 		}	
 		else{
 			lblWarning.setText("Debe introducir su criterio de búsqueda en la caja de texto");
@@ -300,9 +285,9 @@ public class Sales extends JFrame {
 		}
 	}
 	public void cleanTableSearch(){
-		int centinel = modelTest.getRowCount();
+		int centinel = model.getRowCount();
 		for(int i=0; i<centinel; i++){
-			modelTest.removeRow(0);
+			model.removeRow(0);
 		}
 	}
 	
