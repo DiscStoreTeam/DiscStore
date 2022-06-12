@@ -31,6 +31,7 @@ public class Store {
 	public Store(){
 		name = new String();
 		phoneNumber = new String();
+		address = new Address();
 		workersList = new ArrayList<Worker>();
 		database = new ArrayList<Product>();
 		hrCtrl = new HRController("admin", "admin", "admin", ScholarDegreeValue.superior, workersList);
@@ -45,14 +46,24 @@ public class Store {
 	
 	private void initialize(){
 		name = "El Cucurucho";
-		//address.setStreet("114").getLatStreetA("LA Escalinata")
-		SearchManager<Song> searcher = new SearchManager<Song>();
-		ArrayList<Song> canciones = new ArrayList<Song>();
-		//searcher.search("a", canciones);
+		address.setStreet("114").setLatStreetA("La escalinata").setLatStreetB("La warapera").setNumber("12");
+		phoneNumber = "71234567";
 		hrCtrl.hireWorker("Pepe", "A", "12345678901", PositionValue.manager, ScholarDegreeValue.basic);
 		hrCtrl.hireWorker("Alberto", "A", "12345678901", PositionValue.manager, ScholarDegreeValue.basic);
 	}
 	
 	public AccessController getAccessController(){return accessCtrl;}
 	public SalesController getSalesController(){return salesCtrl;}
+	
+	public String getName(){return name;}
+	public void setName(String name){this.name = name;}
+	public Address getAddress(){return address;}
+	public void setAddress(String street, String latStreetA, String latStreetB, String number){
+		this.address.setStreet(street);
+		this.address.setLatStreetA(latStreetA);
+		this.address.setLatStreetB(latStreetB);
+		this.address.setNumber(number);
+	}
+	public String getPhoneNumber(){return phoneNumber;}
+	public void setPhoneNumber(String phoneNumber){this.phoneNumber = phoneNumber;}
 }

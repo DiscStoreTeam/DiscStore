@@ -6,6 +6,10 @@ public class Address {
 	private String latStreetA;
 	private String latStreetB;
 
+	//Builders
+	public Address(){
+		
+	}
 	public Address(String street, String number, String latStreetA, String latStreetB) {
 		this.street = street;
 		this.number = number;
@@ -13,6 +17,7 @@ public class Address {
 		this.latStreetB = latStreetB;
 	}
 
+	//Getters && Setters
 	public String getFullAddress()
 	{
 		return street + " #" + number + " e/ " + latStreetA + " y " + latStreetB; 

@@ -9,12 +9,17 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import main.Application;
+import main.Application.WindowType;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 @SuppressWarnings({ "serial", "unused" })
 public class MainWindow extends JFrame {
@@ -31,21 +36,31 @@ public class MainWindow extends JFrame {
 	private void drawWindow(){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnTienda = new JMenu("Tienda");
+		menuBar.add(mnTienda);
+		
+		JMenuItem mntmCambiarPropiedadesDe = new JMenuItem("Cambiar Propiedades de la Tienda");
+		mntmCambiarPropiedadesDe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				changePropertiesButton();
+			}
+		});
+		mnTienda.add(mntmCambiarPropiedadesDe);
+		
+		JMenuItem mntmCambiarAdministrador = new JMenuItem("Cambiar Administrador");
+		mnTienda.add(mntmCambiarAdministrador);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][][][][][][][]", "[][][][]"));
-		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				goSales();
-			}
-		});
-		contentPane.add(btnNewButton, "cell 5 3");
+		contentPane.setLayout(new MigLayout("", "[]", "[]"));
 		setLocationRelativeTo(null);
 	}
-	public void goSales(){
-		Application.changeWindow(this, Application.WindowType.sales);
+	
+	private void changePropertiesButton(){
+		Application.changeWindow(this, WindowType.properties);
 	}
 }

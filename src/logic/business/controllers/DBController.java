@@ -94,7 +94,7 @@ public class DBController {
 		ArrayList<Song> list = new ArrayList<Song>();
 		
 		SearchManager<Song> searcher = new SearchManager<Song>();
-		list = searcher.search(critery, database);
+		//list = searcher.search(critery, database);
 		
 		return list;
 	}
@@ -102,7 +102,7 @@ public class DBController {
 		ArrayList<Video> list = new ArrayList<Video>();
 		
 		SearchManager<Video> searcher = new SearchManager<Video>();
-		list = searcher.search(critery, database);
+		//list = searcher.search(critery, database);
 		
 		return list;
 	}
