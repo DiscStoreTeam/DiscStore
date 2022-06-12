@@ -1,6 +1,8 @@
 package logic.business.auxiliars;
 
 
+import java.util.ArrayList;
+
 import logic.business.abstractions.IContainerManager;
 import logic.business.abstractions.IProduct;
 import logic.business.controllers.SalesController;
@@ -12,12 +14,14 @@ public class DVDManager implements IContainerManager {
 	private SalesController controller;
 	private DVD dvd;
 	private SearchManager<Video> searcher;
+	private ArrayList<Video> database;
 
-	public DVDManager(SalesController controller)
+	public DVDManager(SalesController controller, ArrayList<Video> database)
 	{
 		this.controller = controller;
 		dvd = new DVD();
 		searcher = new SearchManager<Video>();
+		this.database = database;
 	}
 
 	public DVD getDVD(){
@@ -51,5 +55,8 @@ public class DVDManager implements IContainerManager {
 	@Override
 	public void sell() {
 		//Lo mismo de cd
+	}
+	public ArrayList<Video>getDatabase(){
+		return this.database;
 	}
 }
