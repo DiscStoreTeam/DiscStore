@@ -15,6 +15,7 @@ public class SearchManager<E> {
 	//Methods
 	public ArrayList<E> search(String critery, ArrayList<E> database){
 		//Manejar la excepcion de q E no sea Song o Video
+		System.out.println("Buscador");
 		ArrayList<E> list = new ArrayList<E>();
 		list.addAll(byTitle(critery, database));
 		list.addAll(byGenre(critery, database));
@@ -29,13 +30,13 @@ public class SearchManager<E> {
 		return list;
 	}
 	
-	
 	@SuppressWarnings("unchecked")
 	private ArrayList<E> byTitle(String critery, ArrayList<E> database){
 		ArrayList<E> list = new ArrayList<E>();
 		for(int i = 0; i < database.size(); i++){
 			Product item = (Product)database.get(i);
-			if(item.getTitle().equals(critery)){
+			if(item.getTitle().equalsIgnoreCase(critery)){
+				System.out.println("a");
 				list.add((E)item);
 			}
 		}
@@ -46,7 +47,7 @@ public class SearchManager<E> {
 		ArrayList<E> list = new ArrayList<E>();
 		for(int i = 0; i < database.size(); i++){
 			Product item = (Product)database.get(i);
-			if(item.getGenre().equals(critery)){
+			if(item.getGenre().equalsIgnoreCase(critery)){
 				list.add((E)item);
 			}
 		}
@@ -57,7 +58,7 @@ public class SearchManager<E> {
 		ArrayList<E> list = new ArrayList<E>();
 		for(int i = 0; i < database.size(); i++){
 			Product item = (Product)database.get(i);
-			if(item.getInterpreter().equals(critery)){
+			if(item.getInterpreter().equalsIgnoreCase(critery)){
 				list.add((E)item);
 			}
 		}
@@ -68,7 +69,7 @@ public class SearchManager<E> {
 		ArrayList<E> list = new ArrayList<E>();
 		for(int i = 0; i < database.size(); i++){
 			Product item = (Product)database.get(i);
-			if(item.getCollaborators().equals(critery)){
+			if(item.getCollaborators().equalsIgnoreCase(critery)){
 				list.add((E)item);
 			}
 		}
@@ -79,8 +80,10 @@ public class SearchManager<E> {
 		ArrayList<E> list = new ArrayList<E>();
 		for(int i = 0; i < database.size(); i++){
 			Song item = (Song)database.get(i);
-			if(item.getAlbum().equals(critery)){
-				list.add((E)item);
+			if(item.getAlbum().equalsIgnoreCase(critery)){
+				if(!existingItem((E)item, list)){
+					list.add((E)item);
+				}
 			}
 		}
 		return list;
@@ -90,10 +93,20 @@ public class SearchManager<E> {
 		ArrayList<E> list = new ArrayList<E>();
 		for(int i = 0; i < database.size(); i++){
 			Song item = (Song)database.get(i);
-			if(item.getAuthor().equals(critery)){
+			if(item.getAuthor().equalsIgnoreCase(critery)){
 				list.add((E)item);
 			}
 		}
 		return list;
+	}
+	
+	private boolean existingItem(E item, ArrayList<E> list){
+		boolean exist = false;
+		for(int i = 0; i < list.size(); i++){
+			if(list.get(i) == item){
+				exist = true;
+			}
+		}
+		return exist;
 	}
 }

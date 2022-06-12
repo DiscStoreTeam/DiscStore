@@ -6,8 +6,8 @@ public class SongBuilder {
 	private Song song;
 	
 	//Builders
-	public SongBuilder(){
-		song = new Song();
+	public SongBuilder(int id){
+		song = new Song(id);
 	}
 	
 	//Methods
@@ -43,6 +43,9 @@ public class SongBuilder {
 	}
 	public SongBuilder withAlbum(String album){
 		song.setAlbum(album);
+		return this;
+	}
+	public SongBuilder withID(int id){
 		return this;
 	}
 }

@@ -15,17 +15,20 @@ import logic.util.ProductType;
 import logic.util.Resolution;
 
 public class DBController {
-	private ArrayList<Product> database;
+	private ArrayList<Song> songDatabase;
+	private ArrayList<Video> videoDatabase;
 	private ArrayList<Resolution> registeredResolutions;
 	
 	//Builders
-	public DBController(ArrayList<Product> database)
+	public DBController(ArrayList<Song> songDatabase, ArrayList<Video> videoDatabase)
 	{
-		this.database = database;
+		this.songDatabase = songDatabase;
+		this.videoDatabase = videoDatabase;
 	}
 	public DBController()
 	{
-		this.database = new ArrayList<Product>();
+		this.songDatabase = new ArrayList<Song>();
+		this.videoDatabase = new ArrayList<Video>();
 	}
 	
 	//Methods
@@ -42,7 +45,7 @@ public class DBController {
 	public boolean addProduct(SongPreForm form){
 		boolean exist = compareByTitle(form.getTitle(), ProductType.song);
 		if(!exist){
-			SongBuilder song = new SongBuilder();
+			SongBuilder song = new SongBuilder(songDatabase.size());
 			song.withTitle(form.getTitle());
 			song.withGenre(form.getGenre());
 			song.withInterpreter(form.getInterpreter());
@@ -51,14 +54,14 @@ public class DBController {
 			song.withFileSize(form.getFileSize());
 			song.withAthor(form.getAuthor());
 			song.withAlbum(form.getAlbum());
-			database.add(song.build());
+			songDatabase.add(song.build());
 		}
 		return exist;
 	}
 	public boolean addProduct(VideoPreForm form){
 		boolean exist = compareByTitle(form.getTitle(), ProductType.video);
 		if(!exist){
-			VideoBuilder video = new VideoBuilder();
+			VideoBuilder video = new VideoBuilder(videoDatabase.size());
 			video.withTitle(form.getTitle());
 			video.withGenre(form.getGenre());
 			video.withInterpreter(form.getInterpreter());
@@ -66,10 +69,11 @@ public class DBController {
 			video.withDuration(form.getDuration());
 			video.withFileSize(form.getFileSize());
 			video.withResolution(form.getResolution());
+			videoDatabase.add(video.build());
 		}
 		return exist;
 	}
-	
+	/*
 	public void removeItem(String title, ProductType type){
 		for(int i = 0; i < database.size(); i++){
 			Product item = database.get(i);
@@ -88,7 +92,7 @@ public class DBController {
 				}
 			}
 		}
-	}
+	}*/
 	
 	public ArrayList<Song> searchSongs(String critery){
 		ArrayList<Song> list = new ArrayList<Song>();
@@ -109,17 +113,17 @@ public class DBController {
 	
 	private boolean compareByTitle(String title, ProductType type){
 		boolean exist = false;
-		for(int i = 0; i < database.size() && !exist; i++){
-			if(database.get(i).getTitle().equalsIgnoreCase(title)){
-				if(type == ProductType.song){
-					if(database.get(i) instanceof Song){
-						exist = true;
-					}
+		if(type == ProductType.song){
+			for(int i = 0; i < songDatabase.size(); i++){
+				if(songDatabase.get(i).getTitle().equalsIgnoreCase(title)){
+					exist = true;
 				}
-				else{
-					if(database.get(i) instanceof Video){
-						exist = true;
-					}
+			}
+		}
+		else if(type == ProductType.video){
+			for(int i = 0; i < videoDatabase.size(); i++){
+				if(videoDatabase.get(i).getTitle().equalsIgnoreCase(title)){
+					exist = true;
 				}
 			}
 		}

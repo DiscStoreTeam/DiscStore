@@ -7,15 +7,17 @@ public abstract class Product {
 	private String interpreter;
 	private String collaborators;
 	private Integer fileSize;
+	private Integer id;
 	
 	//Builders
-	public Product(String title, String genre, int duration,String interpreter, String collaborators, int fileSize) {
+	public Product(String title, String genre, int duration,String interpreter, String collaborators, int fileSize, int id) {
 		this.title = title;
 		this.genre = genre;
 		this.duration = duration;
 		this.interpreter = interpreter;
 		this.collaborators = collaborators;
 		this.fileSize = fileSize;
+		this.id = id;
 	}
 	public Product(Product product){
 		this.title = new String(product.getTitle());
@@ -25,11 +27,12 @@ public abstract class Product {
 		this.collaborators = new String(product.getCollaborators());
 		this.fileSize = product.getFileSize();
 	}
-	public Product(){
+	public Product(int id){
 		this.title = new String();
 		this.genre = new String();
 		this.interpreter = new String();
 		this.collaborators = new String();
+		this.id = id;
 	}
 	
 	//Methods
@@ -47,5 +50,6 @@ public abstract class Product {
 	public String getCollaborators() {return collaborators;}
 	public void setCollaborators(String collaborators) {this.collaborators = collaborators;}
 	public Integer getFileSize() {return fileSize;}
-	public void setFileSize(int fileSize) {this.fileSize = fileSize;}	
+	public void setFileSize(int fileSize) {this.fileSize = fileSize;}
+	public Integer getID(){return id;}
 }
