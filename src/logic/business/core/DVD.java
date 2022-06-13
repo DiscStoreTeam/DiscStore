@@ -48,10 +48,10 @@ public class DVD extends Disc {
 		}	
 		return searchList;
 	}*/
-	@Override
-	public Product getItem(int index) {
+	/*@Override
+	/*public Product getItem(int index) {
 		return contents.get(index);
-	}
+	}*/
 
 	@Override
 	public boolean isEmpty() {

@@ -135,7 +135,7 @@ public class Sales extends JFrame {
 
 		lblWarning = new JLabel("Warning");
 		contentPane.add(lblWarning, "cell 2 0,alignx right,aligny center");
-		
+
 		btnGoShoppingcar = new JButton("Carrito");
 		btnGoShoppingcar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -382,11 +382,15 @@ public class Sales extends JFrame {
 	}
 
 	public void addSongsToDisc(){
-		manager.getCD().getContents().clear();
+		for(int i =0; i<auxSCSong.size();i++){
+			manager.getCD().addItem(auxSCSong.get(i));
+		}
+		scManager.addItem(manager.getCD());
+		/*manager.getCD().getContents().clear();
 		for(int i = 0; i<auxSCSong.size();i++){
 			manager.getCD().addSong(auxSCSong.get(i));
 		}
-		scManager.addItem(manager.getCD());
+		scManager.addItem(manager.getCD());*/
 	}
 
 	//Metodos para Videos

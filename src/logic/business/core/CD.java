@@ -49,10 +49,10 @@ public class CD extends Disc{
 		}	
 		return searchList;
 	}*/
-	@Override
+	/*@Override
 	public Product getItem(int index) {
 		return contents.get(index);
-	}
+	}*/
 
 	@Override
 	public boolean isEmpty() {

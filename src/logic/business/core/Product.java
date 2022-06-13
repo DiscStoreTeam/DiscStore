@@ -1,6 +1,8 @@
 package logic.business.core;
 
-public abstract class Product {
+import logic.business.abstractions.IProduct;
+
+public abstract class Product implements IProduct  {
 	private String title;
 	private String genre;
 	private Integer duration;
