@@ -121,10 +121,10 @@ public class Sales extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[15.00][53.00][496.00][192.00,grow][108.00,grow][51.00,grow]", "[][][36.00][86.00,grow][377.00][grow]"));
 		setLocationRelativeTo(null);
+		contentPane.setLayout(new MigLayout("", "[82px][440px][42px][69px][9px][169px][32px][111px]", "[23px][60px][10px][474px][4px][43px]"));
 		JLabel lblNewLabel = new JLabel("Gesti\u00F3n de Venta");
-		contentPane.add(lblNewLabel, "cell 1 0");
+		contentPane.add(lblNewLabel, "cell 0 0,alignx left,aligny center");
 
 		btnBack = new JButton("Volver");
 		btnBack.addActionListener(new ActionListener() {
@@ -134,7 +134,7 @@ public class Sales extends JFrame {
 		});
 
 		lblWarning = new JLabel("Warning");
-		contentPane.add(lblWarning, "cell 2 0,alignx right");
+		contentPane.add(lblWarning, "cell 2 0,alignx right,aligny center");
 		
 		btnGoShoppingcar = new JButton("Carrito");
 		btnGoShoppingcar.addActionListener(new ActionListener() {
@@ -144,12 +144,12 @@ public class Sales extends JFrame {
 				}
 			}
 		});
-		contentPane.add(btnGoShoppingcar, "cell 3 0,alignx right");
-		contentPane.add(btnBack, "cell 4 0 2 1,alignx right");
+		contentPane.add(btnGoShoppingcar, "cell 5 0,alignx right,aligny top");
+		contentPane.add(btnBack, "cell 7 0,alignx right,aligny top");
 		lblWarning.setVisible(false);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		contentPane.add(tabbedPane, "cell 1 1 2 5,grow");
+		contentPane.add(tabbedPane, "cell 0 1 3 5,grow");
 
 		panelCD = new JPanel();
 		tabbedPane.addTab("Venta CD", null, panelCD, null);
@@ -238,7 +238,7 @@ public class Sales extends JFrame {
 		panelDVD.add(buttonAddDVD, "cell 2 4 2 1,alignx right");
 
 		JLabel lblProducts = new JLabel("Productos agregados a contenedor");
-		contentPane.add(lblProducts, "cell 3 2 2 1,alignx center");
+		contentPane.add(lblProducts, "cell 5 1,alignx center,aligny bottom");
 
 		buttonInfo = new JButton("?");
 		buttonInfo.addActionListener(new ActionListener() {
@@ -246,7 +246,7 @@ public class Sales extends JFrame {
 				msgInfo();
 			}
 		});
-		contentPane.add(buttonInfo, "cell 5 2");
+		contentPane.add(buttonInfo, "cell 7 1,alignx center,aligny bottom");
 
 		buttonMoveSC = new JButton("Enviar Al Carrito");
 		buttonMoveSC.addActionListener(new ActionListener() {
@@ -256,7 +256,7 @@ public class Sales extends JFrame {
 		});
 
 		scrollPaneCont = new JScrollPane();
-		contentPane.add(scrollPaneCont, "cell 3 3 3 2,grow");
+		contentPane.add(scrollPaneCont, "cell 3 3 5 1,grow");
 
 		tableCont = new JTable();
 		scrollPaneCont.setViewportView(tableCont);
@@ -280,8 +280,8 @@ public class Sales extends JFrame {
 				delVerifySong(tableCont, modelCont);
 			}
 		});
-		contentPane.add(buttonDel, "cell 3 5,aligny top");
-		contentPane.add(buttonMoveSC, "cell 4 5 2 1,alignx right,aligny top");	
+		contentPane.add(buttonDel, "cell 3 5,alignx left,aligny top");
+		contentPane.add(buttonMoveSC, "cell 7 5,alignx right,aligny top");	
 	}
 	//methods
 	public void goMain(){

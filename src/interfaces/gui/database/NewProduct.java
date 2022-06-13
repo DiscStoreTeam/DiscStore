@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import logic.business.controllers.DBController;
-import logic.business.controllers.HRController;
 import logic.business.core.Store;
 import logic.util.Validator;
 import net.miginfocom.swing.MigLayout;
@@ -31,6 +30,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.DefaultComboBoxModel;
 
+@SuppressWarnings("serial")
 public class NewProduct extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();

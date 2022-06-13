@@ -33,7 +33,7 @@ public class SearchManager<E> {
 	private ArrayList<E> byTitle(String critery, ArrayList<E> database, ArrayList<E> list){
 		for(int i = 0; i < database.size(); i++){
 			Product item = (Product)database.get(i);
-			if(item.getTitle().equalsIgnoreCase(critery)){
+			if(item.getTitle().toLowerCase().contains(critery.toLowerCase())){
 				if(!existingItem((E) item, list)){
 					list.add((E)item);
 				}
@@ -45,7 +45,7 @@ public class SearchManager<E> {
 	private ArrayList<E> byGenre(String critery, ArrayList<E> database, ArrayList<E> list){
 		for(int i = 0; i < database.size(); i++){
 			Product item = (Product)database.get(i);
-			if(item.getGenre().equalsIgnoreCase(critery)){
+			if(item.getGenre().toLowerCase().contains(critery.toLowerCase())){
 				list.add((E)item);
 			}
 		}
@@ -55,7 +55,7 @@ public class SearchManager<E> {
 	private ArrayList<E> byInterpreter(String critery, ArrayList<E> database, ArrayList<E> list){
 		for(int i = 0; i < database.size(); i++){
 			Product item = (Product)database.get(i);
-			if(item.getInterpreter().equalsIgnoreCase(critery)){
+			if(item.getInterpreter().toLowerCase().contains(critery.toLowerCase())){
 				list.add((E)item);
 			}
 		}
@@ -65,7 +65,7 @@ public class SearchManager<E> {
 	private ArrayList<E> byCollaborators(String critery, ArrayList<E> database, ArrayList<E> list){
 		for(int i = 0; i < database.size(); i++){
 			Product item = (Product)database.get(i);
-			if(item.getCollaborators().equalsIgnoreCase(critery)){
+			if(item.getCollaborators().toLowerCase().contains(critery.toLowerCase())){
 				list.add((E)item);
 			}
 		}
@@ -75,7 +75,7 @@ public class SearchManager<E> {
 	private ArrayList<E> byAlbum(String critery, ArrayList<E> database, ArrayList<E> list){
 		for(int i = 0; i < database.size(); i++){
 			Song item = (Song)database.get(i);
-			if(item.getAlbum().equalsIgnoreCase(critery)){
+			if(item.getAlbum().toLowerCase().contains(critery.toLowerCase())){
 				if(!existingItem((E) item, list)){
 					list.add((E)item);
 				}
