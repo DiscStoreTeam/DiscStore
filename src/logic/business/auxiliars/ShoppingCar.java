@@ -55,4 +55,7 @@ public class ShoppingCar implements ProductContainer {
 		}
 		return empty;
 	}
+	public ArrayList<Disc> getDiscs(){
+		return this.discs;
+	}
 }

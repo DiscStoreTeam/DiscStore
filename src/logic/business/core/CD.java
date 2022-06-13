@@ -17,7 +17,7 @@ public class CD extends Disc{
 	}
 
 	//Methods
-	@Override
+
 	public boolean addItem(IProduct item) {
 		contents.add((Song) item);		
 		return true;
@@ -61,5 +61,12 @@ public class CD extends Disc{
 			empty = true;
 		}
 		return empty;
+	}
+	
+	public void addSong(Song song){
+		contents.add(song);
+	}
+	public ArrayList<Song> getContents(){
+		return this.contents;
 	}
 }
