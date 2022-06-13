@@ -31,15 +31,8 @@ public class DVDManager implements IContainerManager {
 	public SearchManager<Video> getSearch(){
 		return this.searcher;
 	}
-	@Override
-	public boolean addItem(IProduct item) {
-		// TODO Auto-generated method stub
-		return dvd.addItem(item);
-	}
-	@Override
-	public void removeItem(IProduct item) {
-		dvd.removeItem(item);
-	}
+
+
 	@Override
 	public void removeItem(int index) {
 		dvd.removeItem(index);
@@ -58,5 +51,17 @@ public class DVDManager implements IContainerManager {
 	}
 	public ArrayList<Video>getDatabase(){
 		return this.database;
+	}
+
+	@Override
+	public boolean addItem(IProduct item) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void removeItem(IProduct item) {
+		// TODO Auto-generated method stub
+		
 	}
 }

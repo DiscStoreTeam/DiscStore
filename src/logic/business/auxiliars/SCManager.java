@@ -19,6 +19,10 @@ public class SCManager implements IContainerManager {
 	}
 
 	//Methods
+	
+	public ShoppingCar getShoppingcar(){
+		return this.shoppingCar;
+	}
 	public double getTotalCost(){
 		return shoppingCar.getTotalCost();
 	}

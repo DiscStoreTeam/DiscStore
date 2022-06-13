@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -23,7 +24,9 @@ import java.util.ArrayList;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 
+import logic.business.abstractions.IProduct;
 import logic.business.auxiliars.CDManager;
+import logic.business.auxiliars.SCManager;
 import logic.business.auxiliars.SearchManager;
 import logic.business.controllers.SalesController;
 import logic.business.core.Product;
@@ -40,7 +43,6 @@ public class Sales extends JFrame {
 	private JTabbedPane tabbedPane;
 	private JPanel panelCD;
 	private JPanel panelDVD;
-	private JPanel panelShoppingcar;
 	private JButton btnSearchCD;
 	private JButton btnSearchDVD;
 	private JLabel lblIntroduzcaSuCriterioCD;
@@ -94,6 +96,8 @@ public class Sales extends JFrame {
 
 	private SalesController controller;
 	private CDManager manager;
+	private SCManager scManager;
+	private JButton btnGoShoppingcar;
 
 
 
@@ -102,6 +106,7 @@ public class Sales extends JFrame {
 	 */
 	public Sales(SalesController controller) {		
 		drawWindow();
+		this.scManager = controller.getSCManager();
 		this.manager = controller.getCDManager();
 		this.controller = controller;
 		auxSong = new ArrayList<Song>();
@@ -130,6 +135,16 @@ public class Sales extends JFrame {
 
 		lblWarning = new JLabel("Warning");
 		contentPane.add(lblWarning, "cell 2 0,alignx right");
+		
+		btnGoShoppingcar = new JButton("Carrito");
+		btnGoShoppingcar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				for(int i=0; i<scManager.getShoppingcar().getDiscs().size();i++){
+					System.out.println(scManager.getShoppingcar().getDiscs().get(i).getID()+ "\n");
+				}
+			}
+		});
+		contentPane.add(btnGoShoppingcar, "cell 3 0,alignx right");
 		contentPane.add(btnBack, "cell 4 0 2 1,alignx right");
 		lblWarning.setVisible(false);
 
@@ -222,12 +237,6 @@ public class Sales extends JFrame {
 		buttonAddDVD = new JButton("A\u00F1adir");
 		panelDVD.add(buttonAddDVD, "cell 2 4 2 1,alignx right");
 
-
-
-
-		panelShoppingcar = new JPanel();
-		tabbedPane.addTab("Carrito", null, panelShoppingcar, null);
-
 		JLabel lblProducts = new JLabel("Productos agregados a contenedor");
 		contentPane.add(lblProducts, "cell 3 2 2 1,alignx center");
 
@@ -242,6 +251,7 @@ public class Sales extends JFrame {
 		buttonMoveSC = new JButton("Enviar Al Carrito");
 		buttonMoveSC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				addSongsToDisc();
 			}
 		});
 
@@ -282,7 +292,7 @@ public class Sales extends JFrame {
 		JOptionPane.showMessageDialog(null, "Esta lista contiene los elementos que conformarán vuestro CD o DVD, al enviar al carrito enviará los productos en formato de disco,\n"
 				+ "quedando registrado el mismo con un id asignado por el sistema.");
 	}
-	
+
 	public void cleanTableSearch(DefaultTableModel modelOrigen){
 		int centinel = modelOrigen.getRowCount();
 		for(int i=0; i<centinel; i++){
@@ -347,21 +357,38 @@ public class Sales extends JFrame {
 		}
 		return search;
 	}
-	
+
 	public void delVerifySong(JTable tableCont, DefaultTableModel modelCont){
 		boolean confirm = false;
 		for(int i = 0; i<tableCont.getRowCount(); i++){
-			if((boolean) tableCont.getValueAt(i, 4)){
+			if((boolean) tableCont.getValueAt(i, 4)){			
 				modelCont.removeRow(i);
 				auxSCSong.remove(i);
 				confirm = true;
-			}
-		}
+				i--;
+			}		
+		}		
 		if(!confirm){	
 			JOptionPane.showMessageDialog(null, "Debe seleccionar al menos un elemento para eliminar");	
 		}
 	}
-	
+
+	public void updateVerifySong(DefaultTableModel modelSC){
+		cleanTableSearch(modelSC);
+		for (Song song : auxSCSong) {
+			Object rowns[] = {song.getTitle(), song.getAlbum(), song.getAuthor(),song.getID(), false};
+			modelSC.addRow(rowns);	
+		}
+	}
+
+	public void addSongsToDisc(){
+		manager.getCD().getContents().clear();
+		for(int i = 0; i<auxSCSong.size();i++){
+			manager.getCD().addSong(auxSCSong.get(i));
+		}
+		scManager.addItem(manager.getCD());
+	}
+
 	//Metodos para Videos
 	public ArrayList<Video> searchVideos(){
 		return controller.getDVDManager().getSearch().search(textFieldSearchDVD.getText(), controller.getVideoList());
@@ -424,9 +451,11 @@ public class Sales extends JFrame {
 		boolean confirm = false;
 		for(int i = 0; i<tableCont.getRowCount(); i++){
 			if((boolean) tableCont.getValueAt(i, 4)){
-				modelCont.removeRow(i);
+				modelCont.moveRow(i, tableCont.getRowCount(), 0);
+				modelCont.removeRow(0);
 				auxSCVideo.remove(i);
 				confirm = true;
+
 			}
 		}
 		if(!confirm){	
