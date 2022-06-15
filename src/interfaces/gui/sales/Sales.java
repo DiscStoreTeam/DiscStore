@@ -5,7 +5,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
+
+
+
+
 
 
 import main.Application;
@@ -17,6 +20,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 
+
+
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -25,17 +31,16 @@ import javax.swing.JTextField;
 import javax.swing.JTable;
 
 import logic.business.abstractions.Disc;
-
 import logic.business.auxiliars.CDManager;
 import logic.business.auxiliars.SCManager;
-import logic.business.auxiliars.SearchManager;
 import logic.business.controllers.SalesController;
 import logic.business.core.CD;
-import logic.business.core.Product;
 import logic.business.core.Song;
 import logic.business.core.Video;
 
 import javax.swing.JScrollPane;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 @SuppressWarnings("serial")
@@ -77,11 +82,13 @@ public class Sales extends JFrame {
 
 	String columnas[]={ "Titulo","Album","Artista","ID",""};
 	boolean columnasEditables[]={false, false, false, false, true};
+	@SuppressWarnings("rawtypes")
 	Class data[]={java.lang.Object.class,java.lang.Object.class , java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class };
 	DefaultTableModel model = new DefaultTableModel(){
 		public boolean isCellEditable(int row, int col){
 			return columnasEditables[col];
 		}
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		public Class getColumnClass(int index){
 			return data[index];
 		}
@@ -90,6 +97,7 @@ public class Sales extends JFrame {
 		public boolean isCellEditable(int row, int col){
 			return columnasEditables[col];
 		}
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		public Class getColumnClass(int index){
 			return data[index];
 		}
@@ -110,9 +118,9 @@ public class Sales extends JFrame {
 	 */
 	public Sales(SalesController controller) {		
 		drawWindow();
+		this.controller = controller;
 		this.scManager = controller.getSCManager();
 		this.manager = controller.getCDManager();
-		this.controller = controller;
 		auxSong = new ArrayList<Song>();
 		auxVideo = new ArrayList<Video>();
 		auxSCSong = new ArrayList<Song>();
@@ -233,10 +241,11 @@ public class Sales extends JFrame {
 		modelCont.setColumnIdentifiers(columnas);
 
 		tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane_1.setToolTipText("Confirmación");
 		contentPane.add(tabbedPane_1, "cell 3 1,grow");
 
 		panel = new JPanel();
-		tabbedPane_1.addTab("New tab", null, panel, null);
+		tabbedPane_1.addTab("Confirmación a disco", null, panel, null);
 		panel.setLayout(new MigLayout("", "[248.00][289.00][289.00]", "[29.00][49.00][505.00][52.00]"));
 
 		JLabel lblProducts = new JLabel("Productos agregados a contenedor");
@@ -266,6 +275,12 @@ public class Sales extends JFrame {
 		panel.add(buttonMoveSC, "flowx,cell 1 3,alignx center");
 
 		button = new JButton("Carrito");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				changeShoppingcar();
+				//goShopingcar();
+			}
+		});
 		panel.add(button, "cell 2 3,alignx right");
 		buttonMoveSC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -298,6 +313,12 @@ public class Sales extends JFrame {
 	//methods
 	public void goMain(){
 		Application.changeWindow(this, Application.WindowType.main);
+	}
+	public void goShopingcar(){
+		Application.changeWindow(this, Application.WindowType.shoppingcar);
+	}
+	public void changeShoppingcar() {
+		Application.openChildWindow(this, Application.WindowType.shoppingcar);
 	}
 
 	public void msgInfo(){
@@ -355,15 +376,18 @@ public class Sales extends JFrame {
 	public ArrayList<Song> searchSelectedSong(JTable table, ArrayList<Song> auxSong){
 		ArrayList<Song>search = new ArrayList<Song>();
 		boolean confirm = false;
+		boolean secure = false;
 		for(int i = 0; i<table.getRowCount(); i++){
 			if((boolean) table.getValueAt(i, 4)){
 				int id = (int) table.getValueAt(i, 3);				
-				for(int j = 0; j<auxSong.size();j++){
+				for(int j = 0; j<auxSong.size() && !secure;j++){
 					if(auxSong.get(j).getID() == id){
 						search.add(auxSong.get(j));
 						confirm = true;
+						secure = true;
 					}
 				}
+				secure = false;
 			}
 		}
 		if(!confirm){	
@@ -402,9 +426,24 @@ public class Sales extends JFrame {
 		}
 		return cd;
 	}
+	
+	public String assignCDName(){
+		String name = auxSCSong.get(0).getAuthor();
+		boolean more = false;
+		for(int i = 1; i<auxSCSong.size() && !more;i++){
+			if(!auxSCSong.get(i).getAuthor().equals(name)){
+				more = true;
+			}
+		}
+		if(more){
+			name += " y otros";
+		}
+		return name;
+	}
 
 	public void moveToShoppingcar(Disc disc){
 		disc.setID(scManager.getShoppingcar().getDiscs().size()+1);
+		disc.setName(assignCDName());
 		scManager.addItem(disc);
 
 	}

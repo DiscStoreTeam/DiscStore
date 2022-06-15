@@ -7,6 +7,7 @@ import interfaces.gui.workflow.AddProductHandler;
 import interfaces.gui.workflow.LoginHandler;
 import interfaces.gui.workflow.MainHandler;
 import interfaces.gui.workflow.SalesHandler;
+import interfaces.gui.workflow.ShoppingcarHandler;
 import interfaces.gui.workflow.WindowHandler;
 
 import java.awt.Window;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 import logic.business.core.Store;
 
 public final class Application {
-	public enum WindowType{login, credentials, main, sales, properties, newProduct;}
+	public enum WindowType{login, credentials, main, sales, properties, newProduct, shoppingcar;}
 	private static HashMap<WindowType, WindowHandler> handlerMap;
 	
 	private final static Store store = new Store();
@@ -33,6 +34,7 @@ public final class Application {
 		handlerMap.put(WindowType.sales, new SalesHandler());
 		handlerMap.put(WindowType.properties, new ChangePropertiesHandler());
 		handlerMap.put(WindowType.newProduct, new AddProductHandler());
+		handlerMap.put(WindowType.shoppingcar, new ShoppingcarHandler());
 	}
 	
 	public static void changeWindow(Window actualWindow,WindowType nextWindow){
