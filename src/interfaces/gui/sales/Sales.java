@@ -99,7 +99,9 @@ public class Sales extends JFrame {
 	private SalesController controller;
 	private CDManager manager;
 	private SCManager scManager;
-	private JButton btnGoShoppingcar;
+	private JTabbedPane tabbedPane_1;
+	private JPanel panel;
+	private JButton button;
 
 
 
@@ -124,7 +126,7 @@ public class Sales extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		setLocationRelativeTo(null);
-		contentPane.setLayout(new MigLayout("", "[82px][440px][42px][69px][9px][169px][32px][111px]", "[23px][60px][10px][474px][4px][43px]"));
+		contentPane.setLayout(new MigLayout("", "[82px][387px][40px][449px]", "[23px][591px]"));
 		JLabel lblNewLabel = new JLabel("Gesti\u00F3n de Venta");
 		contentPane.add(lblNewLabel, "cell 0 0,alignx left,aligny center");
 
@@ -137,26 +139,11 @@ public class Sales extends JFrame {
 
 		lblWarning = new JLabel("Warning");
 		contentPane.add(lblWarning, "cell 2 0,alignx right,aligny center");
-
-		btnGoShoppingcar = new JButton("Carrito");
-		btnGoShoppingcar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				for(int i=0; i<scManager.getShoppingcar().getDiscs().size();i++){
-					System.out.println(scManager.getShoppingcar().getDiscs().get(i).getID());
-					for(int j = 0; j<scManager.getShoppingcar().getDiscs().get(i).getProducts().size();j++){
-						System.out.println(scManager.getShoppingcar().getDiscs().get(i).getProducts().get(j).getTitle()+"\n");
-					}
-					scManager.calculateCost();
-					System.out.println("el precio total es: "+ scManager.getTotalCost());
-				}
-			}
-		});
-		contentPane.add(btnGoShoppingcar, "cell 5 0,alignx right,aligny top");
-		contentPane.add(btnBack, "cell 7 0,alignx right,aligny top");
+		contentPane.add(btnBack, "cell 3 0,alignx right,aligny top");
 		lblWarning.setVisible(false);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		contentPane.add(tabbedPane, "cell 0 1 3 5,grow");
+		contentPane.add(tabbedPane, "cell 0 1 3 1,grow");
 
 		panelCD = new JPanel();
 		tabbedPane.addTab("Venta CD", null, panelCD, null);
@@ -243,19 +230,43 @@ public class Sales extends JFrame {
 
 		buttonAddDVD = new JButton("A\u00F1adir");
 		panelDVD.add(buttonAddDVD, "cell 2 4 2 1,alignx right");
+		modelCont.setColumnIdentifiers(columnas);
+
+		tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
+		contentPane.add(tabbedPane_1, "cell 3 1,grow");
+
+		panel = new JPanel();
+		tabbedPane_1.addTab("New tab", null, panel, null);
+		panel.setLayout(new MigLayout("", "[248.00][289.00][289.00]", "[29.00][49.00][505.00][52.00]"));
 
 		JLabel lblProducts = new JLabel("Productos agregados a contenedor");
-		contentPane.add(lblProducts, "cell 5 1,alignx center,aligny bottom");
+		panel.add(lblProducts, "cell 0 1");
 
 		buttonInfo = new JButton("?");
+		panel.add(buttonInfo, "cell 1 1 2 1,alignx right");
 		buttonInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				msgInfo();
 			}
 		});
-		contentPane.add(buttonInfo, "cell 7 1,alignx center,aligny bottom");
+
+		scrollPaneCont = new JScrollPane();
+		panel.add(scrollPaneCont, "cell 0 2 3 1,growy");
+
+
+		tableCont = new JTable();
+		scrollPaneCont.setViewportView(tableCont);
+		tableCont.setModel(modelCont);
+
+
+		buttonDel = new JButton("Eliminar");
+		panel.add(buttonDel, "cell 0 3,alignx center");
 
 		buttonMoveSC = new JButton("Enviar Al Carrito");
+		panel.add(buttonMoveSC, "flowx,cell 1 3,alignx center");
+
+		button = new JButton("Carrito");
+		panel.add(button, "cell 2 3,alignx right");
 		buttonMoveSC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(tableCont.getRowCount()>0){
@@ -268,14 +279,11 @@ public class Sales extends JFrame {
 				}
 			}
 		});
-
-		scrollPaneCont = new JScrollPane();
-		contentPane.add(scrollPaneCont, "cell 3 3 5 1,grow");
-
-		tableCont = new JTable();
-		scrollPaneCont.setViewportView(tableCont);
-		modelCont.setColumnIdentifiers(columnas);
-		tableCont.setModel(modelCont);
+		buttonDel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				delVerifySong(tableCont, modelCont);
+			}
+		});
 		tableCont.getColumnModel().getColumn(0).setPreferredWidth(160);
 		tableCont.getColumnModel().getColumn(1).setPreferredWidth(160);
 		tableCont.getColumnModel().getColumn(2).setPreferredWidth(160);
@@ -286,16 +294,6 @@ public class Sales extends JFrame {
 		tableCont.getColumnModel().getColumn(2).setResizable(false);
 		tableCont.getColumnModel().getColumn(3).setResizable(false);
 		tableCont.getColumnModel().getColumn(3).setResizable(false);
-
-
-		buttonDel = new JButton("Eliminar");
-		buttonDel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				delVerifySong(tableCont, modelCont);
-			}
-		});
-		contentPane.add(buttonDel, "cell 3 5,alignx left,aligny top");
-		contentPane.add(buttonMoveSC, "cell 7 5,alignx right,aligny top");	
 	}
 	//methods
 	public void goMain(){
