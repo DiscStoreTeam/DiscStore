@@ -46,7 +46,9 @@ public class SearchManager<E> {
 		for(int i = 0; i < database.size(); i++){
 			Product item = (Product)database.get(i);
 			if(item.getGenre().toLowerCase().contains(critery.toLowerCase())){
-				list.add((E)item);
+				if(!existingItem((E) item, list)){
+					list.add((E)item);
+				}
 			}
 		}
 		return list;
@@ -56,7 +58,9 @@ public class SearchManager<E> {
 		for(int i = 0; i < database.size(); i++){
 			Product item = (Product)database.get(i);
 			if(item.getInterpreter().toLowerCase().contains(critery.toLowerCase())){
-				list.add((E)item);
+				if(!existingItem((E) item, list)){
+					list.add((E)item);
+				}
 			}
 		}
 		return list;
@@ -66,7 +70,9 @@ public class SearchManager<E> {
 		for(int i = 0; i < database.size(); i++){
 			Product item = (Product)database.get(i);
 			if(item.getCollaborators().toLowerCase().contains(critery.toLowerCase())){
-				list.add((E)item);
+				if(!existingItem((E) item, list)){
+					list.add((E)item);
+				}
 			}
 		}
 		return list;
@@ -77,7 +83,9 @@ public class SearchManager<E> {
 			Song item = (Song)database.get(i);
 			if(item.getAlbum().toLowerCase().contains(critery.toLowerCase())){
 				if(!existingItem((E) item, list)){
-					list.add((E)item);
+					if(!existingItem((E) item, list)){
+						list.add((E)item);
+					}
 				}
 			}
 		}
@@ -87,8 +95,10 @@ public class SearchManager<E> {
 	private ArrayList<E> byAuthor(String critery, ArrayList<E> database, ArrayList<E> list){
 		for(int i = 0; i < database.size(); i++){
 			Song item = (Song)database.get(i);
-			if(item.getAuthor().equalsIgnoreCase(critery)){
-				list.add((E)item);
+			if(item.getAuthor().toLowerCase().contains(critery.toLowerCase())){
+				if(!existingItem((E) item, list)){
+					list.add((E)item);
+				}
 			}
 		}
 		return list;
