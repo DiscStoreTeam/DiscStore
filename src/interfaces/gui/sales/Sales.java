@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
+
 
 import main.Application;
 import net.miginfocom.swing.MigLayout;
@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
+
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -25,7 +25,7 @@ import javax.swing.JTextField;
 import javax.swing.JTable;
 
 import logic.business.abstractions.Disc;
-import logic.business.abstractions.IProduct;
+
 import logic.business.auxiliars.CDManager;
 import logic.business.auxiliars.SCManager;
 import logic.business.auxiliars.SearchManager;
@@ -303,8 +303,10 @@ public class Sales extends JFrame {
 	}
 
 	public void msgInfo(){
-		JOptionPane.showMessageDialog(null, "Esta lista contiene los elementos que conformarán vuestro CD o DVD, al enviar al carrito enviará los productos en formato de disco,\n"
-				+ "quedando registrado el mismo con un id asignado por el sistema.");
+		JOptionPane.showMessageDialog(null,"Los costos base son:\nCD  : 12.50$\nDVD : 15.50$\nY el precio de cada"
+				+ " producto es: 2.50$\n\nEsta lista contiene los elementos que conformarán vuestro CD o DVD, al enviar"
+				+ " al carrito enviará los \nproductos en formato de disco, quedando registrado el mismo con un id "
+				+ "asignado por el sistema.");
 	}
 
 	public void cleanTableSearch(DefaultTableModel modelOrigen){
