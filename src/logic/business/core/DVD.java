@@ -61,4 +61,17 @@ public class DVD extends Disc {
 		}
 		return empty;
 	}
+	
+	@Override
+	public ArrayList<Product> getProducts() {
+		// TODO Auto-generated method stub		
+		return castVideos();
+	}
+	public ArrayList<Product> castVideos(){
+		ArrayList<Product>a = new ArrayList<Product>();
+		for (Video video : contents) {
+			a.add(video);
+		}
+		return a;
+	}
 }

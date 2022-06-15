@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import logic.business.abstractions.Disc;
 import logic.business.abstractions.IProduct;
 import logic.business.abstractions.ProductContainer;
+import logic.business.core.Product;
 
 public class ShoppingCar implements ProductContainer {
 	private ArrayList<Disc> discs;
@@ -21,6 +22,7 @@ public class ShoppingCar implements ProductContainer {
 	@Override
 	public boolean addItem(IProduct item) {
 			discs.add((Disc) item);
+			
 		return true;
 	}
 	@Override
@@ -37,6 +39,7 @@ public class ShoppingCar implements ProductContainer {
 	}
 	@Override
 	public double calculateCost() {
+		totalCost = 0;
 		for(int i = 0; i<discs.size(); i++){
 			totalCost += discs.get(i).calculateCost();
 		}
@@ -57,5 +60,14 @@ public class ShoppingCar implements ProductContainer {
 	}
 	public ArrayList<Disc> getDiscs(){
 		return this.discs;
+	}
+
+	@Override
+	public ArrayList<Product> getProducts() {
+		ArrayList<Product> a = new ArrayList<Product>();
+		for (Disc disc : discs) {
+			a.addAll(disc.getProducts());
+		}
+		return a;
 	}
 }

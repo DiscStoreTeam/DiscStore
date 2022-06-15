@@ -1,5 +1,7 @@
 package logic.business.abstractions;
 
+import java.util.ArrayList;
+
 import logic.business.core.Product;
 
 public interface ProductContainer {
@@ -8,4 +10,5 @@ public interface ProductContainer {
 	public void removeItem(int index);
 	public double calculateCost();
 	public boolean isEmpty();
+	public ArrayList<Product> getProducts();
 }

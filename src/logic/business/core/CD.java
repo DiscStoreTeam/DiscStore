@@ -69,4 +69,18 @@ public class CD extends Disc{
 	public ArrayList<Song> getContents(){
 		return this.contents;
 	}
+
+	@Override
+	public ArrayList<Product> getProducts() {
+		// TODO Auto-generated method stub		
+		return castSongs();
+	}
+	public ArrayList<Product> castSongs(){
+		ArrayList<Product>a = new ArrayList<Product>();
+		for (Song song : contents) {
+			a.add(song);
+		}
+		return a;
+	}
+	
 }

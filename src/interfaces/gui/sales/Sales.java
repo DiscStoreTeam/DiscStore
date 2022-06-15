@@ -24,11 +24,13 @@ import java.util.ArrayList;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 
+import logic.business.abstractions.Disc;
 import logic.business.abstractions.IProduct;
 import logic.business.auxiliars.CDManager;
 import logic.business.auxiliars.SCManager;
 import logic.business.auxiliars.SearchManager;
 import logic.business.controllers.SalesController;
+import logic.business.core.CD;
 import logic.business.core.Product;
 import logic.business.core.Song;
 import logic.business.core.Video;
@@ -140,7 +142,12 @@ public class Sales extends JFrame {
 		btnGoShoppingcar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				for(int i=0; i<scManager.getShoppingcar().getDiscs().size();i++){
-					System.out.println(scManager.getShoppingcar().getDiscs().get(i).getID()+ "\n");
+					System.out.println(scManager.getShoppingcar().getDiscs().get(i).getID());
+					for(int j = 0; j<scManager.getShoppingcar().getDiscs().get(i).getProducts().size();j++){
+						System.out.println(scManager.getShoppingcar().getDiscs().get(i).getProducts().get(j).getTitle()+"\n");
+					}
+					scManager.calculateCost();
+					System.out.println("el precio total es: "+ scManager.getTotalCost());
 				}
 			}
 		});
@@ -251,7 +258,14 @@ public class Sales extends JFrame {
 		buttonMoveSC = new JButton("Enviar Al Carrito");
 		buttonMoveSC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addSongsToDisc();
+				if(tableCont.getRowCount()>0){
+					moveToShoppingcar(addSongsToDisc());
+					auxSCSong.clear();
+					cleanTableSearch(modelCont);
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Debe agregar al menos un elemento para enviar al carrito");	
+				}
 			}
 		});
 
@@ -381,17 +395,20 @@ public class Sales extends JFrame {
 		}
 	}
 
-	public void addSongsToDisc(){
-		for(int i =0; i<auxSCSong.size();i++){
-			manager.getCD().addItem(auxSCSong.get(i));
+	public Disc addSongsToDisc(){
+		CD cd = new CD();
+		for (Song song : auxSCSong) {
+			cd.addItem(song);	
 		}
-		scManager.addItem(manager.getCD());
-		/*manager.getCD().getContents().clear();
-		for(int i = 0; i<auxSCSong.size();i++){
-			manager.getCD().addSong(auxSCSong.get(i));
-		}
-		scManager.addItem(manager.getCD());*/
+		return cd;
 	}
+
+	public void moveToShoppingcar(Disc disc){
+		disc.setID(scManager.getShoppingcar().getDiscs().size()+1);
+		scManager.addItem(disc);
+
+	}
+
 
 	//Metodos para Videos
 	public ArrayList<Video> searchVideos(){
