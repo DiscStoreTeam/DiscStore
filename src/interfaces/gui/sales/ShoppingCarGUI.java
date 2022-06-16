@@ -42,10 +42,10 @@ public class ShoppingCarGUI extends JFrame {
 	private SalesController controller;
 
 	//TableModel
-	String columnas[]={"Nombre","ID"};
-	boolean columnasEditables[]={false,false};
+	String columnas[]={"Nombre","ID","Costo"};
+	boolean columnasEditables[]={false,false,false};
 	@SuppressWarnings("rawtypes")
-	Class data[]={java.lang.Object.class,java.lang.Object.class};
+	Class data[]={java.lang.Object.class,java.lang.Object.class,java.lang.Object.class};
 
 	DefaultTableModel model = new DefaultTableModel(){
 		public boolean isCellEditable(int row, int col){
@@ -56,6 +56,8 @@ public class ShoppingCarGUI extends JFrame {
 			return data[index];
 		}
 	};
+	private JLabel lblNewLabel;
+	private JLabel lblCost;
 
 	/**
 	 * Create the frame.
@@ -64,6 +66,8 @@ public class ShoppingCarGUI extends JFrame {
 		drawWindow();
 		this.controller=store.getSalesController();
 		this.scManager=controller.getSCManager();
+		refreshShopingCar();
+
 	}
 
 
@@ -74,11 +78,11 @@ public class ShoppingCarGUI extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[400:n:400][50:n:50][351.00][]", "[35:n:35][35px:n:35px][35:n:35][610.00][638.00px][327px]"));
+		contentPane.setLayout(new MigLayout("", "[400:n:400][50:n:50][351.00][]", "[35:n:35][35px:n:35px][35:n:35][610.00][638.00px][638.00px][638.00px][638.00px][327px]"));
 		setLocationRelativeTo(null);
 
 		panel = new JPanel();
-		contentPane.add(panel, "cell 0 0 3 6,grow");
+		contentPane.add(panel, "cell 0 0 3 9,grow");
 		panel.setLayout(new MigLayout("", "[261.00:n:600,grow][100:n:100][140:n:140][89.00:n:40]", "[][][grow]"));
 
 		lblListaDeProductos = new JLabel("Lista de Productos");
@@ -101,6 +105,11 @@ public class ShoppingCarGUI extends JFrame {
 		});
 
 		btnDel = new JButton("-");
+		btnDel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				deleteItem();
+			}
+		});
 		panel.add(btnDel, "cell 3 0,alignx right");
 
 		scrollPane = new JScrollPane();
@@ -109,10 +118,12 @@ public class ShoppingCarGUI extends JFrame {
 		tableShoppingcar = new JTable();
 		tableShoppingcar.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				showContents();
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount() == 2){
+					showContents();
+				}
 			}
-			
+
 		});
 		scrollPane.setViewportView(tableShoppingcar);
 		model.setColumnIdentifiers(columnas);
@@ -121,8 +132,14 @@ public class ShoppingCarGUI extends JFrame {
 		btnBack = new JButton("Atr\u00E1s");
 		contentPane.add(btnBack, "cell 3 0,alignx right");
 
+		lblNewLabel = new JLabel("Costo Total");
+		contentPane.add(lblNewLabel, "cell 3 6,aligny bottom");
+
+		lblCost = new JLabel("");
+		contentPane.add(lblCost, "cell 3 7,alignx center,aligny center");
+
 		btnSell = new JButton("Vender");
-		contentPane.add(btnSell, "cell 3 5");
+		contentPane.add(btnSell, "cell 3 8");
 	}
 
 	//methods
@@ -130,13 +147,14 @@ public class ShoppingCarGUI extends JFrame {
 	public void refreshShopingCar(){
 		cleanTable();
 		for (Disc disc : scManager.getShoppingcar().getDiscs()) {
-			Object row[] = {disc.getName(), disc.getID()};
+			Object row[] = {disc.getName(), disc.getID(), disc.calculateCost()+"$"};
 			model.addRow(row);
 		}
+		lblCost.setText(Double.toString(showTotalCost())+"$");
 
 	}
-	public void cleanTable(){
-		for(int i=0; i<model.getRowCount(); i++){
+	public void cleanTable(){	
+		for(int i=0; i<tableShoppingcar.getRowCount(); i++){
 			model.removeRow(0);
 		}
 	}
@@ -154,5 +172,29 @@ public class ShoppingCarGUI extends JFrame {
 		}
 	}
 
+	public void deleteItem(){
+		if(model.getRowCount()>0){
+			if(tableShoppingcar.getSelectedRow() >= 0 && tableShoppingcar.getSelectedRow() < model.getRowCount()){
+				int auxiliar = tableShoppingcar.getSelectedRow();
+				scManager.getShoppingcar().removeItem(auxiliar);
+				cleanTable();
+				for(Disc disc:scManager.getShoppingcar().getDiscs()){
+					Object row[]={disc.getName(),disc.getID(),disc.calculateCost()};
+					model.addRow(row);
+					tableShoppingcar.clearSelection();
+				}
+			}
+			else{
+				JOptionPane.showMessageDialog(null, "Debe seleccionar un elemento para elmininar");
+			}
+		}
+		else{
+			JOptionPane.showMessageDialog(null, "Debe agregar al menos un elemento para poder eliminar");
+		}
+	}
+
+	public double showTotalCost(){
+		return scManager.calculateCost();
+	}
 
 }

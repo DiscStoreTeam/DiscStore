@@ -109,7 +109,7 @@ public class Sales extends JFrame {
 	private SCManager scManager;
 	private JTabbedPane tabbedPane_1;
 	private JPanel panel;
-	private JButton button;
+	private JButton btnVerCarrito;
 
 
 
@@ -161,6 +161,14 @@ public class Sales extends JFrame {
 		panelCD.add(lblIntroduzcaSuCriterioCD, "cell 1 0");
 
 		textFieldSearchCD = new JTextField();
+		textFieldSearchCD.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER){
+					addToSearchListSong(model);
+				}
+			}
+		});
 		panelCD.add(textFieldSearchCD, "cell 1 1 2 1,growx");
 		textFieldSearchCD.setColumns(10);
 
@@ -197,7 +205,12 @@ public class Sales extends JFrame {
 		btnCleanListCD = new JButton("Limpiar Lista");
 		btnCleanListCD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				cleanTableSearch(model);
+				if(tableCD.getRowCount()>0){
+					cleanTableSearch(model);
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "La tabla ya se encuentra vacia");
+				}
 			}
 		});
 		panelCD.add(btnCleanListCD, "cell 1 4");
@@ -246,7 +259,7 @@ public class Sales extends JFrame {
 
 		panel = new JPanel();
 		tabbedPane_1.addTab("Confirmación a disco", null, panel, null);
-		panel.setLayout(new MigLayout("", "[248.00][289.00][289.00]", "[29.00][49.00][505.00][52.00]"));
+		panel.setLayout(new MigLayout("", "[150px:n:150px][109.00][100px:n:130px]", "[29.00][49.00][505.00][52.00]"));
 
 		JLabel lblProducts = new JLabel("Productos agregados a contenedor");
 		panel.add(lblProducts, "cell 0 1");
@@ -269,19 +282,19 @@ public class Sales extends JFrame {
 
 
 		buttonDel = new JButton("Eliminar");
-		panel.add(buttonDel, "cell 0 3,alignx center");
+		panel.add(buttonDel, "cell 0 3,alignx right");
 
 		buttonMoveSC = new JButton("Enviar Al Carrito");
 		panel.add(buttonMoveSC, "flowx,cell 1 3,alignx center");
 
-		button = new JButton("Carrito");
-		button.addActionListener(new ActionListener() {
+		btnVerCarrito = new JButton("Ver Carrito");
+		btnVerCarrito.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				changeShoppingcar();
 				//goShopingcar();
 			}
 		});
-		panel.add(button, "cell 2 3,alignx right");
+		panel.add(btnVerCarrito, "cell 2 3,alignx center");
 		buttonMoveSC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(tableCont.getRowCount()>0){
@@ -426,7 +439,7 @@ public class Sales extends JFrame {
 		}
 		return cd;
 	}
-	
+
 	public String assignCDName(){
 		String name = auxSCSong.get(0).getAuthor();
 		boolean more = false;
