@@ -105,7 +105,7 @@ public class ShoppingCarGUI extends JFrame {
 			}
 		});
 
-		btnDel = new JButton("-");
+		btnDel = new JButton("Borrar");
 		btnDel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				deleteItem();
@@ -148,6 +148,7 @@ public class ShoppingCarGUI extends JFrame {
 	public void refreshShopingCar(){
 		cleanTable();
 		for (Disc disc : scManager.getShoppingcar().getDiscs()) {
+			System.out.println("Size :  " + scManager.getShoppingcar().getDiscs().size());
 			Object row[] = {disc.getName(), disc.getID(), disc.calculateCost()+"$"};
 			model.addRow(row);
 		}
@@ -155,7 +156,8 @@ public class ShoppingCarGUI extends JFrame {
 
 	}
 	public void cleanTable(){	
-		for(int i=0; i<tableShoppingcar.getRowCount(); i++){
+		int centinel = model.getRowCount();
+		for(int i=0; i<centinel; i++){
 			model.removeRow(0);
 		}
 	}
@@ -177,13 +179,8 @@ public class ShoppingCarGUI extends JFrame {
 		if(model.getRowCount()>0){
 			if(tableShoppingcar.getSelectedRow() >= 0 && tableShoppingcar.getSelectedRow() < model.getRowCount()){
 				int auxiliar = tableShoppingcar.getSelectedRow();
-				scManager.getShoppingcar().removeItem(auxiliar);
-				cleanTable();
-				for(Disc disc:scManager.getShoppingcar().getDiscs()){
-					Object row[]={disc.getName(),disc.getID(),disc.calculateCost()};
-					model.addRow(row);
-					tableShoppingcar.clearSelection();
-				}
+				scManager.removeItem(auxiliar);
+				refreshShopingCar();
 			}
 			else{
 				JOptionPane.showMessageDialog(null, "Debe seleccionar un elemento para elmininar");

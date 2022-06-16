@@ -20,6 +20,8 @@ import java.awt.event.ActionEvent;
 
 import logic.business.controllers.AccessController;
 import logic.util.Validator;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 @SuppressWarnings("serial")
 public class Login extends JFrame {
@@ -63,6 +65,14 @@ public class Login extends JFrame {
 		textFieldUsername.setColumns(10);
 		
 		textFieldPassword = new JPasswordField();
+		textFieldPassword.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER){
+					loginButton();
+				}
+			}
+		});
 		contentPane.add(textFieldPassword, "cell 1 2,growx");
 		
 		lblError = new JLabel("Error Message");

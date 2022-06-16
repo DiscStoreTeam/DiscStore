@@ -322,6 +322,8 @@ public class Sales extends JFrame {
 		tableCont.getColumnModel().getColumn(2).setResizable(false);
 		tableCont.getColumnModel().getColumn(3).setResizable(false);
 		tableCont.getColumnModel().getColumn(3).setResizable(false);
+		
+		textFieldSearchCD.requestFocus();
 	}
 	//methods
 	public void goMain(){
