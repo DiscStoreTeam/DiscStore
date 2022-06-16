@@ -193,6 +193,7 @@ public class ShoppingCarGUI extends JFrame {
 		}
 	}
 
+	
 	public double showTotalCost(){
 		return scManager.calculateCost();
 	}
