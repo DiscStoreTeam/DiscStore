@@ -41,6 +41,7 @@ public class ShoppingCarGUI extends JFrame {
 	private SCManager scManager;
 	private SalesController controller;
 
+	
 	//TableModel
 	String columnas[]={"Nombre","ID","Costo"};
 	boolean columnasEditables[]={false,false,false};
