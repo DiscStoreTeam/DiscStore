@@ -29,6 +29,9 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.SpinnerNumberModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFormattedTextField;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 @SuppressWarnings("serial")
 public class NewProduct extends JDialog {
@@ -41,9 +44,6 @@ public class NewProduct extends JDialog {
 	private JTextField textFieldInterpreter;
 	private JTextField textFieldCollaborators;
 	private JTextField textFieldAuthor;
-	private JSpinner spinnerMinutes;
-	private JSpinner spinnerSeconds;
-	private JSpinner spinnerSize;
 	private JComboBox<String> comboBoxResolution;
 	private JPanel panelType;
 	private JPanel panelCaract;
@@ -54,6 +54,12 @@ public class NewProduct extends JDialog {
 	private JLabel lblError;
 	
 	private DBController controller;
+	
+	private JTextField textFieldMinutes;
+	private JLabel label;
+	private JTextField textFieldSeconds;
+	private JTextField textFieldSize;
+	
 
 	/**
 	 * Create the dialog.
@@ -78,6 +84,7 @@ public class NewProduct extends JDialog {
 
 		ButtonGroup radio = new ButtonGroup();
 		radioSong = new JRadioButton("Canci\u00F3n");
+		radioSong.setSelected(true);
 		radioSong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				updateTypes();
@@ -149,30 +156,34 @@ public class NewProduct extends JDialog {
 		panelTec = new JPanel();
 		panelTec.setBorder(new TitledBorder(null, "Caracter\u00EDsticas T\u00E9cnicas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		contentPanel.add(panelTec, "cell 0 3,grow");
-		panelTec.setLayout(new MigLayout("", "[][grow]", "[][][]"));
+		panelTec.setLayout(new MigLayout("", "[][117.00][][grow]", "[][][]"));
 
 		JLabel lblDuracin = new JLabel("Duraci\u00F3n : ");
-		panelTec.add(lblDuracin, "cell 0 0,alignx right");
-
-
-		spinnerMinutes = new JSpinner();
-		spinnerMinutes.setModel(new SpinnerNumberModel(1, 1, 15, 1));
-		panelTec.add(spinnerMinutes, "flowx,cell 1 0,growx");
+		panelTec.add(lblDuracin, "cell 0 0,alignx trailing");
 		
-		JLabel label = new JLabel(" : ");
-		panelTec.add(label, "cell 1 0,alignx center");
+		textFieldMinutes = new JTextField();
+		textFieldMinutes.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				
+			}
+		});
+		panelTec.add(textFieldMinutes, "cell 1 0,growx");
+		textFieldMinutes.setColumns(10);
 		
-		spinnerSeconds = new JSpinner();
-		spinnerSeconds.setModel(new SpinnerNumberModel(0, 0, 59, 1));
-		panelTec.add(spinnerSeconds, "cell 1 0,growx");
+		label = new JLabel(" : ");
+		panelTec.add(label, "cell 2 0,alignx trailing");
+		
+		textFieldSeconds = new JTextField();
+		panelTec.add(textFieldSeconds, "cell 3 0,growx");
+		textFieldSeconds.setColumns(10);
 
 		JLabel lblTamaoDelArchivo = new JLabel("Tama\u00F1o del archivo : ");
-		panelTec.add(lblTamaoDelArchivo, "cell 0 1");
-
-
-		spinnerSize = new JSpinner();
-		spinnerSize.setModel(new SpinnerNumberModel(new Float(0.1), new Float(0.1), null, new Float(0.5)));
-		panelTec.add(spinnerSize, "cell 1 1,growx");
+		panelTec.add(lblTamaoDelArchivo, "cell 0 1,alignx trailing");
+		
+		textFieldSize = new JTextField();
+		panelTec.add(textFieldSize, "cell 1 1,growx");
+		textFieldSize.setColumns(10);
 
 
 		JLabel lblResolucin = new JLabel("Resoluci\u00F3n : ");
@@ -214,7 +225,6 @@ public class NewProduct extends JDialog {
 		
 		setLocationRelativeTo(null);
 		lblError.setVisible(false);
-		radioSong.setEnabled(true);
 		updateTypes();
 	}
 	
@@ -241,10 +251,9 @@ public class NewProduct extends JDialog {
 				form.setAuthor(textFieldAuthor.getText());
 				form.setInterpreter(textFieldInterpreter.getText());
 				form.setCollaborators(textFieldCollaborators.getText());
-				form.setDuration((Integer)spinnerMinutes.getValue() * 60 + (Integer)spinnerSeconds.getValue());
-				form.setFileSize((Integer)spinnerSize.getValue());
+				//form.setDuration((Integer)spinnerMinutes.getValue() * 60 + (Integer)spinnerSeconds.getValue());
+				//form.setFileSize((Integer)spinnerSize.getValue());
 				System.out.println(form.getDuration());
-				System.out.println(form.getFileSize());
 			}
 		}
 	}
@@ -291,6 +300,25 @@ public class NewProduct extends JDialog {
 				lblError.setText("El género introducido no es válido");
 			}
 		}
+		return valid;
+	}
+	
+	private void formattedFocusLost(JTextField field){
+		if(validateIntegers(field.getText())){
+			
+		}
+	}
+	
+	private boolean validateIntegers(String entry){
+		boolean valid = true;
+		
+		if(Validator.stringNumber(entry)){
+			valid = Validator.positiveNumber(new Integer(entry));
+		}
+		else{
+			valid = false;
+		}
+		
 		return valid;
 	}
 
