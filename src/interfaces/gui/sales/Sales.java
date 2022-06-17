@@ -350,6 +350,9 @@ public class Sales extends JFrame {
 		}
 	}
 
+	public int asignId(){
+		return controller.getReportId();
+	}
 	//Metodos para canciones
 	public ArrayList<Song> searchSongs(){
 		return manager.search(textFieldSearchCD.getText());
@@ -457,10 +460,10 @@ public class Sales extends JFrame {
 	}
 
 	public void moveToShoppingcar(Disc disc){
-		disc.setID(scManager.getShoppingcar().getDiscs().size()+1);
+		disc.setID(asignId());
 		disc.setName(assignCDName());
 		scManager.addItem(disc);
-
+		controller.addHistory(disc);
 	}
 
 

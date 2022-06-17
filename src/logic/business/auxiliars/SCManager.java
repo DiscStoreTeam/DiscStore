@@ -1,5 +1,8 @@
 package logic.business.auxiliars;
 
+import java.util.ArrayList;
+
+import logic.business.abstractions.Disc;
 import logic.business.abstractions.IContainerManager;
 import logic.business.abstractions.IProduct;
 import logic.business.controllers.SalesController;
@@ -10,7 +13,7 @@ public class SCManager implements IContainerManager {
 	//los Manager tiene acceso al controller para poder interactuar con el
 	private SalesController controller; 
 	private ShoppingCar shoppingCar;
-	
+
 	//Builders
 	public SCManager(SalesController controller, ShoppingCar shoppingCar)
 	{
@@ -19,7 +22,7 @@ public class SCManager implements IContainerManager {
 	}
 
 	//Methods
-	
+
 	public ShoppingCar getShoppingcar(){
 		return this.shoppingCar;
 	}
@@ -42,8 +45,19 @@ public class SCManager implements IContainerManager {
 	public double calculateCost() {
 		return shoppingCar.calculateCost();
 	}
-	@Override
 	public void sell() {
-		
+		ArrayList<Disc> auxiliar = shoppingCar.getDiscs();
+		for(Disc disc : auxiliar){
+			controller.addSellReport(generateSellReport(disc.getID(), "", disc.calculateCost(), "a"));
+		}
+		shoppingCar.cleanShoppingCar();
 	}
+	public SellReports generateSellReport(int id, String content, double cost, String workerName){
+		SellReports a = new SellReports(id, content, cost, workerName);
+		return a;
+	}
+
+
+
+
 }

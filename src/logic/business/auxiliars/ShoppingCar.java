@@ -70,4 +70,10 @@ public class ShoppingCar implements ProductContainer {
 		}
 		return a;
 	}
+	
+	public void cleanShoppingCar(){
+		discs.clear();
+	}
+		
+
 }

@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import logic.business.controllers.SalesController;
 import logic.business.core.Product;
 import logic.business.core.Store;
+import main.Application;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.JButton;
@@ -41,7 +42,7 @@ public class ShoppingCarGUI extends JFrame {
 	private SCManager scManager;
 	private SalesController controller;
 
-	
+
 	//TableModel
 	String columnas[]={"Nombre","ID","Costo"};
 	boolean columnasEditables[]={false,false,false};
@@ -84,7 +85,7 @@ public class ShoppingCarGUI extends JFrame {
 
 		panel = new JPanel();
 		contentPane.add(panel, "cell 0 0 3 9,grow");
-		panel.setLayout(new MigLayout("", "[261.00:n:600,grow][100:n:100][140:n:140][89.00:n:40]", "[][][grow]"));
+		panel.setLayout(new MigLayout("", "[230:n:230,grow][100:n:100][140:n:140][80:n:80]", "[][][grow]"));
 
 		lblListaDeProductos = new JLabel("Lista de Productos");
 		panel.add(lblListaDeProductos, "flowx,cell 0 0");
@@ -131,6 +132,11 @@ public class ShoppingCarGUI extends JFrame {
 		tableShoppingcar.setModel(model);
 
 		btnBack = new JButton("Atr\u00E1s");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				closeWindown();
+			}
+		});
 		contentPane.add(btnBack, "cell 3 0,alignx right");
 
 		lblNewLabel = new JLabel("Costo Total");
@@ -140,6 +146,12 @@ public class ShoppingCarGUI extends JFrame {
 		contentPane.add(lblCost, "cell 3 7,alignx center,aligny center");
 
 		btnSell = new JButton("Vender");
+		btnSell.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sell();
+
+			}
+		});
 		contentPane.add(btnSell, "cell 3 8");
 	}
 
@@ -167,11 +179,11 @@ public class ShoppingCarGUI extends JFrame {
 			int pos = tableShoppingcar.getSelectedRow();
 			String text = "El disco contiene: \n\n" ; int num = 1;
 			for(Product product : scManager.getShoppingcar().getDiscs().get(pos).getProducts()){
-				text += (num++) + " " +product.getTitle() + " " +product.getInterpreter() + "\n";
+				text += (num++) + " " +product.getTitle() + " - " +product.getInterpreter() + "\n";
 			}
 			JOptionPane.showMessageDialog(null, text);
 		}else{
-			JOptionPane.showMessageDialog(null, "Seleccione un producto para ver su contendio");
+			JOptionPane.showMessageDialog(null, "Seleccione un producto para ver su contenido");
 		}
 	}
 
@@ -191,10 +203,23 @@ public class ShoppingCarGUI extends JFrame {
 		}
 	}
 
-	
-	
 	public double showTotalCost(){
 		return scManager.calculateCost();
 	}
 
+	public void closeWindown(){
+		dispose();
+	}
+	public void sell(){
+		if((JOptionPane.showConfirmDialog(null, "Seguro que desea realizar la compra por un costo de: " + scManager.getTotalCost()+"$")) == 0){
+			controller.sell();
+			refreshShopingCar();
+
+			String text = "Reporte\n";
+			for(int i=0;i<controller.getSellReports().size();i++){
+				text += "Producto: "+ controller.getSellReports().get(i).getId() + " Precio: " +controller.getSellReports().get(i).getCost()+"\n";
+			}
+			JOptionPane.showMessageDialog(null , text);
+		}
+	}
 }

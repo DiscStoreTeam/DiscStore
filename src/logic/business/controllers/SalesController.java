@@ -3,9 +3,11 @@ package logic.business.controllers;
 import java.util.ArrayList;
 
 import logic.business.abstractions.Disc;
+import logic.business.abstractions.IProduct;
 import logic.business.auxiliars.CDManager;
 import logic.business.auxiliars.DVDManager;
 import logic.business.auxiliars.SCManager;
+import logic.business.auxiliars.SellReports;
 import logic.business.auxiliars.ShoppingCar;
 import logic.business.core.Song;
 import logic.business.core.Video;
@@ -15,7 +17,8 @@ public class SalesController {
 	//q trabajar con informacion q no le toca
 	private ArrayList<Song> songsList;
 	private ArrayList<Video> videosList;
-	private ArrayList<Integer> sellReports;
+	private ArrayList<SellReports> sellReports;
+	private ArrayList<Disc> history;
 	private ShoppingCar shoppingCar;
 
 
@@ -24,7 +27,8 @@ public class SalesController {
 		this.shoppingCar = new ShoppingCar();
 		this.songsList = new ArrayList<Song>(songDatabase);
 		this.videosList = new ArrayList<Video>(videoDatabase);
-		this.sellReports = new ArrayList<Integer>();
+		this.sellReports = new ArrayList<SellReports>();
+		this.history = new ArrayList<Disc>();
 		
 		//String title, String genre, int duration, String interpreter, String collaborators, int fileSize, String author, String album
 		songsList.add( new Song("Lagrimas Desordenadas","Romantico",3,"Melendi","",0,"Melendi","Lagrimas Desordenadas", 0));
@@ -63,13 +67,6 @@ public class SalesController {
 		songsList.add(new Song("Los idiotas", "", 0, "Calle 13", "", 0, "Calle 13", "Multi Viral", 28));
 	}
 
-	public void addToShoppingList(Disc item){	
-		if(!item.isEmpty()){
-			item.setID(sellReports.size()+1);
-			shoppingCar.addItem(item);
-			sellReports.add(sellReports.size()+1);
-		}
-	}
 	public CDManager getCDManager(){
 		return new CDManager(this, songsList);
 	}
@@ -87,7 +84,20 @@ public class SalesController {
 		return songsList;
 	}
 	public void sell(){
-
+		getSCManager().sell();
+	}
+	public int getReportId(){
+		return history.size()+1;
+	}
+	public void addHistory(IProduct item){
+		history.add((Disc)item);
+	}
+	public void addSellReport(SellReports sellReport){
+		sellReports.add(sellReport);
+	}
+	public ArrayList<SellReports> getSellReports(){
+		return this.sellReports;
 	}
 }
+
 
