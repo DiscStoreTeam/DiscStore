@@ -11,6 +11,9 @@ import javax.swing.table.DefaultTableModel;
 
 
 
+
+
+
 import main.Application;
 import net.miginfocom.swing.MigLayout;
 
@@ -18,6 +21,9 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
+
+
+
 
 
 
@@ -32,13 +38,16 @@ import javax.swing.JTable;
 
 import logic.business.abstractions.Disc;
 import logic.business.auxiliars.CDManager;
+import logic.business.auxiliars.DVDManager;
 import logic.business.auxiliars.SCManager;
 import logic.business.controllers.SalesController;
 import logic.business.core.CD;
 import logic.business.core.Song;
 import logic.business.core.Video;
+import logic.business.core.Worker;
 
 import javax.swing.JScrollPane;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -84,7 +93,7 @@ public class Sales extends JFrame {
 	boolean columnasEditables[]={false, false, false, false, true};
 	@SuppressWarnings("rawtypes")
 	Class data[]={java.lang.Object.class,java.lang.Object.class , java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class };
-	DefaultTableModel model = new DefaultTableModel(){
+	DefaultTableModel modelSong = new DefaultTableModel(){
 		public boolean isCellEditable(int row, int col){
 			return columnasEditables[col];
 		}
@@ -102,14 +111,32 @@ public class Sales extends JFrame {
 			return data[index];
 		}
 	};
+	
+	
+	String columnasVideo[]={ "Título","Género","Intérprete","ID",""};
+	boolean columnasEditablesVideo[]={false, false, false, false, true};
+	@SuppressWarnings("rawtypes")
+	Class dataVideo[]={java.lang.Object.class,java.lang.Object.class , java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class };
+	DefaultTableModel modelVideo = new DefaultTableModel(){
+		public boolean isCellEditable(int row, int col){
+			return columnasEditablesVideo[col];
+		}
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		public Class getColumnClass(int index){
+			return dataVideo[index];
+		}
+	};
 
 
+	private Worker loggedWorker;
 	private SalesController controller;
-	private CDManager manager;
+	private CDManager cdManager;
+	private DVDManager dvdManager;
 	private SCManager scManager;
 	private JTabbedPane tabbedPane_1;
 	private JPanel panel;
 	private JButton btnVerCarrito;
+	private JButton btnNewButton;
 
 
 
@@ -119,8 +146,9 @@ public class Sales extends JFrame {
 	public Sales(SalesController controller) {		
 		drawWindow();
 		this.controller = controller;
+		this.loggedWorker = controller.getLoggedWorker();
 		this.scManager = controller.getSCManager();
-		this.manager = controller.getCDManager();
+		this.cdManager = controller.getCDManager();
 		auxSong = new ArrayList<Song>();
 		auxVideo = new ArrayList<Video>();
 		auxSCSong = new ArrayList<Song>();
@@ -147,6 +175,14 @@ public class Sales extends JFrame {
 
 		lblWarning = new JLabel("Warning");
 		contentPane.add(lblWarning, "cell 2 0,alignx right,aligny center");
+		
+		btnNewButton = new JButton("Ver historial de ventas");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				showSellReports();
+			}
+		});
+		contentPane.add(btnNewButton, "flowx,cell 3 0,alignx right");
 		contentPane.add(btnBack, "cell 3 0,alignx right,aligny top");
 		lblWarning.setVisible(false);
 
@@ -165,7 +201,7 @@ public class Sales extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER){
-					addToSearchListSong(model);
+					addToSearchListSong(modelSong);
 				}
 			}
 		});
@@ -175,7 +211,7 @@ public class Sales extends JFrame {
 		btnSearchCD = new JButton("Buscar");
 		btnSearchCD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				addToSearchListSong(model);
+				addToSearchListSong(modelSong);
 			}
 		});
 		panelCD.add(btnSearchCD, "cell 3 1");
@@ -184,8 +220,8 @@ public class Sales extends JFrame {
 		panelCD.add(scrollPaneCD, "cell 1 3 3 1,grow");
 
 		tableCD = new JTable();
-		model.setColumnIdentifiers(columnas);
-		tableCD.setModel(model);
+		modelSong.setColumnIdentifiers(columnas);
+		tableCD.setModel(modelSong);
 		tableCD.getColumnModel().getColumn(0).setPreferredWidth(160);
 		tableCD.getColumnModel().getColumn(1).setPreferredWidth(160);
 		tableCD.getColumnModel().getColumn(2).setPreferredWidth(160);
@@ -206,7 +242,7 @@ public class Sales extends JFrame {
 		btnCleanListCD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(tableCD.getRowCount()>0){
-					cleanTableSearch(model);
+					cleanTableSearch(modelSong);
 				}
 				else{
 					JOptionPane.showMessageDialog(null, "La tabla ya se encuentra vacia");
@@ -224,16 +260,25 @@ public class Sales extends JFrame {
 		panelCD.add(buttonAddCD, "cell 2 4 2 1,alignx right");
 
 
-
+		//////////////////////////////////////////////////////////////////
+		
 
 		panelDVD = new JPanel();
 		tabbedPane.addTab("Venta DVD", null, panelDVD, null);
-		panelDVD.setLayout(new MigLayout("", "[7.00][109.00,grow][251.00][grow]", "[30.00][][9.00][418.00,grow][]"));
+		panelDVD.setLayout(new MigLayout("", "[7.00][109.00,grow][251.00][grow][]", "[30.00][36.00][9.00][418.00,grow][19.00]"));
 
 		lblIntroduzcaSuCriterioDVD = new JLabel("Introduzca su criterio de busqueda");
 		panelDVD.add(lblIntroduzcaSuCriterioDVD, "cell 1 0");
 
 		textFieldSearchDVD = new JTextField();
+		textFieldSearchDVD.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER){
+					addToSearchListVideo(modelVideo);
+				}
+			}
+		});
 		panelDVD.add(textFieldSearchDVD, "cell 1 1 2 1,growx");
 		textFieldSearchDVD.setColumns(10);
 
@@ -245,6 +290,18 @@ public class Sales extends JFrame {
 
 		tableDVD = new JTable();
 		scrollPaneDVD.setViewportView(tableDVD);
+		modelVideo.setColumnIdentifiers(columnasVideo);
+		tableDVD.setModel(modelVideo);
+		tableDVD.getColumnModel().getColumn(0).setPreferredWidth(160);
+		tableDVD.getColumnModel().getColumn(1).setPreferredWidth(160);
+		tableDVD.getColumnModel().getColumn(2).setPreferredWidth(160);
+		tableDVD.getColumnModel().getColumn(3).setPreferredWidth(60);
+		tableDVD.getColumnModel().getColumn(4).setPreferredWidth(35);
+		tableDVD.getColumnModel().getColumn(0).setResizable(false);
+		tableDVD.getColumnModel().getColumn(1).setResizable(false);
+		tableDVD.getColumnModel().getColumn(2).setResizable(false);
+		tableDVD.getColumnModel().getColumn(3).setResizable(false);
+		tableDVD.getColumnModel().getColumn(3).setResizable(false);
 
 		btnCleanListDVD = new JButton("Limpiar Lista");
 		panelDVD.add(btnCleanListDVD, "cell 1 4");
@@ -355,7 +412,7 @@ public class Sales extends JFrame {
 	}
 	//Metodos para canciones
 	public ArrayList<Song> searchSongs(){
-		return manager.search(textFieldSearchCD.getText());
+		return cdManager.search(textFieldSearchCD.getText());
 	}	
 
 	public void addToSearchListSong(DefaultTableModel modelOrigen){
@@ -469,20 +526,20 @@ public class Sales extends JFrame {
 
 	//Metodos para Videos
 	public ArrayList<Video> searchVideos(){
-		return controller.getDVDManager().getSearch().search(textFieldSearchDVD.getText(), controller.getVideoList());
-	}
+		return dvdManager.search(textFieldSearchDVD.getText());
+	}	
 
 	public void addToSearchListVideo(DefaultTableModel modelOrigen){
-		auxSong.clear();
+		auxVideo.clear();
 		cleanTableSearch(modelOrigen);
-		if(!textFieldSearchCD.getText().equals("")){
+		if(!textFieldSearchDVD.getText().equals("")){
 			ArrayList<Video> auxiliar = searchVideos();
 			for (Video video : auxiliar) {
-				Object rowns[] = {video.getTitle(), video.getInterpreter(),video.getID(), false};
+				Object rowns[] = {video.getTitle(),video.getGenre(), video.getInterpreter(),video.getID(), false};
 				modelOrigen.addRow(rowns);		
 			}
 			lblWarning.setVisible(false);
-			auxSong=searchSongs();
+			auxVideo=searchVideos();
 		}	
 		else{
 			lblWarning.setText("Debe introducir su criterio de búsqueda en la caja de texto");
@@ -541,6 +598,12 @@ public class Sales extends JFrame {
 		}
 	}
 
-
+	public void showSellReports(){
+		String text = "Reportes: \n";
+		for(int i=0;i<controller.getSellReports().size();i++){
+			text += "Reporte #"+ controller.getSellReports().get(i).getId()+"\n"+"Disco ID: "+controller.getSellReports().get(i).getDisc().getID() +"  Precio:  " +controller.getSellReports().get(i).getCost()+"$"+ "   Por:  " + loggedWorker.getName() + "\n" + controller.getSellReports().get(i).getContent() +"\n";
+		}
+		JOptionPane.showMessageDialog(null , text);
+	}
 
 }

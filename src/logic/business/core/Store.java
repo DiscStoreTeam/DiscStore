@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import logic.business.auxiliars.SearchManager;
 import logic.business.controllers.AccessController;
 import logic.business.controllers.DBController;
 import logic.business.controllers.HRController;
 import logic.business.controllers.SalesController;
-import logic.util.Address;
 import logic.util.PositionValue;
 import logic.util.ScholarDegreeValue;
 import logic.util.StoreProperties;
@@ -39,7 +37,7 @@ public class Store {
 		startManagerDate = Calendar.getInstance().getTime();
 		accessCtrl = new AccessController(workersList);
 		databaseCtrl = new DBController(songDatabase, videoDatabase);
-		salesCtrl = new SalesController(songDatabase, videoDatabase);
+		salesCtrl = new SalesController(songDatabase, videoDatabase, getAccessController().getLoggedWorker());
 		initialize();
 	}
 	

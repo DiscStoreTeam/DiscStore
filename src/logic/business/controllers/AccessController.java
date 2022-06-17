@@ -63,4 +63,5 @@ public class AccessController {
 	
 	public void logout(){loggedWorker = null;}
 	public Worker getLoggedWorker(){return loggedWorker;}
+	
 }

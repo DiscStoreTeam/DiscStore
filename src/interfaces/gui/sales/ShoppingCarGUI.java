@@ -9,9 +9,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import logic.business.controllers.SalesController;
-import logic.business.core.Product;
+import logic.business.controllers.AccessController;
 import logic.business.core.Store;
-import main.Application;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.JButton;
@@ -159,8 +158,8 @@ public class ShoppingCarGUI extends JFrame {
 
 	public void refreshShopingCar(){
 		cleanTable();
-		for (Disc disc : scManager.getShoppingcar().getDiscs()) {
-			System.out.println("Size :  " + scManager.getShoppingcar().getDiscs().size());
+		for (Disc disc : scManager.getDiscs()) {
+			System.out.println("Size :  " + scManager.getDiscs().size());
 			Object row[] = {disc.getName(), disc.getID(), disc.calculateCost()+"$"};
 			model.addRow(row);
 		}
@@ -177,10 +176,7 @@ public class ShoppingCarGUI extends JFrame {
 	public void showContents() {
 		if(tableShoppingcar.getSelectedRow() != -1){
 			int pos = tableShoppingcar.getSelectedRow();
-			String text = "El disco contiene: \n\n" ; int num = 1;
-			for(Product product : scManager.getShoppingcar().getDiscs().get(pos).getProducts()){
-				text += (num++) + " " +product.getTitle() + " - " +product.getInterpreter() + "\n";
-			}
+			String text = scManager.getDiscs().get(pos).getStringContent();
 			JOptionPane.showMessageDialog(null, text);
 		}else{
 			JOptionPane.showMessageDialog(null, "Seleccione un producto para ver su contenido");
@@ -214,13 +210,10 @@ public class ShoppingCarGUI extends JFrame {
 		if((JOptionPane.showConfirmDialog(null, "Seguro que desea realizar la compra por un costo de: " + scManager.getTotalCost()+"$")) == 0){
 			controller.sell();
 			refreshShopingCar();
-
-			String text = "Reporte\n";
-			for(int i=0;i<controller.getSellReports().size();i++){
-				text += "Producto: "+ controller.getSellReports().get(i).getId() + " Precio: " +controller.getSellReports().get(i).getCost()+"\n";
-			}
-			JOptionPane.showMessageDialog(null , text);
 		}
 	}
+
+
+
 }
 

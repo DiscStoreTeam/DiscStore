@@ -11,6 +11,8 @@ import logic.business.auxiliars.SellReports;
 import logic.business.auxiliars.ShoppingCar;
 import logic.business.core.Song;
 import logic.business.core.Video;
+import logic.business.core.Worker;
+import logic.util.Resolution;
 
 public class SalesController {
 	//Te dejo de tarea cambiar la estructura para q existan 2 listas, una de canciones y otra de videos, asi cada Manager no tiene
@@ -20,18 +22,20 @@ public class SalesController {
 	private ArrayList<SellReports> sellReports;
 	private ArrayList<Disc> history;
 	private ShoppingCar shoppingCar;
+	private Worker loggedWorker;
 
 
-	public SalesController(ArrayList<Song> songDatabase, ArrayList<Video> videoDatabase)
+	public SalesController(ArrayList<Song> songDatabase, ArrayList<Video> videoDatabase, Worker loggedWorker)
 	{	
 		this.shoppingCar = new ShoppingCar();
 		this.songsList = new ArrayList<Song>(songDatabase);
 		this.videosList = new ArrayList<Video>(videoDatabase);
 		this.sellReports = new ArrayList<SellReports>();
 		this.history = new ArrayList<Disc>();
+		this.loggedWorker = loggedWorker;
 		
 		//String title, String genre, int duration, String interpreter, String collaborators, int fileSize, String author, String album
-		songsList.add( new Song("Lagrimas Desordenadas","Romantico",3,"Melendi","",0,"Melendi","Lagrimas Desordenadas", 0));
+		songsList.add(new Song("Lagrimas Desordenadas","Romantico",3,"Melendi","",0,"Melendi","Lagrimas Desordenadas", 0));
 		songsList.add(new Song("Tu jardin con enanitos", "", 0, "Melendi", "", 0, "Melendi", "Lagrimas Desordenadas", 1));
 		songsList.add(new Song("Cheque al portamor", "", 0, "Melendi", "", 0, "Melendi", "Lagrimas Desordenadas", 2));
 		songsList.add(new Song("Tu lista de enemigos", "", 0, "Melendi", "", 0, "Melendi", "Lagrimas Desordenadas", 3));
@@ -65,6 +69,17 @@ public class SalesController {
 		songsList.add(new Song("El Aguante", "", 0, "Calle 13", "", 0, "Calle 13", "Multi Viral", 26));
 		songsList.add(new Song("Ojos de color sol", "", 0, "Calle 13", "", 0, "Calle 13", "Multi Viral", 27));
 		songsList.add(new Song("Los idiotas", "", 0, "Calle 13", "", 0, "Calle 13", "Multi Viral", 28));
+		
+		//String title, String genre, int duration, String interpreter, String collaborators,
+		//int fileSize, Resolution resolution, int id) 
+		Resolution resolution = new Resolution(1,2);
+		videosList.add(new Video("Lagrimas desordenadas","Romantico",0,"Melendi","-",0,resolution,0));
+		videosList.add(new Video("Vuelve","Romantico",0,"Beret","-",0,resolution,1));
+		videosList.add(new Video("Maquiavelico","Rap",0,"Canserbero","-",0,resolution,2));
+		videosList.add(new Video("Dejarte de amar","Romantico",0,"Camila","-",0,resolution,3));
+		videosList.add(new Video("Volar sin ti","Romantico",0,"Buena Fe","-",0,resolution,4));
+		
+		
 	}
 
 	public CDManager getCDManager(){
@@ -97,6 +112,9 @@ public class SalesController {
 	}
 	public ArrayList<SellReports> getSellReports(){
 		return this.sellReports;
+	}
+	public Worker getLoggedWorker(){
+		return this.loggedWorker;
 	}
 }
 

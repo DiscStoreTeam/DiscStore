@@ -66,13 +66,19 @@ public class ShoppingCar implements ProductContainer {
 	public ArrayList<Product> getProducts() {
 		ArrayList<Product> a = new ArrayList<Product>();
 		for (Disc disc : discs) {
-			a.addAll(disc.getProducts());
+			a.addAll(disc.getProducts());	
 		}
 		return a;
 	}
 	
 	public void cleanShoppingCar(){
 		discs.clear();
+	}
+
+	@Override
+	public String getStringContent() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 		
 

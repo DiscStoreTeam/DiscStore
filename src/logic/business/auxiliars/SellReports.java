@@ -1,16 +1,21 @@
 package logic.business.auxiliars;
 
+import logic.business.abstractions.Disc;
+import logic.business.core.Worker;
+
 public class SellReports {
+	private Disc disc;
 	private int id;
 	private String content;
 	private double cost;
-	private String workerName;
+	private Worker worker;
 	
-	public SellReports(int id, String content, double cost, String workerName){
+	public SellReports(int id, String content, double cost, Worker worker, Disc disc){
 		this.id = id;
 		this.content = content;
 		this.cost = cost;
-		this.workerName = workerName;	
+		this.worker = worker;	
+		this.disc = disc;
 	}
 
 	public int getId() {
@@ -23,7 +28,10 @@ public class SellReports {
 		return cost;
 	}
 	public String getWorkerName() {
-		return workerName;
+		return worker.getName();
+	}
+	public Disc getDisc(){
+		return disc;
 	}
 
 }

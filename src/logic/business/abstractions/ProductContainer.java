@@ -11,4 +11,5 @@ public interface ProductContainer {
 	public double calculateCost();
 	public boolean isEmpty();
 	public ArrayList<Product> getProducts();
+	public String getStringContent();
 }

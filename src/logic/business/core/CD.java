@@ -82,5 +82,13 @@ public class CD extends Disc{
 		}
 		return a;
 	}
+
+	@Override
+	public String getStringContent() {
+		String text = ""; int num =1;
+		for(Song song : contents)
+			text += (num++) +" - "+ song.getTitle() +" - "+ song.getInterpreter()+ "\n";
+		return text;
+	}
 	
 }

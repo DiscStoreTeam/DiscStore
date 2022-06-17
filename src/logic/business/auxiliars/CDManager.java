@@ -42,7 +42,6 @@ public class CDManager implements IContainerManager {
 	public double calculateCost() {
 		return cd.calculateCost();
 	}
-	
 	public ArrayList<Song> search(String critery) {
 		return searcher.search(critery, database);
 	}

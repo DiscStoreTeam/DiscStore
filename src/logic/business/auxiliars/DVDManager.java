@@ -1,6 +1,5 @@
 package logic.business.auxiliars;
 
-
 import java.util.ArrayList;
 
 import logic.business.abstractions.IContainerManager;
@@ -12,8 +11,8 @@ import logic.business.core.Video;
 
 public class DVDManager implements IContainerManager {
 	private SalesController controller;
-	private DVD dvd;
 	private SearchManager<Video> searcher;
+	private DVD dvd;
 	private ArrayList<Video> database;
 
 	public DVDManager(SalesController controller, ArrayList<Video> database)
@@ -27,12 +26,15 @@ public class DVDManager implements IContainerManager {
 	public DVD getDVD(){
 		return dvd;
 	}
-
-	public SearchManager<Video> getSearch(){
-		return this.searcher;
+	@Override
+	public boolean addItem(IProduct item) {
+		// TODO Auto-generated method stub	
+		return dvd.addItem(item);
 	}
-
-
+	@Override
+	public void removeItem(IProduct item) {
+		dvd.removeItem(item);
+	}
 	@Override
 	public void removeItem(int index) {
 		dvd.removeItem(index);
@@ -41,10 +43,9 @@ public class DVDManager implements IContainerManager {
 	public double calculateCost() {
 		return dvd.calculateCost();
 	}
-	/*@Override
-	public ArrayList<IProduct> search(String critery) {
-		return null;
-	}*/
+	public ArrayList<Video> search(String critery) {
+		return searcher.search(critery, database);
+	}
 	@Override
 	public void sell() {
 		//Lo mismo de cd
@@ -53,15 +54,4 @@ public class DVDManager implements IContainerManager {
 		return this.database;
 	}
 
-	@Override
-	public boolean addItem(IProduct item) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void removeItem(IProduct item) {
-		// TODO Auto-generated method stub
-		
-	}
 }

@@ -74,4 +74,10 @@ public class DVD extends Disc {
 		}
 		return a;
 	}
+
+	@Override
+	public String getStringContent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
