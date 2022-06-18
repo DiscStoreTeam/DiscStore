@@ -23,6 +23,7 @@ public class Store {
 	private ArrayList<Video> videoDatabase;
 	
 	private Worker manager;
+	private Worker loggedWorker;
 	private Date startManagerDate;
 	private StoreProperties properties;
 	
@@ -31,13 +32,14 @@ public class Store {
 		workersList = new ArrayList<Worker>();
 		songDatabase = new ArrayList<Song>();
 		videoDatabase = new ArrayList<Video>();
+		loggedWorker = new Worker();
 		hrCtrl = new HRController("admin", "admin", "admin", ScholarDegreeValue.superior, workersList);
 		manager = workersList.get(0);
 		startManagerDate = new Date();
 		startManagerDate = Calendar.getInstance().getTime();
-		accessCtrl = new AccessController(workersList);
+		accessCtrl = new AccessController(workersList, this);
 		databaseCtrl = new DBController(songDatabase, videoDatabase);
-		salesCtrl = new SalesController(songDatabase, videoDatabase, accessCtrl);
+		salesCtrl = new SalesController(songDatabase, videoDatabase, loggedWorker);
 		initialize();
 	}
 	
@@ -47,6 +49,11 @@ public class Store {
 		properties.setPhoneNumber("79019090");
 		hrCtrl.hireWorker("Pepe", "A", "12345678901", PositionValue.dependent, ScholarDegreeValue.basic);
 		hrCtrl.hireWorker("Alberto", "A", "12345678901", PositionValue.manager, ScholarDegreeValue.basic);
+	}
+	
+	public void updateLoggedWorker(Worker loggedWorker){
+		this.loggedWorker = loggedWorker;
+		salesCtrl.updateLoggedWorker(this.loggedWorker);
 	}
 	
 	public AccessController getAccessController(){return accessCtrl;}

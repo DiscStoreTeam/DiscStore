@@ -2,17 +2,20 @@ package logic.business.controllers;
 
 import java.util.ArrayList;
 
+import logic.business.core.Store;
 import logic.business.core.Worker;
 import logic.util.PositionValue;
 
 public class AccessController {
 	private ArrayList<Worker> workersList;
 	private Worker loggedWorker;
+	private Store store;
 	
 	//Builders
-	public AccessController(ArrayList<Worker> workersList){
+	public AccessController(ArrayList<Worker> workersList, Store store){
 		this.workersList = workersList;
 		this.loggedWorker = null;
+		this.store = store;
 	}
 	
 	//Methods
@@ -30,6 +33,7 @@ public class AccessController {
 			case 2:
 				workerID = analizedWorker.getWorkerID();
 				loggedWorker = analizedWorker;
+				store.updateLoggedWorker(loggedWorker);
 			default:
 				break;
 			}

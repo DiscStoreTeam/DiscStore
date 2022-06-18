@@ -28,8 +28,6 @@ import logic.business.core.DVD;
 import logic.business.core.Song;
 import logic.business.core.Store;
 import logic.business.core.Video;
-import logic.business.core.Worker;
-
 import javax.swing.JScrollPane;
 
 import java.awt.event.KeyAdapter;
@@ -123,8 +121,6 @@ public class Sales extends JFrame {
 	};
 
 
-
-	private Worker loggedWorker;
 	private SalesController controller;
 	private CDManager cdManager;
 	private DVDManager dvdManager;
@@ -142,7 +138,6 @@ public class Sales extends JFrame {
 	public Sales(Store store) {		
 		drawWindow();
 		this.controller = store.getSalesController();
-		this.loggedWorker = controller.getLoggedWorker();
 		this.scManager = controller.getSCManager();
 		this.cdManager = controller.getCDManager();
 		this.dvdManager = controller.getDVDManager();
@@ -492,7 +487,7 @@ public class Sales extends JFrame {
 					+controller.getSellReports().get(i).getDisc().getID() +"  Tipo :   "
 					+controller.getSellReports().get(i).getDisc().getType()+"  - "
 					+"  Precio:  " +controller.getSellReports().get(i).getCost()+"$"+ "   Por:  " 
-					+ loggedWorker.getName() + "\n" + controller.getSellReports().get(i).getContent() +"\n";
+					+ controller.getLoggedWorker().getName() + "\n" + controller.getSellReports().get(i).getContent() +"\n";
 		}
 		JOptionPane.showMessageDialog(null , text);
 	}

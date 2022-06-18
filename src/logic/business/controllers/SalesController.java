@@ -24,17 +24,15 @@ public class SalesController {
 	private ArrayList<Disc> history;
 	private ShoppingCar shoppingCar;
 	private Worker loggedWorker;
-	private AccessController access;
 
 
-	public SalesController(ArrayList<Song> songDatabase, ArrayList<Video> videoDatabase, AccessController access)
+	public SalesController(ArrayList<Song> songDatabase, ArrayList<Video> videoDatabase, Worker loggedWorker)
 	{	
 		this.shoppingCar = new ShoppingCar();
 		this.songsList = new ArrayList<Song>(songDatabase);
 		this.videosList = new ArrayList<Video>(videoDatabase);
 		this.sellReports = new ArrayList<SellReports>();
 		this.history = new ArrayList<Disc>();
-		this.access = access;
 		this.loggedWorker = loggedWorker;
 		
 		//String title, String genre, int duration, String interpreter, String collaborators, int fileSize, String author, String album
@@ -117,8 +115,10 @@ public class SalesController {
 		return this.sellReports;
 	}
 	public Worker getLoggedWorker(){
-		loggedWorker = access.getLoggedWorker();
 		return loggedWorker;
+	}
+	public void updateLoggedWorker(Worker loggedWorker){
+		this.loggedWorker = loggedWorker;
 	}
 }
 

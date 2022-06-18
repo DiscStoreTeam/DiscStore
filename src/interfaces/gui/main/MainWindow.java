@@ -117,7 +117,7 @@ public class MainWindow extends JFrame {
 		mnGestionarTrabajadores.add(mntmDespedirTrabajador);
 		contentPane = new JPanel(){
 			public void paintComponent(Graphics pic){
-				Image image = Toolkit.getDefaultToolkit().getImage(MainWindow.class.getResource("/assets/images/pic-750x628.jpg"));
+				Image image = Toolkit.getDefaultToolkit().getImage(MainWindow.class.getResource("/interfaces/assets/pic-750x628.jpg"));
 				pic.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
 			}
 		};

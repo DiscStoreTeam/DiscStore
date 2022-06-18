@@ -51,12 +51,26 @@ public class Worker {
 			break;
 		}
 	}
+	public Worker(){
+		
+	}
 
 	//Methods
+	public void setNull(){
+		this.name = null;
+		this.lastName = null;
+		this.ci = null;
+		this.workerID = null;
+		this.position = null;
+		this.scholarDegree = null;
+		this.credentials = null;
+	}
+	
+	public boolean isNull(){return name == null;}
+	
 	public int isMe(String username, String password)
 	{
 		int valid = 0;
-		
 		if(credentials.getUsername().equalsIgnoreCase(username)){
 			if(credentials.getPassword().equals(password)){
 				valid = 2;
