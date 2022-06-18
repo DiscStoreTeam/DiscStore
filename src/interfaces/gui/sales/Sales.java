@@ -487,7 +487,7 @@ public class Sales extends JFrame {
 					+controller.getSellReports().get(i).getDisc().getID() +"  Tipo :   "
 					+controller.getSellReports().get(i).getDisc().getType()+"  - "
 					+"  Precio:  " +controller.getSellReports().get(i).getCost()+"$"+ "   Por:  " 
-					+ controller.getLoggedWorker().getName() + "\n" + controller.getSellReports().get(i).getContent() +"\n";
+					+ controller.getSellReports().get(i).getWorkerName() + "\n" + controller.getSellReports().get(i).getContent() +"\n";
 		}
 		JOptionPane.showMessageDialog(null , text);
 	}
