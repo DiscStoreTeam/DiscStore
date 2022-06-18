@@ -61,7 +61,7 @@ public class DVD extends Disc {
 		}
 		return empty;
 	}
-	
+
 	@Override
 	public ArrayList<Product> getProducts() {
 		// TODO Auto-generated method stub		
@@ -77,7 +77,11 @@ public class DVD extends Disc {
 
 	@Override
 	public String getStringContent() {
-		// TODO Auto-generated method stub
-		return null;
+		String text = ""; int num =1;
+		for(Video video : contents)
+			text += (num++) +" - "+ video.getTitle() +" - "+ video.getInterpreter()+ "\n";
+		return text;
 	}
+	
 }
+

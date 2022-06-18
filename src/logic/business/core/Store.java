@@ -37,7 +37,7 @@ public class Store {
 		startManagerDate = Calendar.getInstance().getTime();
 		accessCtrl = new AccessController(workersList);
 		databaseCtrl = new DBController(songDatabase, videoDatabase);
-		salesCtrl = new SalesController(songDatabase, videoDatabase, getAccessController().getLoggedWorker());
+		salesCtrl = new SalesController(songDatabase, videoDatabase, accessCtrl);
 		initialize();
 	}
 	

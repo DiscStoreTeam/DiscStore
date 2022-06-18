@@ -5,34 +5,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
-
-
-
-
-
-
-
-
 import main.Application;
 import net.miginfocom.swing.MigLayout;
-
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
-
-
-
-
-
-
-
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
-
 import javax.swing.JTextField;
 import javax.swing.JTable;
 
@@ -42,7 +24,9 @@ import logic.business.auxiliars.DVDManager;
 import logic.business.auxiliars.SCManager;
 import logic.business.controllers.SalesController;
 import logic.business.core.CD;
+import logic.business.core.DVD;
 import logic.business.core.Song;
+import logic.business.core.Store;
 import logic.business.core.Video;
 import logic.business.core.Worker;
 
@@ -50,6 +34,7 @@ import javax.swing.JScrollPane;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
 
 
 @SuppressWarnings("serial")
@@ -102,7 +87,7 @@ public class Sales extends JFrame {
 			return data[index];
 		}
 	};
-	DefaultTableModel modelCont = new DefaultTableModel(){
+	DefaultTableModel modelContSong = new DefaultTableModel(){
 		public boolean isCellEditable(int row, int col){
 			return columnasEditables[col];
 		}
@@ -127,6 +112,17 @@ public class Sales extends JFrame {
 		}
 	};
 
+	DefaultTableModel modelContVideo = new DefaultTableModel(){
+		public boolean isCellEditable(int row, int col){
+			return columnasEditablesVideo[col];
+		}
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		public Class getColumnClass(int index){
+			return dataVideo[index];
+		}
+	};
+
+
 
 	private Worker loggedWorker;
 	private SalesController controller;
@@ -143,9 +139,9 @@ public class Sales extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Sales(SalesController controller) {		
+	public Sales(Store store) {		
 		drawWindow();
-		this.controller = controller;
+		this.controller = store.getSalesController();
 		this.loggedWorker = controller.getLoggedWorker();
 		this.scManager = controller.getSCManager();
 		this.cdManager = controller.getCDManager();
@@ -189,13 +185,37 @@ public class Sales extends JFrame {
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, "cell 0 1 3 1,grow");
+		tabbedPane.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e){
+				resetModelCont();
+			}
+
+			@Override
+			public void mouseEntered(java.awt.event.MouseEvent arg0) {
+				// TODO Auto-generated method stub
+			}
+			@Override
+			public void mouseExited(java.awt.event.MouseEvent arg0) {
+				// TODO Auto-generated method stub
+			}
+			@Override
+			public void mousePressed(java.awt.event.MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			@Override
+			public void mouseReleased(java.awt.event.MouseEvent arg0) {
+				// TODO Auto-generated method stub	
+			}
+		});
 
 		panelCD = new JPanel();
 		tabbedPane.addTab("Venta CD", null, panelCD, null);
 		panelCD.setLayout(new MigLayout("", "[7.00][109.00,grow][251.00][grow][]", "[30.00][36.00][9.00][418.00,grow][19.00]"));
-
 		lblIntroduzcaSuCriterioCD = new JLabel("Introduzca su criterio de busqueda");
 		panelCD.add(lblIntroduzcaSuCriterioCD, "cell 1 0");
+
 
 		textFieldSearchCD = new JTextField();
 		textFieldSearchCD.addKeyListener(new KeyAdapter() {
@@ -255,7 +275,7 @@ public class Sales extends JFrame {
 		buttonAddCD = new JButton("A\u00F1adir");
 		buttonAddCD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				moveToVerifyListSong(tableCD, modelCont, 12, auxSong);
+				moveToVerifyListSong(tableCD, modelContSong, 12, auxSong);
 			}
 		});
 		panelCD.add(buttonAddCD, "cell 2 4 2 1,alignx right");
@@ -284,6 +304,11 @@ public class Sales extends JFrame {
 		textFieldSearchDVD.setColumns(10);
 
 		btnSearchDVD = new JButton("Buscar");
+		btnSearchDVD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				addToSearchListVideo(modelVideo);
+			}
+		});
 		panelDVD.add(btnSearchDVD, "cell 3 1");
 
 		scrollPaneDVD = new JScrollPane();
@@ -305,11 +330,21 @@ public class Sales extends JFrame {
 		tableDVD.getColumnModel().getColumn(3).setResizable(false);
 
 		btnCleanListDVD = new JButton("Limpiar Lista");
+		btnCleanListDVD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				cleanTableSearch(modelVideo);
+			}
+		});
 		panelDVD.add(btnCleanListDVD, "cell 1 4");
 
 		buttonAddDVD = new JButton("A\u00F1adir");
+		buttonAddDVD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				moveToVerifyListVideo(tableDVD, modelContVideo, 7, auxVideo);
+			}
+		});
 		panelDVD.add(buttonAddDVD, "cell 2 4 2 1,alignx right");
-		modelCont.setColumnIdentifiers(columnas);
+		modelContSong.setColumnIdentifiers(columnas);
 
 		tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_1.setToolTipText("Confirmación");
@@ -336,40 +371,66 @@ public class Sales extends JFrame {
 
 		tableCont = new JTable();
 		scrollPaneCont.setViewportView(tableCont);
-		tableCont.setModel(modelCont);
 
 
 		buttonDel = new JButton("Eliminar");
 		panel.add(buttonDel, "cell 0 3,alignx right");
+		buttonDel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(tableCont.getModel().equals(modelContSong)){
+					delVerifySong(tableCont, modelContSong);
+				}
+				else{
+					delVerifyVideo(tableCont, modelContVideo);
+				}
+			}
+		});
+
 
 		buttonMoveSC = new JButton("Enviar Al Carrito");
 		panel.add(buttonMoveSC, "flowx,cell 1 3,alignx center");
-
-		btnVerCarrito = new JButton("Ver Carrito");
-		btnVerCarrito.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				changeShoppingcar();
-				//goShopingcar();
-			}
-		});
-		panel.add(btnVerCarrito, "cell 2 3,alignx center");
 		buttonMoveSC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(tableCont.getRowCount()>0){
-					moveToShoppingcar(addSongsToDisc());
-					auxSCSong.clear();
-					cleanTableSearch(modelCont);
+					if(tableCont.getModel().equals(modelContSong)){
+						moveToShoppingcar(addSongsToDisc());
+					}
+					else{
+						moveToShoppingcar(addVideosToDisc());
+					}
 				}
 				else{
 					JOptionPane.showMessageDialog(null, "Debe agregar al menos un elemento para enviar al carrito");	
 				}
 			}
 		});
-		buttonDel.addActionListener(new ActionListener() {
+
+
+
+		btnVerCarrito = new JButton("Ver Carrito");
+		btnVerCarrito.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				delVerifySong(tableCont, modelCont);
+				changeShoppingcar();
 			}
 		});
+		panel.add(btnVerCarrito, "cell 2 3,alignx center");
+
+
+		textFieldSearchCD.requestFocus();
+	}
+	//methods
+	public void resetModelCont(){
+		if(tabbedPane.getSelectedIndex()==0){
+			resetModelContSong();
+		}
+		else{
+			resetModelContVideo();
+		}
+	}
+
+	public void resetModelContSong(){
+		modelContSong.setColumnIdentifiers(columnas);
+		tableCont.setModel(modelContSong);
 		tableCont.getColumnModel().getColumn(0).setPreferredWidth(160);
 		tableCont.getColumnModel().getColumn(1).setPreferredWidth(160);
 		tableCont.getColumnModel().getColumn(2).setPreferredWidth(160);
@@ -380,10 +441,22 @@ public class Sales extends JFrame {
 		tableCont.getColumnModel().getColumn(2).setResizable(false);
 		tableCont.getColumnModel().getColumn(3).setResizable(false);
 		tableCont.getColumnModel().getColumn(3).setResizable(false);
-
-		textFieldSearchCD.requestFocus();
 	}
-	//methods
+	public void resetModelContVideo(){
+		modelContVideo.setColumnIdentifiers(columnasVideo);
+		tableCont.setModel(modelContVideo);
+		tableCont.getColumnModel().getColumn(0).setPreferredWidth(160);
+		tableCont.getColumnModel().getColumn(1).setPreferredWidth(160);
+		tableCont.getColumnModel().getColumn(2).setPreferredWidth(160);
+		tableCont.getColumnModel().getColumn(3).setPreferredWidth(60);
+		tableCont.getColumnModel().getColumn(4).setPreferredWidth(35);
+		tableCont.getColumnModel().getColumn(0).setResizable(false);
+		tableCont.getColumnModel().getColumn(1).setResizable(false);
+		tableCont.getColumnModel().getColumn(2).setResizable(false);
+		tableCont.getColumnModel().getColumn(3).setResizable(false);
+		tableCont.getColumnModel().getColumn(3).setResizable(false);
+	}
+
 	public void goMain(){
 		Application.changeWindow(this, Application.WindowType.main);
 	}
@@ -411,6 +484,19 @@ public class Sales extends JFrame {
 	public int asignId(){
 		return controller.getReportId();
 	}
+
+	public void showSellReports(){
+		String text = "Reportes: \n";
+		for(int i=0;i<controller.getSellReports().size();i++){
+			text += "Reporte #"+ controller.getSellReports().get(i).getId()+"\n"+"Disco ID: "
+					+controller.getSellReports().get(i).getDisc().getID() +"  Tipo :   "
+					+controller.getSellReports().get(i).getDisc().getType()+"  - "
+					+"  Precio:  " +controller.getSellReports().get(i).getCost()+"$"+ "   Por:  " 
+					+ loggedWorker.getName() + "\n" + controller.getSellReports().get(i).getContent() +"\n";
+		}
+		JOptionPane.showMessageDialog(null , text);
+	}
+
 	//Metodos para canciones
 	public ArrayList<Song> searchSongs(){
 		return cdManager.search(textFieldSearchCD.getText());
@@ -438,6 +524,8 @@ public class Sales extends JFrame {
 	public void moveToVerifyListSong(JTable tableOrigen, DefaultTableModel modelSC, int max, ArrayList<Song> auxSearch){
 		ArrayList<Song>auxiliar = searchSelectedSong(tableOrigen, auxSearch);
 		if(!(auxiliar.size() > (max-modelSC.getRowCount()))){
+			modelContSong.setColumnIdentifiers(columnas);
+			resetModelCont();
 			for (Song song : auxiliar) {
 				Object rowns[] = {song.getTitle(), song.getAlbum(), song.getAuthor(),song.getID(), false};
 				modelSC.addRow(rowns);	
@@ -487,14 +575,6 @@ public class Sales extends JFrame {
 		}
 	}
 
-	public void updateVerifySong(DefaultTableModel modelSC){
-		cleanTableSearch(modelSC);
-		for (Song song : auxSCSong) {
-			Object rowns[] = {song.getTitle(), song.getAlbum(), song.getAuthor(),song.getID(), false};
-			modelSC.addRow(rowns);	
-		}
-	}
-
 	public Disc addSongsToDisc(){
 		CD cd = new CD();
 		for (Song song : auxSCSong) {
@@ -519,7 +599,17 @@ public class Sales extends JFrame {
 
 	public void moveToShoppingcar(Disc disc){
 		disc.setID(asignId());
-		disc.setName(assignCDName());
+		if(disc instanceof CD){		
+			disc.setType("CD");
+			disc.setName(assignCDName());
+			auxSCSong.clear();
+			cleanTableSearch(modelContSong);
+		}else{
+			disc.setType("DVD");
+			disc.setName(assignDVDName());
+			auxSCVideo.clear();
+			cleanTableSearch(modelContVideo);
+		}
 		scManager.addItem(disc);
 		controller.addHistory(disc);
 	}
@@ -552,9 +642,11 @@ public class Sales extends JFrame {
 	public void moveToVerifyListVideo(JTable tableOrigen, DefaultTableModel modelSC, int max, ArrayList<Video> auxSearch){
 		ArrayList<Video>auxiliar = searchSelectedVideo(tableOrigen, auxSearch);
 		if(!(auxiliar.size() > (max-modelSC.getRowCount()))){
+			modelSC.setColumnIdentifiers(columnasVideo);
+			resetModelCont();
 			for (Video video : auxiliar) {
-				Object rowns[] = {video.getTitle(), video.getInterpreter(),video.getID(), false};
-				modelSC.addRow(rowns);	
+				Object rowns[] = {video.getTitle(),video.getGenre() ,video.getInterpreter(),video.getID(), false};
+				modelContVideo.addRow(rowns);	
 				auxSCVideo.add(video);
 			}
 		}
@@ -566,15 +658,18 @@ public class Sales extends JFrame {
 	public ArrayList<Video> searchSelectedVideo(JTable table, ArrayList<Video> auxSearch){
 		ArrayList<Video>search = new ArrayList<Video>();
 		boolean confirm = false;
+		boolean secure = false;
 		for(int i = 0; i<table.getRowCount(); i++){
 			if((boolean) table.getValueAt(i, 4)){
 				int id = (int) table.getValueAt(i, 3);				
-				for(int j = 0; j<auxSearch.size();j++){
+				for(int j = 0; j<auxSearch.size() && !secure;j++){
 					if(auxSearch.get(j).getID() == id){
 						search.add(auxSearch.get(j));
 						confirm = true;
+						secure = true;
 					}
 				}
+				secure = false;
 			}
 		}
 		if(!confirm){	
@@ -587,11 +682,10 @@ public class Sales extends JFrame {
 		boolean confirm = false;
 		for(int i = 0; i<tableCont.getRowCount(); i++){
 			if((boolean) tableCont.getValueAt(i, 4)){
-				modelCont.moveRow(i, tableCont.getRowCount(), 0);
-				modelCont.removeRow(0);
+				modelCont.removeRow(i);
 				auxSCVideo.remove(i);
 				confirm = true;
-
+				i--;
 			}
 		}
 		if(!confirm){	
@@ -599,12 +693,30 @@ public class Sales extends JFrame {
 		}
 	}
 
-	public void showSellReports(){
-		String text = "Reportes: \n";
-		for(int i=0;i<controller.getSellReports().size();i++){
-			text += "Reporte #"+ controller.getSellReports().get(i).getId()+"\n"+"Disco ID: "+controller.getSellReports().get(i).getDisc().getID() +"  Precio:  " +controller.getSellReports().get(i).getCost()+"$"+ "   Por:  " + loggedWorker.getName() + "\n" + controller.getSellReports().get(i).getContent() +"\n";
+
+	public Disc addVideosToDisc(){
+		DVD dvd = new DVD();
+		for (Video video : auxSCVideo) {
+			dvd.addItem(video);	
 		}
-		JOptionPane.showMessageDialog(null , text);
+		return dvd;
 	}
+
+	public String assignDVDName(){
+		String name = auxSCVideo.get(0).getInterpreter();
+		boolean more = false;
+		for(int i = 1; i<auxSCVideo.size() && !more;i++){
+			if(!auxSCVideo.get(i).getInterpreter().equals(name)){
+				more = true;
+			}
+		}
+		if(more){
+			name += " y otros";
+		}
+		return name;
+	}
+
+
+
 
 }

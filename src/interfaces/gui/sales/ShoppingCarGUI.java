@@ -9,7 +9,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import logic.business.controllers.SalesController;
-import logic.business.controllers.AccessController;
 import logic.business.core.Store;
 import net.miginfocom.swing.MigLayout;
 
@@ -43,10 +42,10 @@ public class ShoppingCarGUI extends JFrame {
 
 
 	//TableModel
-	String columnas[]={"Nombre","ID","Costo"};
-	boolean columnasEditables[]={false,false,false};
+	String columnas[]={"Nombre","ID","Tipo","Costo"};
+	boolean columnasEditables[]={false,false,false,false};
 	@SuppressWarnings("rawtypes")
-	Class data[]={java.lang.Object.class,java.lang.Object.class,java.lang.Object.class};
+	Class data[]={java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class};
 
 	DefaultTableModel model = new DefaultTableModel(){
 		public boolean isCellEditable(int row, int col){
@@ -92,6 +91,7 @@ public class ShoppingCarGUI extends JFrame {
 		btnRefresh = new JButton("Refrescar");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				System.out.println(scManager.getDiscs().get(0).getClass());
 				refreshShopingCar();
 			}
 		});
@@ -160,7 +160,7 @@ public class ShoppingCarGUI extends JFrame {
 		cleanTable();
 		for (Disc disc : scManager.getDiscs()) {
 			System.out.println("Size :  " + scManager.getDiscs().size());
-			Object row[] = {disc.getName(), disc.getID(), disc.calculateCost()+"$"};
+			Object row[] = {disc.getName(), disc.getID(),disc.getType(),disc.calculateCost()+"$"};
 			model.addRow(row);
 		}
 		lblCost.setText(Double.toString(showTotalCost())+"$");

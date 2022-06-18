@@ -4,6 +4,7 @@ package logic.business.abstractions;
 public abstract class Disc implements IProduct, ProductContainer{
 	private int id;
 	private String name;
+	private String type;
 	
 	public int getID(){
 		return this.id;
@@ -17,5 +18,11 @@ public abstract class Disc implements IProduct, ProductContainer{
 	}
 	public void setName(String name){
 		this.name = name;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getType() {
+		return this.type;
 	}
 }

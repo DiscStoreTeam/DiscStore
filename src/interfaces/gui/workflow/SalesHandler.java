@@ -21,7 +21,7 @@ public class SalesHandler implements WindowHandler{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame = new Sales(store.getSalesController());
+					frame = new Sales(store);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

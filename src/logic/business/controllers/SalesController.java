@@ -2,6 +2,7 @@ package logic.business.controllers;
 
 import java.util.ArrayList;
 
+
 import logic.business.abstractions.Disc;
 import logic.business.abstractions.IProduct;
 import logic.business.auxiliars.CDManager;
@@ -23,15 +24,17 @@ public class SalesController {
 	private ArrayList<Disc> history;
 	private ShoppingCar shoppingCar;
 	private Worker loggedWorker;
+	private AccessController access;
 
 
-	public SalesController(ArrayList<Song> songDatabase, ArrayList<Video> videoDatabase, Worker loggedWorker)
+	public SalesController(ArrayList<Song> songDatabase, ArrayList<Video> videoDatabase, AccessController access)
 	{	
 		this.shoppingCar = new ShoppingCar();
 		this.songsList = new ArrayList<Song>(songDatabase);
 		this.videosList = new ArrayList<Video>(videoDatabase);
 		this.sellReports = new ArrayList<SellReports>();
 		this.history = new ArrayList<Disc>();
+		this.access = access;
 		this.loggedWorker = loggedWorker;
 		
 		//String title, String genre, int duration, String interpreter, String collaborators, int fileSize, String author, String album
@@ -114,7 +117,8 @@ public class SalesController {
 		return this.sellReports;
 	}
 	public Worker getLoggedWorker(){
-		return this.loggedWorker;
+		loggedWorker = access.getLoggedWorker();
+		return loggedWorker;
 	}
 }
 
