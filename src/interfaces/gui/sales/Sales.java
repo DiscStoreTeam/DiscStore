@@ -111,8 +111,8 @@ public class Sales extends JFrame {
 			return data[index];
 		}
 	};
-	
-	
+
+
 	String columnasVideo[]={ "Título","Género","Intérprete","ID",""};
 	boolean columnasEditablesVideo[]={false, false, false, false, true};
 	@SuppressWarnings("rawtypes")
@@ -149,6 +149,7 @@ public class Sales extends JFrame {
 		this.loggedWorker = controller.getLoggedWorker();
 		this.scManager = controller.getSCManager();
 		this.cdManager = controller.getCDManager();
+		this.dvdManager = controller.getDVDManager();
 		auxSong = new ArrayList<Song>();
 		auxVideo = new ArrayList<Video>();
 		auxSCSong = new ArrayList<Song>();
@@ -175,7 +176,7 @@ public class Sales extends JFrame {
 
 		lblWarning = new JLabel("Warning");
 		contentPane.add(lblWarning, "cell 2 0,alignx right,aligny center");
-		
+
 		btnNewButton = new JButton("Ver historial de ventas");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -261,7 +262,7 @@ public class Sales extends JFrame {
 
 
 		//////////////////////////////////////////////////////////////////
-		
+
 
 		panelDVD = new JPanel();
 		tabbedPane.addTab("Venta DVD", null, panelDVD, null);
@@ -379,7 +380,7 @@ public class Sales extends JFrame {
 		tableCont.getColumnModel().getColumn(2).setResizable(false);
 		tableCont.getColumnModel().getColumn(3).setResizable(false);
 		tableCont.getColumnModel().getColumn(3).setResizable(false);
-		
+
 		textFieldSearchCD.requestFocus();
 	}
 	//methods
