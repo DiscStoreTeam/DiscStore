@@ -32,6 +32,8 @@ import javax.swing.JScrollPane;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 
@@ -120,15 +122,36 @@ public class Sales extends JFrame {
 		}
 	};
 
+	
+	String columnasPrefab[]={"Nombre","ID","Tipo","Costo",""};
+	boolean columnasEditablesPrefab[]={false,false,false,false,true};
+	@SuppressWarnings("rawtypes")
+	Class dataPrefab[]={java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Boolean.class};
+
+	DefaultTableModel modelPrefab = new DefaultTableModel(){
+		public boolean isCellEditable(int row, int col){
+			return columnasEditablesPrefab[col];
+		}
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		public Class getColumnClass(int index){
+			return dataPrefab[index];
+		}
+	};
 
 	private SalesController controller;
 	private CDManager cdManager;
 	private DVDManager dvdManager;
 	private SCManager scManager;
 	private JTabbedPane tabbedPane_1;
-	private JPanel panel;
-	private JButton btnVerCarrito;
+	private JPanel panelConfirmation;
+	private JButton btnShowSC;
 	private JButton btnNewButton;
+	private JPanel panelPrefab;
+	private JButton btnShowSCPrefab;
+	private JButton buttonMoveSCPrefab;
+	private JScrollPane scrollPane;
+	private JTable tablePrefab;
+	private JButton btnRefresh;
 
 
 
@@ -197,7 +220,7 @@ public class Sales extends JFrame {
 			@Override
 			public void mousePressed(java.awt.event.MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
 			@Override
 			public void mouseReleased(java.awt.event.MouseEvent arg0) {
@@ -270,6 +293,7 @@ public class Sales extends JFrame {
 		buttonAddCD = new JButton("A\u00F1adir");
 		buttonAddCD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				tabbedPane_1.setSelectedIndex(0);
 				moveToVerifyListSong(tableCD, modelContSong, 12, auxSong);
 			}
 		});
@@ -335,6 +359,7 @@ public class Sales extends JFrame {
 		buttonAddDVD = new JButton("A\u00F1adir");
 		buttonAddDVD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				tabbedPane_1.setSelectedIndex(0);
 				moveToVerifyListVideo(tableDVD, modelContVideo, 7, auxVideo);
 			}
 		});
@@ -344,16 +369,40 @@ public class Sales extends JFrame {
 		tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_1.setToolTipText("Confirmación");
 		contentPane.add(tabbedPane_1, "cell 3 1,grow");
+		tabbedPane_1.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e){
+				refreshPrefab();
+			}
 
-		panel = new JPanel();
-		tabbedPane_1.addTab("Confirmación a disco", null, panel, null);
-		panel.setLayout(new MigLayout("", "[150px:n:150px][109.00][100px:n:130px]", "[29.00][49.00][505.00][52.00]"));
+			@Override
+			public void mouseEntered(java.awt.event.MouseEvent arg0) {
+				// TODO Auto-generated method stub
+			}
+			@Override
+			public void mouseExited(java.awt.event.MouseEvent arg0) {
+				// TODO Auto-generated method stub
+			}
+			@Override
+			public void mousePressed(java.awt.event.MouseEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+			@Override
+			public void mouseReleased(java.awt.event.MouseEvent arg0) {
+				// TODO Auto-generated method stub	
+			}
+		});
+
+		panelConfirmation = new JPanel();
+		tabbedPane_1.addTab("Confirmación a disco", null, panelConfirmation, null);
+		panelConfirmation.setLayout(new MigLayout("", "[150px:n:150px][109.00][100px:n:130px]", "[30.00][49.00][505.00][52.00]"));
 
 		JLabel lblProducts = new JLabel("Productos agregados a contenedor");
-		panel.add(lblProducts, "cell 0 1");
+		panelConfirmation.add(lblProducts, "cell 0 1");
 
 		buttonInfo = new JButton("?");
-		panel.add(buttonInfo, "cell 1 1 2 1,alignx right");
+		panelConfirmation.add(buttonInfo, "cell 1 1 2 1,alignx right");
 		buttonInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				msgInfo();
@@ -361,7 +410,7 @@ public class Sales extends JFrame {
 		});
 
 		scrollPaneCont = new JScrollPane();
-		panel.add(scrollPaneCont, "cell 0 2 3 1,growy");
+		panelConfirmation.add(scrollPaneCont, "cell 0 2 3 1,growy");
 
 
 		tableCont = new JTable();
@@ -369,7 +418,7 @@ public class Sales extends JFrame {
 
 
 		buttonDel = new JButton("Eliminar");
-		panel.add(buttonDel, "cell 0 3,alignx right");
+		panelConfirmation.add(buttonDel, "cell 0 3,alignx right");
 		buttonDel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(tableCont.getModel().equals(modelContSong)){
@@ -383,7 +432,7 @@ public class Sales extends JFrame {
 
 
 		buttonMoveSC = new JButton("Enviar Al Carrito");
-		panel.add(buttonMoveSC, "flowx,cell 1 3,alignx center");
+		panelConfirmation.add(buttonMoveSC, "flowx,cell 1 3,alignx center");
 		buttonMoveSC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(tableCont.getRowCount()>0){
@@ -402,13 +451,73 @@ public class Sales extends JFrame {
 
 
 
-		btnVerCarrito = new JButton("Ver Carrito");
-		btnVerCarrito.addActionListener(new ActionListener() {
+		btnShowSC = new JButton("Ver Carrito");
+		btnShowSC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				changeShoppingcar();
 			}
 		});
-		panel.add(btnVerCarrito, "cell 2 3,alignx center");
+		panelConfirmation.add(btnShowSC, "cell 2 3,alignx center");
+		
+		panelPrefab = new JPanel();
+		tabbedPane_1.addTab("Discos Prefabricados", null, panelPrefab, null);
+		panelPrefab.setLayout(new MigLayout("", "[150px:n:150px,grow][109.00][198.00px:n:130px]", "[29.00][49.00][49,grow][505][52px]"));
+		
+		btnShowSCPrefab = new JButton("Ver Carrito");
+		btnShowSCPrefab.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				changeShoppingcar();
+			}
+		});
+		
+		scrollPane = new JScrollPane();
+		panelPrefab.add(scrollPane, "cell 0 1 3 3,grow");
+		
+		tablePrefab = new JTable();
+		tablePrefab.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount()==2){
+					if(tablePrefab.getRowCount()>0){
+					int a = tablePrefab.getSelectedRow();	
+					JOptionPane.showMessageDialog(null, controller.getHistory().get(a).getStringContent());
+					}
+				}
+			}
+		});
+		scrollPane.setViewportView(tablePrefab);
+		modelPrefab.setColumnIdentifiers(columnasPrefab);
+		tablePrefab.setModel(modelPrefab);
+		tablePrefab.getColumnModel().getColumn(0).setPreferredWidth(160);
+		tablePrefab.getColumnModel().getColumn(1).setPreferredWidth(50);
+		tablePrefab.getColumnModel().getColumn(2).setPreferredWidth(50);
+		tablePrefab.getColumnModel().getColumn(3).setPreferredWidth(80);
+		tablePrefab.getColumnModel().getColumn(4).setPreferredWidth(35);
+		tablePrefab.getColumnModel().getColumn(0).setResizable(false);
+		tablePrefab.getColumnModel().getColumn(1).setResizable(false);
+		tablePrefab.getColumnModel().getColumn(2).setResizable(false);
+		tablePrefab.getColumnModel().getColumn(3).setResizable(false);
+		tablePrefab.getColumnModel().getColumn(3).setResizable(false);
+		
+		btnRefresh = new JButton("Refrescar");
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				refreshPrefab();
+			}
+		});
+		panelPrefab.add(btnRefresh, "cell 0 4");
+		
+		buttonMoveSCPrefab = new JButton("Enviar Al Carrito");
+		buttonMoveSCPrefab.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				prefabToSC();
+				tablePrefab.clearSelection();
+				for(int i = 0; i<modelPrefab.getRowCount();i++)
+				tablePrefab.setValueAt(false, i, 4);
+			}
+		});
+		panelPrefab.add(buttonMoveSCPrefab, "cell 1 4,alignx center");
+		panelPrefab.add(btnShowSCPrefab, "cell 2 4,alignx center");
 
 
 		textFieldSearchCD.requestFocus();
@@ -491,6 +600,17 @@ public class Sales extends JFrame {
 		}
 		JOptionPane.showMessageDialog(null , text);
 	}
+	
+	public void refreshPrefab(){
+		cleanTableSearch(modelPrefab);
+		for(Disc disc : controller.getHistory()){
+			Object rows[]={disc.getName(),disc.getID(),disc.getType(),disc.calculateCost(), false};
+			modelPrefab.addRow(rows);
+		}
+	}
+	
+	
+	
 
 	//Metodos para canciones
 	public ArrayList<Song> searchSongs(){
@@ -519,12 +639,18 @@ public class Sales extends JFrame {
 	public void moveToVerifyListSong(JTable tableOrigen, DefaultTableModel modelSC, int max, ArrayList<Song> auxSearch){
 		ArrayList<Song>auxiliar = searchSelectedSong(tableOrigen, auxSearch);
 		if(!(auxiliar.size() > (max-modelSC.getRowCount()))){
+
 			modelContSong.setColumnIdentifiers(columnas);
 			resetModelCont();
 			for (Song song : auxiliar) {
-				Object rowns[] = {song.getTitle(), song.getAlbum(), song.getAuthor(),song.getID(), false};
-				modelSC.addRow(rowns);	
-				auxSCSong.add(song);
+				if(!auxSCSong.contains(song)){
+					Object rowns[] = {song.getTitle(), song.getAlbum(), song.getAuthor(),song.getID(), false};
+					modelSC.addRow(rowns);	
+					auxSCSong.add(song);
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Ya existe la cancion: "+song.getTitle());
+				}
 			}
 		}
 		else{
@@ -593,21 +719,47 @@ public class Sales extends JFrame {
 	}
 
 	public void moveToShoppingcar(Disc disc){
-		disc.setID(asignId());
-		if(disc instanceof CD){		
-			disc.setType("CD");
-			disc.setName(assignCDName());
-			auxSCSong.clear();
-			cleanTableSearch(modelContSong);
-		}else{
-			disc.setType("DVD");
-			disc.setName(assignDVDName());
-			auxSCVideo.clear();
-			cleanTableSearch(modelContVideo);
+		boolean centinel = false;
+		int auxiliarID = 0;
+		for(Disc product : controller.getHistory()){
+			if(disc.getProducts().equals(product.getProducts())){
+				centinel = true;
+				auxiliarID = product.getID();
+			}
+		}
+		if(centinel){
+			disc.setID(auxiliarID);
+			if(disc instanceof CD){		
+				disc.setType("CD");
+				disc.setName(assignCDName());
+				auxSCSong.clear();
+				cleanTableSearch(modelContSong);
+			}
+			else{
+				disc.setType("DVD");
+				disc.setName(assignDVDName());
+				auxSCVideo.clear();
+				cleanTableSearch(modelContVideo);
+			}
+		}
+		else{
+			disc.setID(asignId());
+			if(disc instanceof CD){		
+				disc.setType("CD");
+				disc.setName(assignCDName());
+				auxSCSong.clear();
+				cleanTableSearch(modelContSong);
+			}else{
+				disc.setType("DVD");
+				disc.setName(assignDVDName());
+				auxSCVideo.clear();
+				cleanTableSearch(modelContVideo);
+			}
+			controller.addHistory(disc);
 		}
 		scManager.addItem(disc);
-		controller.addHistory(disc);
 	}
+
 
 
 	//Metodos para Videos
@@ -640,9 +792,14 @@ public class Sales extends JFrame {
 			modelSC.setColumnIdentifiers(columnasVideo);
 			resetModelCont();
 			for (Video video : auxiliar) {
-				Object rowns[] = {video.getTitle(),video.getGenre() ,video.getInterpreter(),video.getID(), false};
-				modelContVideo.addRow(rowns);	
-				auxSCVideo.add(video);
+				if(!auxSCVideo.contains(video)){
+					Object rowns[] = {video.getTitle(),video.getGenre() ,video.getInterpreter(),video.getID(), false};
+					modelContVideo.addRow(rowns);	
+					auxSCVideo.add(video);					
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Ya existe el video: "+video.getTitle());
+				}
 			}
 		}
 		else{
@@ -712,6 +869,21 @@ public class Sales extends JFrame {
 	}
 
 
+	////Prefabs
+	
+	public void prefabToSC(){
+		boolean centinel = false;
+		for(int i = 0; i<tablePrefab.getRowCount() ; i++){
+			if((boolean)modelPrefab.getValueAt(i, 4)){
+				scManager.addItem(controller.getHistory().get(i));
+				centinel = true;
+			}
+		}
+		if(!centinel){
+			JOptionPane.showMessageDialog(null,"Seleccione al menos un elemento para añadir al carrito");
+		}
+	}
 
+	
 
 }

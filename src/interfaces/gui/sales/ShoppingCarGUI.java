@@ -91,7 +91,6 @@ public class ShoppingCarGUI extends JFrame {
 		btnRefresh = new JButton("Refrescar");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println(scManager.getDiscs().get(0).getClass());
 				refreshShopingCar();
 			}
 		});
@@ -147,8 +146,12 @@ public class ShoppingCarGUI extends JFrame {
 		btnSell = new JButton("Vender");
 		btnSell.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(model.getRowCount()>0){
 				sell();
-
+				}
+				else{
+					JOptionPane.showMessageDialog(null, "Debe agregar productos al carrito poder llevar a cabo la venta");
+					}
 			}
 		});
 		contentPane.add(btnSell, "cell 3 8");

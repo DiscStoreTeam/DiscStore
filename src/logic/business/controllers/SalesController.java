@@ -108,6 +108,9 @@ public class SalesController {
 	public void addHistory(IProduct item){
 		history.add((Disc)item);
 	}
+	public ArrayList<Disc> getHistory(){
+		return history;
+	}
 	public void addSellReport(SellReports sellReport){
 		sellReports.add(sellReport);
 	}

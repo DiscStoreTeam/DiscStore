@@ -27,9 +27,7 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import javax.swing.SpinnerNumberModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JFormattedTextField;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
