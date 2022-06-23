@@ -1,14 +1,6 @@
 package logic.util;
 
 public class Validator {
-	/*
-	public static boolean template()
-	{
-		boolean valid = true;
-		
-		return valid;
-	}
-	 */
 	public static boolean ci(String ci)
 	{
 		boolean valid = true;
