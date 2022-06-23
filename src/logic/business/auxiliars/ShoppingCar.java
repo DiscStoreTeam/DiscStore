@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import logic.business.abstractions.Disc;
 import logic.business.abstractions.IProduct;
-import logic.business.abstractions.ProductContainer;
+import logic.business.abstractions.IProductContainer;
 import logic.business.core.Product;
 
-public class ShoppingCar implements ProductContainer {
+public class ShoppingCar implements IProductContainer {
 	private ArrayList<Disc> discs;
 	private double totalCost = 0;
 
