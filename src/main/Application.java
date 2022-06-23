@@ -38,17 +38,17 @@ public final class Application {
 	
 	public static void changeWindow(Window actualWindow,WindowType nextWindow){
 		WindowHandler handler = handlerMap.get(nextWindow);
-		handler.open(store, actualWindow);
+		handler.open(store);
 		actualWindow.dispose();
 	}
 	
 	public static void openChildWindow(Window actualWindow, WindowType nextWindow){
 		WindowHandler handler = handlerMap.get(nextWindow);
-		handler.open(store, actualWindow);
+		handler.open(store);
 	}
 	
 	public static void start(){
 		WindowHandler handler = handlerMap.get(WindowType.login);
-		handler.open(store, null);
+		handler.open(store);
 	}
 }

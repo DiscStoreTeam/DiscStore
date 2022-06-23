@@ -40,7 +40,7 @@ public class ChangeProperties extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ChangeProperties(Store store, Window father) {
+	public ChangeProperties(Store store) {
 		setTitle("Cambiar Propiedades de la Tienda");
 		properties = store.getProperties();
 		drawWindow();

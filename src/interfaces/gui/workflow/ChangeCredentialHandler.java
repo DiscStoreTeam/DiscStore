@@ -15,7 +15,7 @@ public class ChangeCredentialHandler implements WindowHandler {
 	}
 	
 	@Override
-	public Window open(final Store store, Window father) {
+	public Window open(final Store store) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
