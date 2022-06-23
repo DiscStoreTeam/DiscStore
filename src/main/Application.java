@@ -1,6 +1,5 @@
 package main;
 
-import interfaces.gui.main.ChangeProperties;
 import interfaces.gui.workflow.ChangeCredentialHandler;
 import interfaces.gui.workflow.ChangePropertiesHandler;
 import interfaces.gui.workflow.AddProductHandler;
@@ -45,8 +44,7 @@ public final class Application {
 	
 	public static void openChildWindow(Window actualWindow, WindowType nextWindow){
 		WindowHandler handler = handlerMap.get(nextWindow);
-		Window window = handler.open(store, actualWindow);
-		//actualWindow.setEnabled(false);
+		handler.open(store, actualWindow);
 	}
 	
 	public static void start(){
