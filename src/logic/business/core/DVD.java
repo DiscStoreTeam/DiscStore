@@ -15,6 +15,12 @@ public class DVD extends Disc {
 	{
 		contents = new ArrayList<Video>();
 	}
+	public DVD(DVD dvd){
+		ArrayList<Video>contentsCopy = new ArrayList<Video>();
+		for(Video a : dvd.getContents()){
+			contentsCopy.add(a);
+		}
+	}
 
 	//Methods	
 	@Override
@@ -81,6 +87,10 @@ public class DVD extends Disc {
 		for(Video video : contents)
 			text += (num++) +" - "+ video.getTitle() +" - "+ video.getInterpreter()+ "\n";
 		return text;
+	}
+
+	public ArrayList<Video> getContents() {
+		return contents;
 	}
 	
 }
