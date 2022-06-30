@@ -58,6 +58,9 @@ public class NewProduct extends JDialog {
 	private JTextField textFieldSeconds;
 	private JTextField textFieldSize;
 	
+	private int lastRightM;
+	private int lastRightS;
+	
 
 	/**
 	 * Create the dialog.
@@ -163,7 +166,7 @@ public class NewProduct extends JDialog {
 		textFieldMinutes.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				
+				validateDuration();
 			}
 		});
 		panelTec.add(textFieldMinutes, "cell 1 0,growx");
@@ -249,10 +252,30 @@ public class NewProduct extends JDialog {
 				form.setAuthor(textFieldAuthor.getText());
 				form.setInterpreter(textFieldInterpreter.getText());
 				form.setCollaborators(textFieldCollaborators.getText());
-				//form.setDuration((Integer)spinnerMinutes.getValue() * 60 + (Integer)spinnerSeconds.getValue());
-				//form.setFileSize((Integer)spinnerSize.getValue());
 				System.out.println(form.getDuration());
 			}
+		}
+	}
+	
+	private void validateDuration(){
+		Integer minutes = new Integer(textFieldMinutes.getText());
+		Integer seconds = new Integer(textFieldSeconds.getText());
+		if(minutes > 0 && minutes < 60){
+			lastRightM = minutes;
+		}
+		else{
+			textFieldMinutes.setText(minutes.toString());
+		}
+		if(seconds > 0 && seconds < 60){
+			lastRightS = seconds;
+		}
+		else if(seconds == 60){
+			minutes = new Integer(textFieldMinutes.getText());
+			minutes++;
+			textFieldMinutes.setText(minutes.toString());
+		}
+		else{
+			textFieldSeconds.setText(seconds.toString());
 		}
 	}
 	
@@ -300,24 +323,4 @@ public class NewProduct extends JDialog {
 		}
 		return valid;
 	}
-	
-	private void formattedFocusLost(JTextField field){
-		if(validateIntegers(field.getText())){
-			
-		}
-	}
-	
-	private boolean validateIntegers(String entry){
-		boolean valid = true;
-		
-		if(Validator.stringNumber(entry)){
-			valid = Validator.positiveNumber(new Integer(entry));
-		}
-		else{
-			valid = false;
-		}
-		
-		return valid;
-	}
-
 }
