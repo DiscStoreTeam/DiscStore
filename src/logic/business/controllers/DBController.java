@@ -89,7 +89,20 @@ public class DBController {
 	}
 	
 	public void removeItem(int ID, ProductType type){
-		
+		if(type == ProductType.song){
+			for(int i = 0; i < songDatabase.size(); i++){
+				if(songDatabase.get(i).getID().intValue() == ID){
+					songDatabase.remove(i);
+				}
+			}
+		}
+		else{
+			for(int i = 0; i < videoDatabase.size(); i++){
+				if(videoDatabase.get(i).getID().intValue() == ID){
+					videoDatabase.remove(i);
+				}
+			}
+		}
 	}
 	
 	public ArrayList<Song> searchSongs(String critery){
@@ -184,5 +197,10 @@ public class DBController {
 		videoDatabase.add(new Video("Maquiavelico","Rap",0,"Canserbero","-",0,resolution,2));
 		videoDatabase.add(new Video("Dejarte de amar","Romantico",0,"Camila","-",0,resolution,3));
 		videoDatabase.add(new Video("Volar sin ti","Romantico",0,"Buena Fe","-",0,resolution,4));
+	}
+	
+	public void reaload(ArrayList<Song> songDatabase, ArrayList<Video> videoDatabase){
+		this.songDatabase = songDatabase;
+		this.videoDatabase = videoDatabase;
 	}
 }

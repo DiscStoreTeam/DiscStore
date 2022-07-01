@@ -56,6 +56,11 @@ public class Store {
 		salesCtrl.updateLoggedWorker(this.loggedWorker);
 	}
 	
+	public void reload(){
+		databaseCtrl.reaload(songDatabase, videoDatabase);
+		salesCtrl.reload(songDatabase, videoDatabase, loggedWorker);
+	}
+	
 	public AccessController getAccessController(){return accessCtrl;}
 	public DBController getDatabaseController(){return databaseCtrl;}
 	public SalesController getSalesController(){return salesCtrl;}

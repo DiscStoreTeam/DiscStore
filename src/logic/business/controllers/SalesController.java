@@ -34,11 +34,6 @@ public class SalesController {
 		this.sellReports = new ArrayList<SellReports>();
 		this.history = new ArrayList<Disc>();
 		this.loggedWorker = loggedWorker;
-		
-		//String title, String genre, int duration, String interpreter, String collaborators, int fileSize, String author, String album
-		
-		
-		
 	}
 
 	public CDManager getCDManager(){
@@ -79,6 +74,11 @@ public class SalesController {
 		return loggedWorker;
 	}
 	public void updateLoggedWorker(Worker loggedWorker){
+		this.loggedWorker = loggedWorker;
+	}
+	public void reload(ArrayList<Song> songDatabase, ArrayList<Video> videoDatabase, Worker loggedWorker){
+		this.songsList = songDatabase;
+		this.videosList = videoDatabase;
 		this.loggedWorker = loggedWorker;
 	}
 }

@@ -46,7 +46,7 @@ public class DeleteProduct extends JDialog {
 	}
 	
 	public void drawWindow(){
-		setBounds(100, 100, 450, 387);
+		setBounds(100, 100, 580, 470);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -80,9 +80,9 @@ public class DeleteProduct extends JDialog {
 				JScrollPane scrollPane = new JScrollPane();
 				panel.add(scrollPane, "cell 0 0,grow");
 				{
-					String columns[] = {"Título", "Género", "Intérprete", "Tipo",""};
-					final boolean editable[] = {false, false, false, true};
-					final Class data[] = {java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class};
+					String columns[] = {"Título", "Género", "Intérprete", "ID", "Tipo",""};
+					final boolean editable[] = {false, false, false, false, false, true};
+					final Class data[] = {java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Boolean.class};
 					model = new DefaultTableModel(){
 						public boolean isCellEditable(int row, int col){
 							return editable[col];
@@ -168,7 +168,7 @@ public class DeleteProduct extends JDialog {
 		}
 		for(Product product : products){
 			System.out.println(product.getTitle());
-			Object rowns[] = {product.getTitle(), product.getGenre(), product.getInterpreter(), (product instanceof Song) ? "Canción": "Vídeo", false};
+			Object rowns[] = {product.getTitle(), product.getGenre(), product.getInterpreter(), product.getID(), (product instanceof Song) ? "Canción": "Vídeo", false};
 			model.addRow(rowns);
 		}
 	}
@@ -183,11 +183,11 @@ public class DeleteProduct extends JDialog {
 	private void deleteButton(){
 		boolean selected = false;
 		for(int i = 0; i < model.getRowCount(); i++){
-			if((boolean)model.getValueAt(i, 3)){
+			if((boolean)model.getValueAt(i, 5)){
 				selected = true;
 				error.setVisible(false);
-				Integer id = (Integer)model.getValueAt(i, 2);
-				//controller.removeItem(id.intValue();
+				Integer id = (Integer)model.getValueAt(i, 3);
+				controller.removeItem(id.intValue(), (model.getValueAt(1, 4) == "Canción" ? ProductType.song : ProductType.video));
 			}
 		}
 		if(!selected){

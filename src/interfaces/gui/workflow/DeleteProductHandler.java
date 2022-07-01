@@ -13,6 +13,7 @@ public class DeleteProductHandler implements WindowHandler{
 
 	@Override
 	public Window open(final Store store) {
+		store.reload();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
