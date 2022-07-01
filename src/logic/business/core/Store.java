@@ -59,5 +59,6 @@ public class Store {
 	public AccessController getAccessController(){return accessCtrl;}
 	public DBController getDatabaseController(){return databaseCtrl;}
 	public SalesController getSalesController(){return salesCtrl;}
+	public HRController getHumanResourcesController(){return hrCtrl;}
 	public StoreProperties getProperties(){return properties;}
 }

@@ -91,6 +91,11 @@ public class MainWindow extends JFrame {
 		mnGestionarBaseDe.add(mntmAadirProducto);
 		
 		JMenuItem mntmEliminarProducto = new JMenuItem("Eliminar Producto");
+		mntmEliminarProducto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				deleteProductButton();
+			}
+		});
 		mnGestionarBaseDe.add(mntmEliminarProducto);
 		
 		mnTienda = new JMenu("Tienda");
@@ -105,15 +110,30 @@ public class MainWindow extends JFrame {
 		mnTienda.add(mntmCambiarPropiedadesDe);
 		
 		JMenuItem mntmCambiarAdministrador = new JMenuItem("Cambiar Administrador");
+		mntmCambiarAdministrador.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				changeManagerButton();
+			}
+		});
 		mnTienda.add(mntmCambiarAdministrador);
 		
 		mnGestionarTrabajadores = new JMenu("Gestionar Trabajadores");
 		menuBar.add(mnGestionarTrabajadores);
 		
 		JMenuItem mntmContratarNuevoTrabajador = new JMenuItem("Contratar Nuevo Trabajador");
+		mntmContratarNuevoTrabajador.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				hireWorkerButton();
+			}
+		});
 		mnGestionarTrabajadores.add(mntmContratarNuevoTrabajador);
 		
 		JMenuItem mntmDespedirTrabajador = new JMenuItem("Despedir Trabajador");
+		mntmDespedirTrabajador.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				fireWorkerButton();
+			}
+		});
 		mnGestionarTrabajadores.add(mntmDespedirTrabajador);
 		contentPane = new JPanel(){
 			public void paintComponent(Graphics pic){
@@ -153,5 +173,21 @@ public class MainWindow extends JFrame {
 	
 	private void newProductButton(){
 		Application.openChildWindow(this, WindowType.newProduct);
+	}
+	
+	private void deleteProductButton(){
+		Application.openChildWindow(this, WindowType.deleteProduct);
+	}
+	
+	private void hireWorkerButton(){
+		Application.openChildWindow(this, WindowType.hireWorker);
+	}
+	
+	private void fireWorkerButton(){
+		Application.openChildWindow(this, WindowType.fireWorker);
+	}
+	
+	private void changeManagerButton(){
+		Application.openChildWindow(this, WindowType.changeManager);
 	}
 }

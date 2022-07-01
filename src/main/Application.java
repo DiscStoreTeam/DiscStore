@@ -1,8 +1,12 @@
 package main;
 
 import interfaces.gui.workflow.ChangeCredentialHandler;
+import interfaces.gui.workflow.ChangeManagerHandler;
 import interfaces.gui.workflow.ChangePropertiesHandler;
 import interfaces.gui.workflow.AddProductHandler;
+import interfaces.gui.workflow.DeleteProductHandler;
+import interfaces.gui.workflow.FireWorkerHandler;
+import interfaces.gui.workflow.HireWorkerHandler;
 import interfaces.gui.workflow.LoginHandler;
 import interfaces.gui.workflow.MainHandler;
 import interfaces.gui.workflow.SalesHandler;
@@ -15,7 +19,7 @@ import java.util.HashMap;
 import logic.business.core.Store;
 
 public final class Application {
-	public enum WindowType{login, credentials, main, sales, properties, newProduct, shoppingcar;}
+	public enum WindowType{login, credentials, main, sales, properties, newProduct, shoppingcar, deleteProduct, hireWorker, fireWorker, changeManager;}
 	private static HashMap<WindowType, WindowHandler> handlerMap;
 	
 	private final static Store store = new Store();
@@ -34,6 +38,10 @@ public final class Application {
 		handlerMap.put(WindowType.properties, new ChangePropertiesHandler());
 		handlerMap.put(WindowType.newProduct, new AddProductHandler());
 		handlerMap.put(WindowType.shoppingcar, new ShoppingcarHandler());
+		handlerMap.put(WindowType.deleteProduct, new DeleteProductHandler());
+		handlerMap.put(WindowType.hireWorker, new HireWorkerHandler());
+		handlerMap.put(WindowType.fireWorker, new FireWorkerHandler());
+		handlerMap.put(WindowType.changeManager, new ChangeManagerHandler());
 	}
 	
 	public static void changeWindow(Window actualWindow,WindowType nextWindow){
