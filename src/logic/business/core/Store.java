@@ -48,7 +48,7 @@ public class Store {
 		properties.getAddress().setStreet("114").setNumber("12").setLatStreetA("La escalinata").setLatStreetB("La warapera");
 		properties.setPhoneNumber("79019090");
 		hrCtrl.hireWorker("Pepe", "A", "12345678901", PositionValue.dependent, ScholarDegreeValue.basic);
-		hrCtrl.hireWorker("Alberto", "A", "12345678901", PositionValue.manager, ScholarDegreeValue.basic);
+		hrCtrl.hireWorker("Alberto", "A", "12345678901", PositionValue.dependent, ScholarDegreeValue.basic);
 	}
 	
 	public void updateLoggedWorker(Worker loggedWorker){

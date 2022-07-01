@@ -14,7 +14,6 @@ public class SearchManager<E> {
 	
 	//Methods
 	public ArrayList<E> search(String critery, ArrayList<E> database){
-		//Manejar la excepcion de q E no sea Song o Video
 		ArrayList<E> list = new ArrayList<E>();
 		byTitle(critery, database, list);
 		byGenre(critery, database, list);

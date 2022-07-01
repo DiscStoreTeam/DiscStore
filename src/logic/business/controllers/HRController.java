@@ -3,9 +3,11 @@ package logic.business.controllers;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 
 import logic.business.core.Worker;
 import logic.util.PositionValue;
+import logic.util.PublicScholarDegree;
 import logic.util.ScholarDegreeValue;
 
 public class HRController {
@@ -40,6 +42,16 @@ public class HRController {
 	public void hireWorker(String name, String lastName, String ci, PositionValue position, ScholarDegreeValue scholarDegree)
 	{
 		Worker hiredWorker = new Worker(name, lastName, ci, generateID(), position, scholarDegree);
+		workersList.add(hiredWorker.getWorkerID(), hiredWorker);
+	}
+	
+	public void hireWorker(String name, String lastName, String ci, PositionValue position, PublicScholarDegree scholarDegree)
+	{
+		HashMap<PublicScholarDegree, ScholarDegreeValue> hash = new HashMap<PublicScholarDegree, ScholarDegreeValue>();
+		hash.put(PublicScholarDegree.Básico, ScholarDegreeValue.basic);
+		hash.put(PublicScholarDegree.Medio_Superior, ScholarDegreeValue.halfSuperior);
+		hash.put(PublicScholarDegree.Superior, ScholarDegreeValue.superior);
+		Worker hiredWorker = new Worker(name, lastName, ci, generateID(), position, hash.get(scholarDegree));
 		workersList.add(hiredWorker.getWorkerID(), hiredWorker);
 	}
 	
@@ -99,5 +111,38 @@ public class HRController {
 			}
 		}
 		return ID;
+	}
+	
+	public Worker getManager(){
+		return manager;
+	}
+	
+	public ArrayList<String> getWorkers(){
+		ArrayList<String> workersNames = new ArrayList<String>();
+		for(int i = 0; i < workersList.size(); i++){
+			workersNames.add(workersList.get(i).getName() + " " + workersList.get(i).getLastName());
+		}
+		return workersNames;
+	}
+	
+	public ArrayList<Worker> findWorkers(String critery){
+		ArrayList<Worker> workers = new ArrayList<Worker>();
+		for(Worker workerI : workersList){
+			if(workerI.getName().contains(critery) && workerI.getPosition() != PositionValue.manager){
+				workers.add(workerI);
+			}
+			if(workerI.getLastName().contains(critery) && workerI.getPosition() != PositionValue.manager){
+				boolean exist = false;
+				for(Worker workerJ : workers){
+					if(workerJ.getWorkerID().equals(workerI.getWorkerID())){
+						exist = true;
+					}
+				}
+				if(!exist){
+					workers.add(workerI);
+				}
+			}
+		}
+		return workers;
 	}
 }

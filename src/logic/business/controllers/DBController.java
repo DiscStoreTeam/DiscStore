@@ -141,4 +141,11 @@ public class DBController {
 		}
 		return exist;
 	}
+	
+	public ArrayList<Product> getProducts(){
+		ArrayList<Product> products = new ArrayList<Product>();
+		products.addAll(songDatabase);
+		products.addAll(videoDatabase);
+		return products;
+	}
 }
