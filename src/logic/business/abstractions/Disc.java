@@ -1,7 +1,7 @@
 package logic.business.abstractions;
 
 
-public abstract class Disc implements IProduct, ProductContainer{
+public abstract class Disc implements IProduct, IProductContainer{
 	private int id;
 	private String name;
 	private String type;

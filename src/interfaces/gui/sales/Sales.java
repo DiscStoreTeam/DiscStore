@@ -367,7 +367,6 @@ public class Sales extends JFrame {
 		modelContSong.setColumnIdentifiers(columnas);
 
 		tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane_1.setToolTipText("Confirmación");
 		contentPane.add(tabbedPane_1, "cell 3 1,grow");
 		tabbedPane_1.addMouseListener(new MouseListener() {
 			@Override

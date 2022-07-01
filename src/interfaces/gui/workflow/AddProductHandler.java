@@ -10,7 +10,7 @@ public class AddProductHandler implements WindowHandler {
 	NewProduct frame;
 
 	@Override
-	public Window open(final Store store, Window fatherWindow) {
+	public Window open(final Store store) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

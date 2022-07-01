@@ -38,22 +38,6 @@ public class CD extends Disc{
 	public double calculateCost() {
 		return priceBase + contents.size()*2.50;
 	}
-	
-	/*@Override
-	public ArrayList<IProduct> search(String critery) {
-		ArrayList<IProduct> searchList = new ArrayList<IProduct>();
-		for(int i = 0; i<contents.size();i++){
-			if(contents.get(i).getTitle().equalsIgnoreCase(critery)){
-				searchList.add((IProduct) contents.get(i));			
-			}
-		}	
-		return searchList;
-	}*/
-	/*@Override
-	public Product getItem(int index) {
-		return contents.get(index);
-	}*/
-
 	@Override
 	public boolean isEmpty() {
 		boolean empty = false;

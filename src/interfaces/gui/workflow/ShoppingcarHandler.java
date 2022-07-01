@@ -12,7 +12,7 @@ public class ShoppingcarHandler implements WindowHandler {
 	
 
 	@Override
-	public Window open(final Store store, Window fatherWindow) {
+	public Window open(final Store store) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
