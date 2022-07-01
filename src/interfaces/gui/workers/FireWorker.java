@@ -5,7 +5,6 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
@@ -19,11 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import java.awt.ScrollPane;
-
 import javax.swing.JTable;
-
-import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory.Default;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -123,7 +118,7 @@ public class FireWorker extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton btnEliminar = new JButton("Eliminar");
+				JButton btnEliminar = new JButton("Despedir");
 				buttonPane.add(btnEliminar);
 				btnEliminar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {

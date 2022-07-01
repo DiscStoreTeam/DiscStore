@@ -23,8 +23,8 @@ public class Store {
 	private ArrayList<Video> videoDatabase;
 	
 	private Worker manager;
-	private Worker loggedWorker;
 	private Date startManagerDate;
+	private Worker loggedWorker;
 	private StoreProperties properties;
 	
 	public Store(){

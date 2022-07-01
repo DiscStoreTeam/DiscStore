@@ -11,7 +11,9 @@ import javax.swing.border.EmptyBorder;
 import logic.business.auxiliars.SearchManager;
 import logic.business.controllers.DBController;
 import logic.business.core.Product;
+import logic.business.core.Song;
 import logic.business.core.Store;
+import logic.util.ProductType;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.border.TitledBorder;
@@ -78,7 +80,7 @@ public class DeleteProduct extends JDialog {
 				JScrollPane scrollPane = new JScrollPane();
 				panel.add(scrollPane, "cell 0 0,grow");
 				{
-					String columns[] = {"Título", "Género", "Intérprete", ""};
+					String columns[] = {"Título", "Género", "Intérprete", "Tipo",""};
 					final boolean editable[] = {false, false, false, true};
 					final Class data[] = {java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class};
 					model = new DefaultTableModel(){
@@ -97,11 +99,13 @@ public class DeleteProduct extends JDialog {
 					table.getColumnModel().getColumn(0).setPreferredWidth(160);
 					table.getColumnModel().getColumn(1).setPreferredWidth(160);
 					table.getColumnModel().getColumn(2).setPreferredWidth(160);
-					table.getColumnModel().getColumn(3).setPreferredWidth(60);
+					table.getColumnModel().getColumn(3).setPreferredWidth(100);
+					table.getColumnModel().getColumn(4).setPreferredWidth(60);
 					table.getColumnModel().getColumn(0).setResizable(false);
 					table.getColumnModel().getColumn(1).setResizable(false);
 					table.getColumnModel().getColumn(2).setResizable(false);
 					table.getColumnModel().getColumn(3).setResizable(false);
+					table.getColumnModel().getColumn(4).setResizable(false);
 				}
 			}
 		}
@@ -117,6 +121,11 @@ public class DeleteProduct extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Eliminar");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						deleteButton();
+					}
+				});
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
@@ -154,9 +163,12 @@ public class DeleteProduct extends JDialog {
 		SearchManager<Product> searcher = new SearchManager<Product>();
 		ArrayList<Product> database = controller.getProducts();
 		ArrayList<Product> products = searcher.search(textFieldSearch.getText(), database);
+		if(database.size() == 0){
+			System.out.println("Empty");
+		}
 		for(Product product : products){
 			System.out.println(product.getTitle());
-			Object rowns[] = {product.getTitle(), product.getGenre(), product.getInterpreter(), false};
+			Object rowns[] = {product.getTitle(), product.getGenre(), product.getInterpreter(), (product instanceof Song) ? "Canción": "Vídeo", false};
 			model.addRow(rowns);
 		}
 	}
@@ -166,6 +178,23 @@ public class DeleteProduct extends JDialog {
 		for(int i=0; i<centinel; i++){
 			model.removeRow(0);
 		}
+	}
+	
+	private void deleteButton(){
+		boolean selected = false;
+		for(int i = 0; i < model.getRowCount(); i++){
+			if((boolean)model.getValueAt(i, 3)){
+				selected = true;
+				error.setVisible(false);
+				Integer id = (Integer)model.getValueAt(i, 2);
+				//controller.removeItem(id.intValue();
+			}
+		}
+		if(!selected){
+			error.setVisible(true);
+			error.setText("Debe seleccionar al menos 1 elemento");
+		}
+		updateTable();
 	}
 
 }

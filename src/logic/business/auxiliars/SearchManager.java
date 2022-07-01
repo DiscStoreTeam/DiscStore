@@ -19,7 +19,7 @@ public class SearchManager<E> {
 		byGenre(critery, database, list);
 		byInterpreter(critery, database, list);
 		byCollaborators(critery, database, list);
-		if(!database.isEmpty()){
+		if(!database.isEmpty() && !(database.get(0) instanceof Product)){
 			if(database.get(0) instanceof Song){
 				byAlbum(critery, database, list);
 				byAuthor(critery, database, list);
