@@ -26,6 +26,7 @@ public class CDTest {
 		cd.addItem(new Song("Gatos Celestes", "", 0, "Melendi", "", 0, "Melendi", "Lagrimas Desordenadas", 9));
 		cd.addItem(new Song("De repente desperte", "", 0, "Melendi", "", 0, "Melendi", "Lagrimas Desordenadas", 10));
 		song = (Song) cd.getProducts().get(5);
+		
 	}
 	@Before
 	public void setUp() throws Exception {
