@@ -163,11 +163,7 @@ public class DeleteProduct extends JDialog {
 		SearchManager<Product> searcher = new SearchManager<Product>();
 		ArrayList<Product> database = controller.getProducts();
 		ArrayList<Product> products = searcher.search(textFieldSearch.getText(), database);
-		if(database.size() == 0){
-			System.out.println("Empty");
-		}
 		for(Product product : products){
-			System.out.println(product.getTitle());
 			Object rowns[] = {product.getTitle(), product.getGenre(), product.getInterpreter(), product.getID(), (product instanceof Song) ? "Canción": "Vídeo", false};
 			model.addRow(rowns);
 		}

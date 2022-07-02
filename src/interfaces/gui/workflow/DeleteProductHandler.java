@@ -26,5 +26,4 @@ public class DeleteProductHandler implements WindowHandler{
 		});
 		return frame;
 	}
-	
 }

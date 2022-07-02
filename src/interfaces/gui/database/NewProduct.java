@@ -1,6 +1,7 @@
 package interfaces.gui.database;
 
 import interfaces.util.SongPreForm;
+import interfaces.util.VideoPreForm;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -17,6 +18,7 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.ButtonGroup;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -28,8 +30,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import javax.swing.DefaultComboBoxModel;
+
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 @SuppressWarnings("serial")
 public class NewProduct extends JDialog {
@@ -52,14 +59,14 @@ public class NewProduct extends JDialog {
 	private JLabel lblError;
 	
 	private DBController controller;
-	
-	private JTextField textFieldMinutes;
 	private JLabel label;
-	private JTextField textFieldSeconds;
-	private JTextField textFieldSize;
 	
 	private int lastRightM;
 	private int lastRightS;
+	private JSpinner spinnerMinutes;
+	private JSpinner spinnerSeconds;
+	private JSpinner spinnerSize;
+	private JLabel lblMb;
 	
 
 	/**
@@ -162,29 +169,34 @@ public class NewProduct extends JDialog {
 		JLabel lblDuracin = new JLabel("Duraci\u00F3n : ");
 		panelTec.add(lblDuracin, "cell 0 0,alignx trailing");
 		
-		textFieldMinutes = new JTextField();
-		textFieldMinutes.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent arg0) {
-				validateDuration();
-			}
-		});
-		panelTec.add(textFieldMinutes, "cell 1 0,growx");
-		textFieldMinutes.setColumns(10);
+		spinnerMinutes = new JSpinner();
+		spinnerMinutes.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+		panelTec.add(spinnerMinutes, "cell 1 0,growx");
 		
 		label = new JLabel(" : ");
 		panelTec.add(label, "cell 2 0,alignx trailing");
 		
-		textFieldSeconds = new JTextField();
-		panelTec.add(textFieldSeconds, "cell 3 0,growx");
-		textFieldSeconds.setColumns(10);
+		spinnerSeconds = new JSpinner();
+		spinnerSeconds.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				if(((Integer)spinnerSeconds.getValue()).intValue() == 60){
+					spinnerSeconds.setValue(new Integer(0));
+					spinnerMinutes.setValue(new Integer(((Integer)spinnerMinutes.getValue()) + 1));
+				}
+			}
+		});
+		spinnerSeconds.setModel(new SpinnerNumberModel(0, 0, 60, 1));
+		panelTec.add(spinnerSeconds, "cell 3 0,growx");
 
 		JLabel lblTamaoDelArchivo = new JLabel("Tama\u00F1o del archivo : ");
 		panelTec.add(lblTamaoDelArchivo, "cell 0 1,alignx trailing");
 		
-		textFieldSize = new JTextField();
-		panelTec.add(textFieldSize, "cell 1 1,growx");
-		textFieldSize.setColumns(10);
+		spinnerSize = new JSpinner();
+		spinnerSize.setModel(new SpinnerNumberModel(new Integer(256), new Integer(256), null, new Integer(256)));
+		panelTec.add(spinnerSize, "cell 1 1,growx");
+		
+		lblMb = new JLabel("KB");
+		panelTec.add(lblMb, "cell 2 1 2 1");
 
 
 		JLabel lblResolucin = new JLabel("Resoluci\u00F3n : ");
@@ -244,7 +256,7 @@ public class NewProduct extends JDialog {
 	
 	private void addButton(){
 		if(validateFields()){
-			if(radioSong.isEnabled()){
+			if(radioSong.isSelected()){
 				SongPreForm form = new SongPreForm();
 				form.setTitle(textFieldTitle.getText());
 				form.setGenre(textFieldGender.getText());
@@ -252,31 +264,59 @@ public class NewProduct extends JDialog {
 				form.setAuthor(textFieldAuthor.getText());
 				form.setInterpreter(textFieldInterpreter.getText());
 				form.setCollaborators(textFieldCollaborators.getText());
-				System.out.println(form.getDuration());
+				Integer seconds = new Integer((Integer)spinnerSeconds.getValue());
+				Integer minutes = new Integer((Integer)spinnerMinutes.getValue());
+				form.setDuration(seconds + minutes * 60);
+				form.setFileSize((Integer)spinnerSize.getValue());
+				controller.addProduct(form);
+				cleanForm();
+				JOptionPane.showMessageDialog(null, "Canción añadida exitosamente");
+			}
+			else{
+				VideoPreForm form = new VideoPreForm();
+				form.setTitle(textFieldTitle.getText());
+				form.setGenre(textFieldGender.getText());
+				form.setInterpreter(textFieldInterpreter.getText());
+				form.setCollaborators(textFieldCollaborators.getText());
+				Integer seconds = new Integer((Integer)spinnerSeconds.getValue());
+				Integer minutes = new Integer((Integer)spinnerMinutes.getValue());
+				form.setDuration(seconds + minutes * 60);
+				form.setFileSize((Integer)spinnerSize.getValue());
+				switch (comboBoxResolution.getSelectedIndex()) {
+				case 0:
+					form.setResolution(600, 800);
+					break;
+				case 1:
+					form.setResolution(720, 1280);
+					break;
+				case 2:
+					form.setResolution(1080, 1920);
+					break;
+				case 3:
+					form.setResolution(1080, 2048);
+					break;
+				case 4:
+					form.setResolution(2160, 4096);
+					break;
+				}
+				controller.addProduct(form);
+				cleanForm();
+				JOptionPane.showMessageDialog(null, "Vídeo añadido exitosamente");
 			}
 		}
 	}
 	
-	private void validateDuration(){
-		Integer minutes = new Integer(textFieldMinutes.getText());
-		Integer seconds = new Integer(textFieldSeconds.getText());
-		if(minutes > 0 && minutes < 60){
-			lastRightM = minutes;
-		}
-		else{
-			textFieldMinutes.setText(minutes.toString());
-		}
-		if(seconds > 0 && seconds < 60){
-			lastRightS = seconds;
-		}
-		else if(seconds == 60){
-			minutes = new Integer(textFieldMinutes.getText());
-			minutes++;
-			textFieldMinutes.setText(minutes.toString());
-		}
-		else{
-			textFieldSeconds.setText(seconds.toString());
-		}
+	private void cleanForm(){
+		textFieldTitle.setText("");
+		textFieldGender.setText("");
+		textFieldGender.setText("");
+		textFieldInterpreter.setText("");
+		textFieldCollaborators.setText("");
+		textFieldAlbum.setText("");
+		textFieldAuthor.setText("");
+		spinnerMinutes.setValue(new Integer(0));
+		spinnerSeconds.setValue(new Integer(0));
+		spinnerSize.setValue(new Integer(256));
 	}
 	
 	private void cancelButton(){
@@ -319,6 +359,13 @@ public class NewProduct extends JDialog {
 				valid = false;
 				lblError.setVisible(true);
 				lblError.setText("El género introducido no es válido");
+			}
+		}
+		if(valid){
+			if(((Integer)spinnerMinutes.getValue()) == 0 && ((Integer)spinnerSeconds.getValue()) == 0){
+				valid = false;
+				lblError.setVisible(true);
+				lblError.setText("La duración introducida no es válida");
 			}
 		}
 		return valid;

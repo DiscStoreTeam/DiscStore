@@ -149,7 +149,6 @@ public class DBController {
 		for(Video product : videoDatabase){
 			products.add(product);
 		}
-		System.out.println(products.size());
 		return products;
 	}
 	
