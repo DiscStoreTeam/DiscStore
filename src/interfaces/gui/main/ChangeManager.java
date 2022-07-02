@@ -15,8 +15,6 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.border.TitledBorder;
 import javax.swing.JLabel;
-import javax.swing.JComboBox;
-
 import java.awt.Choice;
 import java.util.ArrayList;
 import java.awt.event.ActionListener;

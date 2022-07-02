@@ -5,7 +5,6 @@ import interfaces.util.VideoPreForm;
 
 import java.util.ArrayList;
 
-import logic.business.auxiliars.SearchManager;
 import logic.business.auxiliars.SongBuilder;
 import logic.business.auxiliars.VideoBuilder;
 import logic.business.core.Product;
@@ -103,23 +102,6 @@ public class DBController {
 				}
 			}
 		}
-	}
-	
-	public ArrayList<Song> searchSongs(String critery){
-		ArrayList<Song> list = new ArrayList<Song>();
-		
-		SearchManager<Song> searcher = new SearchManager<Song>();
-		//list = searcher.search(critery, database);
-		
-		return list;
-	}
-	public ArrayList<Video> searchVideos(String critery){
-		ArrayList<Video> list = new ArrayList<Video>();
-		
-		SearchManager<Video> searcher = new SearchManager<Video>();
-		//list = searcher.search(critery, database);
-		
-		return list;
 	}
 	
 	private boolean compareByTitle(String title, ProductType type){

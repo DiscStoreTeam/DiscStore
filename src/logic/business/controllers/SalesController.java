@@ -13,11 +13,8 @@ import logic.business.auxiliars.ShoppingCar;
 import logic.business.core.Song;
 import logic.business.core.Video;
 import logic.business.core.Worker;
-import logic.util.Resolution;
 
 public class SalesController {
-	//Te dejo de tarea cambiar la estructura para q existan 2 listas, una de canciones y otra de videos, asi cada Manager no tiene
-	//q trabajar con informacion q no le toca
 	private ArrayList<Song> songsList;
 	private ArrayList<Video> videosList;
 	private ArrayList<SellReports> sellReports;

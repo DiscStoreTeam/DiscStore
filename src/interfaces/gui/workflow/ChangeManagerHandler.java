@@ -1,8 +1,6 @@
 package interfaces.gui.workflow;
 
 import interfaces.gui.main.ChangeManager;
-import interfaces.gui.workers.FireWorker;
-
 import java.awt.EventQueue;
 import java.awt.Window;
 

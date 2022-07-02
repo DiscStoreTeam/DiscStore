@@ -1,8 +1,6 @@
 package interfaces.gui.workflow;
 
 import interfaces.gui.database.DeleteProduct;
-import interfaces.gui.database.NewProduct;
-
 import java.awt.EventQueue;
 import java.awt.Window;
 

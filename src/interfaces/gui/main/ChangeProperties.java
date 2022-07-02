@@ -2,8 +2,6 @@ package interfaces.gui.main;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.Window;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;

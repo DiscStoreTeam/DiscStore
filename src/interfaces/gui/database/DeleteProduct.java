@@ -45,6 +45,7 @@ public class DeleteProduct extends JDialog {
 		drawWindow();
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public void drawWindow(){
 		setBounds(100, 100, 580, 470);
 		getContentPane().setLayout(new BorderLayout());
@@ -87,6 +88,7 @@ public class DeleteProduct extends JDialog {
 						public boolean isCellEditable(int row, int col){
 							return editable[col];
 						}
+						@SuppressWarnings("unchecked")
 						public Class getColumnClass(int index){
 							return data[index];
 						}

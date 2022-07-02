@@ -31,9 +31,6 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.DefaultComboBoxModel;
 
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
@@ -61,8 +58,6 @@ public class NewProduct extends JDialog {
 	private DBController controller;
 	private JLabel label;
 	
-	private int lastRightM;
-	private int lastRightS;
 	private JSpinner spinnerMinutes;
 	private JSpinner spinnerSeconds;
 	private JSpinner spinnerSize;

@@ -17,7 +17,6 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-
 import javax.swing.JTable;
 
 import java.awt.event.ActionListener;
@@ -45,6 +44,7 @@ public class FireWorker extends JDialog {
 		drawWindow();
 	}
 	
+	@SuppressWarnings("rawtypes")
 	private void drawWindow(){
 		setBounds(100, 100, 470, 438);
 		getContentPane().setLayout(new BorderLayout());
@@ -83,6 +83,7 @@ public class FireWorker extends JDialog {
 					public boolean isCellEditable(int row, int col){
 						return editable[col];
 					}
+					@SuppressWarnings("unchecked")
 					public Class getColumnClass(int index){
 						return data[index];
 					}

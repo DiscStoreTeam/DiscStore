@@ -1,8 +1,6 @@
 package interfaces.gui.workflow;
 
 import interfaces.gui.workers.FireWorker;
-import interfaces.gui.workers.HireWorker;
-
 import java.awt.EventQueue;
 import java.awt.Window;
 
