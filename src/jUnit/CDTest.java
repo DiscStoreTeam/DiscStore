@@ -1,6 +1,5 @@
 package jUnit;
 
-import static org.junit.Assert.*;
 import logic.business.abstractions.IProduct;
 import logic.business.core.CD;
 import logic.business.core.Song;

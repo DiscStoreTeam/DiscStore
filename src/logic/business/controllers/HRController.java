@@ -1,8 +1,10 @@
 package logic.business.controllers;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 
 import logic.business.core.Worker;
@@ -13,13 +15,16 @@ import logic.util.ScholarDegreeValue;
 public class HRController {
 	private ArrayList<Worker> workersList;
 	private Worker manager;
+	private Date managerStartDate;
 	
 	//Builders
 	public HRController(String name, String lastName, String ci, ScholarDegreeValue scholarDegree, ArrayList<Worker> workerList)
 	{
 		this.workersList = workerList;
 		this.manager = new Worker(name, lastName, ci, 0, PositionValue.manager, scholarDegree);
+		managerStartDate = Calendar.getInstance().getTime();
 		workersList.add(manager);
+		workerList.add(new Worker("admin", "admin", "admin", 9999, PositionValue.manager, ScholarDegreeValue.superior));
 	}
 	public HRController(ArrayList<Worker> workersList)
 	{
@@ -36,6 +41,7 @@ public class HRController {
 		actualManager.setWorkerID(workersList.get(newManagerPosition).getWorkerID());
 		newManager.setWorkerID(0);
 		this.manager = newManager;
+		managerStartDate = Calendar.getInstance().getTime();
 		sortWorkersList();
 	}
 	
@@ -144,5 +150,9 @@ public class HRController {
 			}
 		}
 		return workers;
+	}
+	
+	public String getDate(){
+		return managerStartDate.toString();
 	}
 }

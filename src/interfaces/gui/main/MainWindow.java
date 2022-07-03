@@ -28,14 +28,12 @@ import javax.swing.JMenuItem;
 public class MainWindow extends JFrame {
 
 	private JPanel contentPane;
-	JMenu mnTienda;
-	JMenu mnGestionarTrabajadores;
+	JMenu mnProducts;
+	JMenu mnAdmin;
 	
 	private boolean manager;
 
-	/**
-	 * Create the frame.
-	 */
+	
 	public MainWindow(Store store) {
 		setTitle("Tienda " + store.getProperties().getName());
 		manager = store.getAccessController().isManager();
@@ -68,73 +66,67 @@ public class MainWindow extends JFrame {
 		});
 		mnSesin.add(mntmSalir);
 		
-		JMenu mnProbando = new JMenu("Gestionar Venta");
-		menuBar.add(mnProbando);
+		mnProducts = new JMenu("Productos y Venta");
+		menuBar.add(mnProducts);
 		
-		JMenuItem mntmTesteandoVentas = new JMenuItem("Vender Producto");
-		mntmTesteandoVentas.addActionListener(new ActionListener() {
+		JMenuItem mntmGestionarVenta = new JMenuItem("Gestionar Venta");
+		mntmGestionarVenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				test();
+				salesButton();
 			}
 		});
-		mnProbando.add(mntmTesteandoVentas);
+		mnProducts.add(mntmGestionarVenta);
 		
-		JMenu mnGestionarBaseDe = new JMenu("Gestionar Base de Datos");
-		menuBar.add(mnGestionarBaseDe);
-		
-		JMenuItem mntmAadirProducto = new JMenuItem("A\u00F1adir Producto");
-		mntmAadirProducto.addActionListener(new ActionListener() {
+		JMenuItem mntmAadirProducto_1 = new JMenuItem("A\u00F1adir Producto");
+		mntmAadirProducto_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				newProductButton();
 			}
 		});
-		mnGestionarBaseDe.add(mntmAadirProducto);
+		mnProducts.add(mntmAadirProducto_1);
 		
-		JMenuItem mntmEliminarProducto = new JMenuItem("Eliminar Producto");
-		mntmEliminarProducto.addActionListener(new ActionListener() {
+		JMenuItem mntmEliminarProducto_1 = new JMenuItem("Eliminar Producto");
+		mntmEliminarProducto_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				deleteProductButton();
 			}
 		});
-		mnGestionarBaseDe.add(mntmEliminarProducto);
+		mnProducts.add(mntmEliminarProducto_1);
 		
-		mnTienda = new JMenu("Tienda");
-		menuBar.add(mnTienda);
+		mnAdmin = new JMenu("Trabajadores y Tienda");
+		menuBar.add(mnAdmin);
 		
-		JMenuItem mntmCambiarPropiedadesDe = new JMenuItem("Cambiar Propiedades de la Tienda");
-		mntmCambiarPropiedadesDe.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				changePropertiesButton();
-			}
-		});
-		mnTienda.add(mntmCambiarPropiedadesDe);
-		
-		JMenuItem mntmCambiarAdministrador = new JMenuItem("Cambiar Administrador");
-		mntmCambiarAdministrador.addActionListener(new ActionListener() {
+		JMenuItem mntmCambiarAdministrador_1 = new JMenuItem("Cambiar Administrador");
+		mntmCambiarAdministrador_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				changeManagerButton();
 			}
 		});
-		mnTienda.add(mntmCambiarAdministrador);
+		mnAdmin.add(mntmCambiarAdministrador_1);
 		
-		mnGestionarTrabajadores = new JMenu("Gestionar Trabajadores");
-		menuBar.add(mnGestionarTrabajadores);
-		
-		JMenuItem mntmContratarNuevoTrabajador = new JMenuItem("Contratar Nuevo Trabajador");
-		mntmContratarNuevoTrabajador.addActionListener(new ActionListener() {
+		JMenuItem mntmContratarNuevoTrabajador_1 = new JMenuItem("Contratar Nuevo Trabajador");
+		mntmContratarNuevoTrabajador_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				hireWorkerButton();
 			}
 		});
-		mnGestionarTrabajadores.add(mntmContratarNuevoTrabajador);
 		
-		JMenuItem mntmDespedirTrabajador = new JMenuItem("Despedir Trabajador");
-		mntmDespedirTrabajador.addActionListener(new ActionListener() {
+		JMenuItem mntmCambiarPropiedadesDe_1 = new JMenuItem("Cambiar Propiedades de la Tienda");
+		mntmCambiarPropiedadesDe_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				changePropertiesButton();
+			}
+		});
+		mnAdmin.add(mntmCambiarPropiedadesDe_1);
+		mnAdmin.add(mntmContratarNuevoTrabajador_1);
+		
+		JMenuItem mntmDespedirTrabajador_1 = new JMenuItem("Despedir Trabajador");
+		mntmDespedirTrabajador_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				fireWorkerButton();
 			}
 		});
-		mnGestionarTrabajadores.add(mntmDespedirTrabajador);
+		mnAdmin.add(mntmDespedirTrabajador_1);
 		contentPane = new JPanel(){
 			public void paintComponent(Graphics pic){
 				Image image = Toolkit.getDefaultToolkit().getImage(MainWindow.class.getResource("/interfaces/assets/pic-750x628.jpg"));
@@ -150,16 +142,14 @@ public class MainWindow extends JFrame {
 	
 	private void updatePermissions(){
 		if(manager){
-			mnTienda.setEnabled(true);
-			mnGestionarTrabajadores.setEnabled(true);
+			mnAdmin.setEnabled(true);
 		}
 		else{
-			mnTienda.setEnabled(false);
-			mnGestionarTrabajadores.setEnabled(false);
+			mnAdmin.setEnabled(false);
 		}
 	}
 	
-	private void test(){
+	private void salesButton(){
 		Application.changeWindow(this, WindowType.sales);
 	}
 	

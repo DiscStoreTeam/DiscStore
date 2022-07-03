@@ -2,9 +2,6 @@ package jUnit;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-
-import logic.business.abstractions.Disc;
 import logic.business.auxiliars.ShoppingCar;
 import logic.business.core.CD;
 import logic.business.core.Song;

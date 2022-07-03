@@ -1,9 +1,6 @@
 package logic.business.core;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
 import logic.business.controllers.AccessController;
 import logic.business.controllers.DBController;
 import logic.business.controllers.HRController;
@@ -22,8 +19,6 @@ public class Store {
 	private ArrayList<Song> songDatabase;
 	private ArrayList<Video> videoDatabase;
 	
-	private Worker manager;
-	private Date startManagerDate;
 	private Worker loggedWorker;
 	private StoreProperties properties;
 	
@@ -33,10 +28,7 @@ public class Store {
 		songDatabase = new ArrayList<Song>();
 		videoDatabase = new ArrayList<Video>();
 		loggedWorker = new Worker();
-		hrCtrl = new HRController("admin", "admin", "admin", ScholarDegreeValue.superior, workersList);
-		manager = workersList.get(0);
-		startManagerDate = new Date();
-		startManagerDate = Calendar.getInstance().getTime();
+		hrCtrl = new HRController("Alicia", "Lopez", "12345678901", ScholarDegreeValue.superior, workersList);
 		accessCtrl = new AccessController(workersList, this);
 		databaseCtrl = new DBController(songDatabase, videoDatabase);
 		salesCtrl = new SalesController(songDatabase, videoDatabase, loggedWorker);
@@ -44,11 +36,11 @@ public class Store {
 	}
 	
 	private void initialize(){
-		properties.setName("El cucurucho");
-		properties.getAddress().setStreet("114").setNumber("12").setLatStreetA("La escalinata").setLatStreetB("La warapera");
+		properties.setName("El Cucurucho");
+		properties.getAddress().setStreet("114").setNumber("11901").setLatStreetA("119").setLatStreetB("129");
 		properties.setPhoneNumber("79019090");
-		hrCtrl.hireWorker("Pepe", "A", "12345678901", PositionValue.dependent, ScholarDegreeValue.basic);
-		hrCtrl.hireWorker("Alberto", "A", "12345678901", PositionValue.dependent, ScholarDegreeValue.basic);
+		hrCtrl.hireWorker("Juan", "Pérez", "12345678901", PositionValue.dependent, ScholarDegreeValue.halfSuperior);
+		hrCtrl.hireWorker("Alberto", "García", "12345678901", PositionValue.dependent, ScholarDegreeValue.basic);
 	}
 	
 	public void updateLoggedWorker(Worker loggedWorker){

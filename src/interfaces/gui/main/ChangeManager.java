@@ -35,16 +35,16 @@ public class ChangeManager extends JDialog {
 	}
 	
 	private void drawWindow(){
-		setBounds(100, 100, 450, 227);
+		setBounds(100, 100, 450, 239);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(new MigLayout("", "[grow]", "[][]"));
+		contentPanel.setLayout(new MigLayout("", "[grow]", "[54.00][]"));
 		{
 			JPanel panel = new JPanel();
 			panel.setBorder(new TitledBorder(null, "Actual Administrador", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			contentPanel.add(panel, "cell 0 0,grow");
-			panel.setLayout(new MigLayout("", "[][grow][][][][][][][][]", "[][]"));
+			panel.setLayout(new MigLayout("", "[][grow][][][][][][][][]", "[][][]"));
 			{
 				JLabel lblNombre = new JLabel("Nombre y Apellidos : ");
 				panel.add(lblNombre, "cell 0 0");
@@ -68,6 +68,14 @@ public class ChangeManager extends JDialog {
 			{
 				JLabel lblNewLabel_1 = new JLabel(controller.getManager().getCi());
 				panel.add(lblNewLabel_1, "cell 1 1 6 1");
+			}
+			{
+				JLabel lblFechaDeInicio = new JLabel("Fecha de Inicio : ");
+				panel.add(lblFechaDeInicio, "cell 0 2");
+			}
+			{
+				JLabel lblDate = new JLabel(controller.getDate());
+				panel.add(lblDate, "cell 1 2");
 			}
 		}
 		{
