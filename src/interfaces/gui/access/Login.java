@@ -54,7 +54,7 @@ public class Login extends JFrame {
 		setLocationRelativeTo(null);
 		
 		JLabel lblCredencialesDeAcceso = new JLabel("Credenciales de Acceso");
-		contentPane.add(lblCredencialesDeAcceso, "cell 0 0 2 1,alignx center,aligny center");
+		contentPane.add(lblCredencialesDeAcceso, "flowx,cell 0 0 2 1,alignx center,aligny center");
 		JLabel lblUsername = new JLabel("Nombre de Usuario : ");
 		contentPane.add(lblUsername, "cell 0 1,alignx trailing");
 		JLabel lblContrasea = new JLabel("Contrase\u00F1a : ");
@@ -87,6 +87,7 @@ public class Login extends JFrame {
 			}
 		});
 		contentPane.add(btnIniciarSesin, "cell 0 4 2 1,alignx center,aligny bottom");
+		textFieldUsername.requestFocus();
 	}
 	
 	private void loginButton(){

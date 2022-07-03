@@ -110,6 +110,15 @@ public class HireWorker extends JDialog {
 						okButton();
 					}
 				});
+				{
+					JButton button = new JButton(" ? ");
+					button.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent arg0) {
+							helpMessage();
+						}
+					});
+					buttonPane.add(button);
+				}
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
@@ -134,9 +143,13 @@ public class HireWorker extends JDialog {
 	private void okButton(){
 		if(validateFields()){
 			controller.hireWorker(textFieldName.getText(), textFieldLastName.getText(), textFieldCI.getText(), PositionValue.dependent, (PublicScholarDegree)comboBox.getSelectedItem());
-			JOptionPane.showMessageDialog(null, "Trabajador Contratado Exitosamente");
+			JOptionPane.showMessageDialog(null, "Credenciales Temporales:\nNombre de Usuario : " + textFieldName.getText() + "\nContraseña : " + textFieldCI.getText(), "Trabajador Contratado Exitosamente", 1);
 			dispose();
 		}
+	}
+	
+	private void helpMessage(){
+		JOptionPane.showMessageDialog(null, "Credenciales Temporales:\nNombre de Usuario : Nombre del Trabajador\nContraseña : Carnet de Identidad");
 	}
 	
 	private boolean validateFields(){
