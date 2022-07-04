@@ -21,6 +21,7 @@ public class SearchManager<E> {
 		byCollaborators(critery, database, list);
 		if(!database.isEmpty() && !(database.get(0) instanceof Product)){
 			if(database.get(0) instanceof Song){
+				System.out.println("ASd");
 				byAlbum(critery, database, list);
 				byAuthor(critery, database, list);
 			}
